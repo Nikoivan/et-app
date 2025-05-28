@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  login        String        @unique
+  passwordHash String        @map("password_hash")
+  salt         String
+  role         String        @db.VarChar(80)
+  posts        Post[]
+  tours        Tour[]
+  Review       Review[]
+  Activity     Activity[]
+  Transaction  Transaction[]
+  Order        Order[]
+
+  @@map("user")
+}
+
+model Post {
+  id           Int    @id @default(autoincrement())
+  title        String
+  content      String
+  user         User   @relation(fields: [postAuthorId], references: [id])
+  postAuthorId Int    @map("post_author_id")
+
+  @@map("post")
+}
+
+model LegacyPosts {
+  id           Int     @id @default(autoincrement())
+  postAuthorId Int     @map("post_author_id")
+  postDate     String  @map("post_date")
+  guid         String
+  postContent  String? @map("post_content")
+  postTitle    String? @map("post_title")
+  postStatus   String? @map("post_status") @db.VarChar(80)
+  postName     String? @map("post_name")
+  postModified String? @map("post_modified")
+  postParent   Int?    @map("post_parent")
+
+  @@map("legacy_post")
+}
+
+model Review {
+  id            Int    @id @default(autoincrement())
+  content       String
+  estimation    Json
+  estimateValue Int    @map("estimate_value")
+  authorId      Int    @map("author_id")
+  user          User   @relation(fields: [authorId], references: [id])
+  Tour          Tour?  @relation(fields: [tourId], references: [id])
+  tourId        Int?
+}
+
+model Tour {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(180)
+  description String
+  mainPhoto   String
+  price       Int
+  duration    String     @db.VarChar(180)
+  categories  String[]
+  authorId    Int        @map("author_id")
+  author      User       @relation(fields: [authorId], references: [id])
+  photos      String[]
+  rating      Float?
+  reviews     Review[]
+  Activity    Activity[]
+  Order       Order[]
+}
+
+model Order {
+  id          Int          @id @default(autoincrement())
+  userId      Int          @map("user_id")
+  user        User         @relation(fields: [userId], references: [id])
+  amount      Int
+  status      String       @db.VarChar(80)
+  places      Int?
+  tourId      Int?         @map("tour_id")
+  tour        Tour?        @relation(fields: [tourId], references: [id])
+  activityId  Int?         @map("activity_id")
+  activity    Activity?    @relation(fields: [activityId], references: [id])
+  transaction Transaction?
+}
+
+model Transaction {
+  id       Int   @id @default(autoincrement())
+  authorId Int   @map("author_id")
+  author   User  @relation(fields: [authorId], references: [id])
+  amount   Int
+  orderId  Int   @unique
+  Order    Order @relation(fields: [orderId], references: [id])
+}
+
+model Activity {
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(180)
+  description  String
+  status       String   @db.VarChar(80)
+  authorId     Int      @map("author_id")
+  author       User     @relation(fields: [authorId], references: [id])
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp()
+  startTime    DateTime @map("start_time") @db.Timestamp()
+  finishTime   DateTime @map("finish_time") @db.Timestamp()
+  places       Int
+  participants Int[]
+  groupPrice   Int      @map("group_price")
+  personPrice  Int      @map("person_price")
+  type         String   @db.VarChar(80)
+  tourId       Int      @map("tour_id")
+  tour         Tour     @relation(fields: [tourId], references: [id])
+  Orders       Order[]
+  tags         String[]
+  categories   String[]
+  discount     Int?
+}
