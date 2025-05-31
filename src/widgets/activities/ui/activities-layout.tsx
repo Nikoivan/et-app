@@ -17,13 +17,13 @@ export const ActivitiesLayout: FC<ActivitiesLayoutProps> = ({
   footer,
   className
 }) => (
-  <section className={cnActivities(null, [className])}>
-    <div className={cnActivities('Header', ['pt-40'])}>
+  <section className={cnActivities(null, ['px-4', className])}>
+    <div className={cnActivities('Header', ['pt-22'])}>
       <Title type='h2' className={cnActivities('Title')}>
         {title}
       </Title>
     </div>
-    <div className={cnActivities('Main')}>{content}</div>
+    <div className={cnActivities('Main', ['mt-8'])}>{content}</div>
     <div className={cnActivities('Footer')}>{footer}</div>
   </section>
 );

@@ -20,7 +20,11 @@ export const ActivityCardLayout: FC<LayoutProps> = async ({
   descriptionNode
 }) => (
   <Link
-    className={cnActivityCard(null, ['flex', 'items-center'])}
+    className={cnActivityCard(null, [
+      'flex',
+      'items-center',
+      'backdrop-blur-xs'
+    ])}
     href={`activity/${id}`}
   >
     <div className={cnActivityCard('LeftWrap', ['basis-1/3'])}>{leftNode}</div>

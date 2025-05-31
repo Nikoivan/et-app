@@ -1,5 +1,3 @@
-'use server';
-
 import { FC } from 'react';
 import { ActivityCardEntity } from '@/entities/activity/domain';
 import { ActivityCardLayout } from '@/entities/activity/ui/activity-card-layout';
