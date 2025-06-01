@@ -1,7 +1,9 @@
 'use server';
 
-import { cn as cnBem } from '@bem-react/classname';
 import { FC } from 'react';
+import { cn as cnBem } from '@bem-react/classname';
+
+import styles from '../assets/styles.module.scss';
 
 const cnCardDates = cnBem('CardDates');
 
@@ -14,7 +16,8 @@ export const CardDates: FC<CardDatesProps> = async ({
   startTime,
   finishTime
 }) => (
-  <div className={cnCardDates()}>
-    {startTime.getDate()} — {finishTime.getDate()}
+  <div className={cnCardDates(null, ['text-xl', styles.CardDates])}>
+    {('0' + startTime.getDate()).slice(-2)}-
+    {('0' + finishTime.getDate()).slice(-2)}
   </div>
 );

@@ -6,5 +6,5 @@ import { FC } from 'react';
 const cnCardPrice = cn('CardPrice');
 
 export const CardPrice: FC<{ price: number }> = async ({ price }) => (
-  <span className={cnCardPrice()}>{price}</span>
+  <span className={cnCardPrice(null, ['text-xs'])}>{price} ₽</span>
 );

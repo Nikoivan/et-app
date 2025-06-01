@@ -6,9 +6,9 @@ import { ActivitiesLayout } from '@/widgets/activities/ui/activities-layout';
 import { getActivitiesDates } from '@/widgets/activities/lib/dates-helpers';
 import { getUpcominglActivities } from '@/widgets/activities/services/get-upcomingl-activities';
 import { ActivityCard } from '@/entities/activity/server';
+import { Months } from '@/widgets/activities/ui/months';
 
 import styles from '../assets/styles.module.scss';
-import { Months } from '@/widgets/activities/ui/months';
 
 const cnUpcomingActivities = cn('UpcomingActivities');
 
@@ -26,7 +26,7 @@ export const UpcomingActivities: FC = async () => {
         <div className={cnUpcomingActivities('Content', 'p-1')}>
           <div
             className={cnUpcomingActivities('Description', [
-              'mt-3',
+              'mt-2',
               'leading-4'
             ])}
           >
@@ -39,7 +39,7 @@ export const UpcomingActivities: FC = async () => {
               выбирай свои даты на <Months dates={activitiesDates} />
             </span>
           </div>
-          <ul>
+          <ul className='flex flex-col gap-1.5'>
             {upcomingActivities.map(
               ({
                 id,

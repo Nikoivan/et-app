@@ -1,0 +1,23 @@
+.ActivityCard {
+  background-color: #ffffff1a;
+}
+
+.CardDates {
+  font-family: var(--font-poire-one), serif;
+  -webkit-text-stroke: 1px #ffffff;
+  letter-spacing: 3px;
+}
+
+.CardTitle {
+  font-family: var(--oswald), serif;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.CardPlaces {
+  font-size: 11px
+}
+
+.CardPrice {
+  font-size: 10px
+}

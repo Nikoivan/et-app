@@ -5,7 +5,11 @@ import { CardDates } from '@/entities/activity/ui/card-dates';
 import { CardTitle } from '@/entities/activity/ui/card-title';
 import { CardDescription } from '@/entities/activity/ui/card-description';
 import { CardPlaces } from '@/entities/activity/ui/card-places';
-import { CardPrice } from '@/features/tour/ui/card-price';
+
+import { cn } from '@/shared/lib/css';
+
+import styles from '../assets/styles.module.scss';
+import { CardPrice } from '@/entities/activity/ui/card-price';
 
 export const ActivityCard: FC<ActivityCardEntity> = async ({
   id,
@@ -23,5 +27,6 @@ export const ActivityCard: FC<ActivityCardEntity> = async ({
         <CardPlaces freePlaces={freePlaces} />/<CardPrice price={price} />
       </CardDescription>
     }
+    className={cn(styles.ActivityCard)}
   />
 );

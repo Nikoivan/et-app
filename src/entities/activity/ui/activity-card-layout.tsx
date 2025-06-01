@@ -11,24 +11,33 @@ type LayoutProps = {
   leftNode: ReactNode;
   titleNode: ReactNode;
   descriptionNode: ReactNode;
+  className?: string;
 };
 
 export const ActivityCardLayout: FC<LayoutProps> = async ({
   id,
   leftNode,
   titleNode,
-  descriptionNode
+  descriptionNode,
+  className
 }) => (
   <Link
     className={cnActivityCard(null, [
       'flex',
       'items-center',
-      'backdrop-blur-xs'
+      'justify-between',
+      'gap-4.5',
+      'backdrop-blur-xs',
+      'px-3.5',
+      'py-1.5',
+      'mt-4',
+      'rounded-xl',
+      className
     ])}
     href={`activity/${id}`}
   >
-    <div className={cnActivityCard('LeftWrap', ['basis-1/3'])}>{leftNode}</div>
-    <div className={cnActivityCard('RightWrap', ['basis-2/3'])}>
+    <div className={cnActivityCard('LeftWrap')}>{leftNode}</div>
+    <div className={cnActivityCard('RightWrap')}>
       <div>{titleNode}</div>
       <div>{descriptionNode}</div>
     </div>

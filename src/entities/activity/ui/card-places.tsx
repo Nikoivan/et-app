@@ -1,7 +1,8 @@
 'use server';
 
-import { cn } from '@bem-react/classname';
 import { FC } from 'react';
+import { cn } from '@bem-react/classname';
+import { pluralize } from 'numeralize-ru';
 
 const cnCardPlaces = cn('CardPlaces');
 
@@ -14,10 +15,12 @@ export const CardPlaces: FC<{ freePlaces: number }> = async ({
     <span
       className={cnCardPlaces(null, [
         'rounded-2xl',
-        isTooMuchFreePlaces ? 'bg-green-900' : 'bg-red-900'
+        'px-2',
+        'text-xs',
+        isTooMuchFreePlaces ? 'bg-green-700' : 'bg-red-800'
       ])}
     >
-      {freePlaces}
+      {`${freePlaces} мест${pluralize(freePlaces, 'о', 'а', '')}`}
     </span>
   );
 };
