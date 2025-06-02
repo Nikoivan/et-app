@@ -8,7 +8,8 @@ import './globals.css';
 
 const oswald = Oswald({
   weight: ['400'],
-  variable: '--oswald'
+  variable: '--oswald',
+  subsets: ['cyrillic']
 });
 
 const poireOne = Poiret_One({

@@ -16,6 +16,7 @@ export const CardPlaces: FC<{ freePlaces: number }> = async ({
       className={cnCardPlaces(null, [
         'rounded-2xl',
         'px-2',
+        'pb-1',
         'text-xs',
         isTooMuchFreePlaces ? 'bg-green-700' : 'bg-red-800'
       ])}
