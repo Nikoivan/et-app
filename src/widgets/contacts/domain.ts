@@ -13,9 +13,15 @@ export type ContactsData = {
   youTube?: string;
 };
 
-type Types = 'server' | 'client';
+enum Types {
+  SERVER = 'server',
+  CLIENT = 'client'
+}
 
-type ContactsLayoutTypes<T extends string = Types> = T;
+type ContactsLayoutTypes<
+  T extends string = Types,
+  K extends keyof Types = keyof Types
+> = T[K];
 
 export type ContactsLayoutProps = PropsWithChildren<
   ContactsData & PropsWithClassNames & { type: ContactsLayoutTypes }
