@@ -31,6 +31,6 @@ export const HomePage: FC = async () => (
         <UpcomingActivities />
       </>
     }
-    mainBottom={'Нижняя часть страницы'}
+    mainBottom={null}
   />
 );

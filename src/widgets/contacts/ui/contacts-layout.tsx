@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Title } from '@/shared/ui/title';
-import styles from '../assets/styles.module.scss';
+
 import { cn } from '@bem-react/classname';
 import { ContactsLayoutProps } from '@/widgets/contacts/domain';
 import { Row } from '@/widgets/contacts/ui/row';
@@ -9,6 +9,8 @@ import { GeoPointIcon } from '@/shared/ui/GeoPointIcon';
 import { MailIcon } from '@/shared/ui/mailIcon';
 import { PhoneIcon } from '@/shared/ui/PhoneIcon';
 import { v4 } from 'uuid';
+
+import styles from '../assets/styles.module.scss';
 
 const cnContactsWidget = cn('ContactsWidget');
 
@@ -20,13 +22,13 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
   children,
   className
 }) => (
-  <section
+  <div
     className={cnContactsWidget({ type }, [styles.ContactsWidget, className])}
   >
-    <div className={cnContactsWidget('Header')}>
+    <div className={cnContactsWidget('Header', [styles.ContactsWidget_Header])}>
       <Title type='h2'>Контакты</Title>
     </div>
-    <div>
+    <div className='flex flex-col justify-center items-center mt-6'>
       <Row>
         <GeoPointIcon />
         <span>{address}</span>
@@ -43,5 +45,5 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
       ))}
       {children}
     </div>
-  </section>
+  </div>
 );

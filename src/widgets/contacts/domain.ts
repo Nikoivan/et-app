@@ -18,10 +18,7 @@ enum Types {
   CLIENT = 'client'
 }
 
-type ContactsLayoutTypes<
-  T extends string = Types,
-  K extends keyof Types = keyof Types
-> = T[K];
+type ContactsLayoutTypes<T extends Types[keyof Types] = string> = T;
 
 export type ContactsLayoutProps = PropsWithChildren<
   ContactsData & PropsWithClassNames & { type: ContactsLayoutTypes }

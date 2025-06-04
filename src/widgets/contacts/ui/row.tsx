@@ -8,4 +8,18 @@ const cnRow = cn('Row');
 
 export const Row: FC<PropsWithChildren & PropsWithClassNames> = ({
   children
-}) => <div className={cnRow(null, [styles.Row])}>{children}</div>;
+}) => (
+  <div
+    className={cnRow(null, [
+      'flex',
+      'items-center',
+      'justify-center',
+      'gap-2',
+      'tracking-widest',
+      'mt-4',
+      styles.Row
+    ])}
+  >
+    {children}
+  </div>
+);
