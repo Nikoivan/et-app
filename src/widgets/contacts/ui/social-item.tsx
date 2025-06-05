@@ -7,8 +7,13 @@ const cnSocialItem = cn('SocialItem');
 
 type SocialItemProps = {
   icon: ReactNode;
+  href: string;
 };
 
-export const SocialItem: FC<SocialItemProps> = ({ icon }) => (
-  <div className={cnSocialItem(null, [styles.SocialItem])}>{icon}</div>
-);
+export const SocialItem: FC<SocialItemProps> = ({ icon, href }) => {
+  return (
+    <div className={cnSocialItem(null, [styles.SocialItem])}>
+      <a href={href}>{icon}</a>
+    </div>
+  );
+};

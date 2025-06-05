@@ -11,6 +11,12 @@ import { PhoneIcon } from '@/shared/ui/PhoneIcon';
 import { v4 } from 'uuid';
 
 import styles from '../assets/styles.module.scss';
+import { formatNumber } from '@/shared/lib/string-utils';
+import { SocialItem } from '@/widgets/contacts/ui/social-item';
+import { TelegrammIcon } from '@/shared/ui/telegramm-icon';
+import { WhatsAppIcon } from '@/shared/ui/whats-app-icon';
+import { VkIcon } from '@/shared/ui/vk-icon';
+import { RutubeIcon } from '@/shared/ui/rutube-icon';
 
 const cnContactsWidget = cn('ContactsWidget');
 
@@ -20,6 +26,10 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
   email,
   phones,
   children,
+  telegram,
+  whatsapp,
+  vk,
+  ruTube,
   className
 }) => (
   <div
@@ -35,14 +45,39 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
       </Row>
       <Row>
         <MailIcon />
-        <span>{email}</span>
+        <a href={`mailto:${email}`}>{email}</a>
       </Row>
       {phones.map(phone => (
-        <Row key={v4()}>
-          <PhoneIcon />
-          <span>{phone}</span>
-        </Row>
+        <a href={`tel:${phone}`} key={v4()}>
+          <Row>
+            <PhoneIcon />
+            {formatNumber(phone)}
+          </Row>
+        </a>
       ))}
+      <ul
+        className={cnContactsWidget('SocialList', [
+          'flex',
+          'items-center',
+          'gap-5',
+          'mt-8.5'
+        ])}
+      >
+        <li>
+          <SocialItem href={telegram} icon={<TelegrammIcon />} />
+        </li>
+        <li>
+          <SocialItem href={whatsapp} icon={<WhatsAppIcon />} />
+        </li>
+        <li>
+          <SocialItem href={vk} icon={<VkIcon />} />
+        </li>
+        {!!ruTube && (
+          <li>
+            <SocialItem href={ruTube} icon={<RutubeIcon />} />
+          </li>
+        )}
+      </ul>
       {children}
     </div>
   </div>
