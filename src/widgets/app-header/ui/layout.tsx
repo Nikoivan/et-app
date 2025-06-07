@@ -29,8 +29,8 @@ export const Layout: FC<LayoutProps> = async ({ logo, nav, contacts }) => (
       <div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant='ghost' size='icon'>
-              <BurgerIcon className='w-20 h-20 shrink-0' />
+            <Button variant='ghost' aria-controls='burgerIcon'>
+              <BurgerIcon className='w-20 h-20 shrink-0' id='burgerIcon' />
             </Button>
           </SheetTrigger>
           <SheetContent side='left'>

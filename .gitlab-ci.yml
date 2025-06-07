@@ -1,8 +1,5 @@
 name: Pull requests check
 
-on:
-
-
 jobs:
   lint:
     runs-on: ubuntu-latest

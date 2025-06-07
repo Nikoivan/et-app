@@ -1,8 +1,9 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FilledHeartIcon } from '@/shared/ui/filled-heart-icon';
 import { BlankHeartIcon } from '@/shared/ui/blank-heart-icon';
+import { v4 } from 'uuid';
 
 type FavouriteLabelIconProps = {
   isFavourite: boolean;
@@ -12,8 +13,24 @@ type FavouriteLabelIconProps = {
 export const FavouriteLabelIcon: FC<FavouriteLabelIconProps> = ({
   isFavourite,
   onChange
-}) => (
-  <span className='hover: cursor-pointer' onClick={onChange}>
-    {isFavourite ? <FilledHeartIcon /> : <BlankHeartIcon />}
-  </span>
-);
+}) => {
+  const [id, setId] = useState<string | null>(null);
+  const [secondId, setSecondId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!id && !secondId) {
+      setId(v4());
+      setSecondId(v4());
+    }
+  }, []);
+
+  return (
+    <span className='hover: cursor-pointer' onClick={onChange}>
+      {isFavourite && !!id && !!secondId ? (
+        <FilledHeartIcon id={id} />
+      ) : (
+        <>{!!secondId && <BlankHeartIcon id={secondId} />}</>
+      )}
+    </span>
+  );
+};

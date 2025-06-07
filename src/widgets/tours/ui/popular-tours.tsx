@@ -26,7 +26,9 @@ export const PopularTours: FC = async () => {
       list={
         <ul className='mt-[10%] flex flex-col gap-10'>
           {tours.map(tour => (
-            <ServerTourCard {...tour} key={tour.id} />
+            <li key={tour.id}>
+              <ServerTourCard {...tour} />
+            </li>
           ))}
         </ul>
       }

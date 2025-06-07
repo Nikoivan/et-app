@@ -10,13 +10,14 @@ import { MailIcon } from '@/shared/ui/mailIcon';
 import { PhoneIcon } from '@/shared/ui/PhoneIcon';
 import { v4 } from 'uuid';
 
-import styles from '../assets/styles.module.scss';
 import { formatNumber } from '@/shared/lib/string-utils';
 import { SocialItem } from '@/widgets/contacts/ui/social-item';
 import { TelegrammIcon } from '@/shared/ui/telegramm-icon';
 import { WhatsAppIcon } from '@/shared/ui/whats-app-icon';
 import { VkIcon } from '@/shared/ui/vk-icon';
 import { RutubeIcon } from '@/shared/ui/rutube-icon';
+
+import styles from '../assets/styles.module.scss';
 
 const cnContactsWidget = cn('ContactsWidget');
 
