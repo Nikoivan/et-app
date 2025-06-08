@@ -82,7 +82,7 @@ model Tour {
   rating          Float?
   descriptionText String?    @map("description_text")
   content         String?    @map("content")
-  startPlace      String?    @map("start_place")
+  startPlace      Json?      @map("start_place")
 }
 
 model Order {

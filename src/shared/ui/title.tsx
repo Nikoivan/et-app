@@ -1,12 +1,13 @@
 import { FC, PropsWithChildren } from 'react';
-import { cn } from '@/shared/lib/css';
-
 import styles from '@/shared/assets/styles.module.scss';
+import { cn } from '@bem-react/classname';
 
 type TitleProps = {
   type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   className?: string;
 };
+
+const cnTitle = cn('Title');
 
 export const Title: FC<PropsWithChildren<TitleProps>> = ({
   children,
@@ -17,13 +18,13 @@ export const Title: FC<PropsWithChildren<TitleProps>> = ({
 
   return (
     <Tag
-      className={cn(
+      className={cnTitle({ type }, [
         className,
         styles.Title,
         'text-center',
         'tracking-wider',
         Tag === 'h2' ? 'text-3xl' : 'text-xl'
-      )}
+      ])}
     >
       {children}
     </Tag>

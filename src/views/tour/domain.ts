@@ -1,3 +1,6 @@
+import { ReviewDomain } from '@/entities/review';
+import { ActivityDomain } from '@/entities/activity';
+
 export type TourEntity = {
   id: number;
   title: string;
@@ -8,5 +11,10 @@ export type TourEntity = {
   categories: string[];
   authorId: string;
   photos: string[];
-  reviews: Review[];
+  reviews: ReviewDomain.Review[];
+  activities: ActivityDomain.ActivityEntity[];
+  rating: number;
+  descriptionText?: string;
+  content?: string;
+  startPlace?: string;
 };
