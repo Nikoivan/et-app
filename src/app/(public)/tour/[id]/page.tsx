@@ -1,5 +1,7 @@
 'use server';
 
-const TourPage = async () => <div>TOUR Page</div>;
+import { FC } from 'react';
+
+const TourPage: FC = async () => <div>TOUR Page</div>;
 
 export default TourPage;

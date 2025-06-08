@@ -66,20 +66,23 @@ model Review {
 }
 
 model Tour {
-  id          Int        @id @default(autoincrement())
-  title       String     @db.VarChar(180)
-  description String
-  mainPhoto   String
-  price       Int
-  duration    String     @db.VarChar(180)
-  categories  String[]
-  authorId    Int        @map("author_id")
-  author      User       @relation(fields: [authorId], references: [id])
-  photos      String[]
-  rating      Float?
-  reviews     Review[]
-  Activity    Activity[]
-  Order       Order[]
+  id              Int        @id @default(autoincrement())
+  title           String     @db.VarChar(180)
+  description     String
+  mainPhoto       String     @map("main_photo")
+  price           Int
+  duration        String     @db.VarChar(180)
+  categories      String[]
+  authorId        Int        @map("author_id")
+  author          User       @relation(fields: [authorId], references: [id])
+  photos          String[]
+  reviews         Review[]
+  Activity        Activity[]
+  Order           Order[]
+  rating          Float?
+  descriptionText String?    @map("description_text")
+  content         String?    @map("content")
+  startPlace      String?    @map("start_place")
 }
 
 model Order {
