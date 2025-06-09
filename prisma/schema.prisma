@@ -72,6 +72,7 @@ model Tour {
   mainPhoto       String     @map("main_photo")
   price           Int
   duration        String     @db.VarChar(180)
+  content         String     @map("content")
   categories      String[]
   authorId        Int        @map("author_id")
   author          User       @relation(fields: [authorId], references: [id])
@@ -81,7 +82,6 @@ model Tour {
   Order           Order[]
   rating          Float?
   descriptionText String?    @map("description_text")
-  content         String?    @map("content")
   startPlace      Json?      @map("start_place")
 }
 

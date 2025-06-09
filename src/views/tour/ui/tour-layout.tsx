@@ -21,16 +21,16 @@ export const TourViewLayout: FC<TourViewLayoutProps> = ({
 }) => (
   <>
     {header}
-    <main className={cnTourView()}>
+    <div className={cnTourView()}>
       <section className={cnTourView('HeadSection')}>
         <div>
           <Title type='h1'>{title}</Title>
         </div>
         <div>
-          <GeoPoint geoPoint={geoPoint} />{' '}
+          <GeoPoint geoPoint={geoPoint} />
         </div>
       </section>
-    </main>
+    </div>
     {footer}
   </>
 );
