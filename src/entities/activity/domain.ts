@@ -1,4 +1,4 @@
-import { Tour } from '@prisma/client';
+import { Activity, Tour } from '@prisma/client';
 import { UserEntity } from '@/entities/user/domain';
 
 enum ActivityTypes {
@@ -67,3 +67,9 @@ export type ActivityCardEntity = {
   freePlaces: number;
   price: number;
 };
+
+export function activityToActivityEntity(activity: Activity): ActivityEntity {
+  const discount = activity.discount || undefined;
+
+  return { ...activity, discount };
+}

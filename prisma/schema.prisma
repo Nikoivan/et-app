@@ -61,8 +61,8 @@ model Review {
   estimateValue Int    @map("estimate_value")
   authorId      Int    @map("author_id")
   user          User   @relation(fields: [authorId], references: [id])
-  Tour          Tour?  @relation(fields: [tourId], references: [id])
-  tourId        Int?
+  Tour          Tour   @relation(fields: [tourId], references: [id])
+  tourId        Int
 }
 
 model Tour {
@@ -78,7 +78,7 @@ model Tour {
   author          User       @relation(fields: [authorId], references: [id])
   photos          String[]
   reviews         Review[]
-  Activity        Activity[]
+  activities      Activity[]
   Order           Order[]
   rating          Float?
   descriptionText String?    @map("description_text")
