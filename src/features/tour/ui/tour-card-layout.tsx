@@ -26,7 +26,6 @@ export const TourCardLayout: FC<TourCardLayoutProps> = ({
       height={500}
       src={bgImage}
       alt={title}
-      priority
     />
     <div className='relative flex flex-col justify-between z-2 p-4 mt'>
       {cardHeader}

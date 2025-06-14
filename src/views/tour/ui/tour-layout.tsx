@@ -1,36 +1,25 @@
-import { FC, ReactNode } from 'react';
-import { cn } from '@bem-react/classname';
-import { Title } from '@/shared/ui/title';
-import { GeoPointEntity } from '@/entities/geo-point/domain';
-import { GeoPoint } from '@/entities/geo-point';
+'use server';
 
-type TourViewLayoutProps = {
-  header: ReactNode;
-  title: string;
-  footer: ReactNode;
-  geoPoint?: GeoPointEntity;
+import { FC, PropsWithChildren } from 'react';
+import { AppHeader } from '@/widgets/app-header/containers/app-header';
+import { ContactsWidget } from '@/widgets/contacts/containers/contacts-widget';
+
+type Props = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-const cnTourView = cn('TourView');
-
-export const TourViewLayout: FC<TourViewLayoutProps> = ({
-  header,
-  title,
-  geoPoint,
-  footer
-}) => (
-  <>
-    {header}
-    <div className={cnTourView()}>
-      <section className={cnTourView('HeadSection')}>
-        <div>
-          <Title type='h1'>{title}</Title>
-        </div>
-        <div>
-          <GeoPoint geoPoint={geoPoint} />
-        </div>
-      </section>
-    </div>
-    {footer}
-  </>
-);
+export const TourViewLayout: FC<PropsWithChildren<Props>> = async ({
+  children,
+  params
+}) => {
+  return (
+    <>
+      <AppHeader variant='public' />
+      <main>{children}</main>
+      <footer>
+        <ContactsWidget />
+      </footer>
+    </>
+  );
+};

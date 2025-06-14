@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { AppMain } from '@/widgets/app-main/server';
-import { PageHead } from '@/entities/page-head/server';
+import { PageHeadLayout } from '@/entities/page-head/server';
 import { PageTitle } from '@/entities/page-title/server';
 import { LinkButton } from '@/shared/ui/link-button';
 import { PopularTours } from '@/widgets/tours/server';
@@ -11,7 +11,7 @@ import { UpcomingActivities } from '@/widgets/activities/server';
 export const HomePage: FC = async () => (
   <AppMain
     mainHead={
-      <PageHead
+      <PageHeadLayout
         title={
           <PageTitle
             topTitle={{ text: 'Джип туры' }}
