@@ -10,13 +10,12 @@ type Props = {
 };
 
 export const TourViewLayout: FC<PropsWithChildren<Props>> = async ({
-  children,
-  params
+  children
 }) => {
   return (
     <>
       <AppHeader variant='public' />
-      <main>{children}</main>
+      {children}
       <footer>
         <ContactsWidget />
       </footer>

@@ -24,7 +24,9 @@ type LayoutProps = {
 // TODO: MenuIcon взять из макета Яны
 
 export const Layout: FC<LayoutProps> = async ({ logo, nav, contacts }) => (
-  <header className={cnAppHeader(null, ['absolute top-0 w-full border-b'])}>
+  <header
+    className={cnAppHeader(null, ['absolute top-0 w-full border-b', 'z-10'])}
+  >
     <div className='container flex justify-between items-center px-5 py-12'>
       <div>
         <Sheet>

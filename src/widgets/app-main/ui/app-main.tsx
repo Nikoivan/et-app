@@ -17,8 +17,8 @@ export const AppMain: FC<LayoutProps> = async ({
   mainBottom
 }) => (
   <main className={cnMain()}>
-    <div className={cnMain('Head')}>{mainHead}</div>
-    <div className={cnMain('Content')}>{mainContent}</div>
-    <div className={cnMain('Bottom')}>{mainBottom}</div>
+    {mainHead}
+    {mainContent}
+    {mainBottom}
   </main>
 );

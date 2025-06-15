@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { PropsWithClassNames } from '@/shared/model/types';
 
 enum Pages {
   HOME = 'home',
@@ -15,4 +16,4 @@ export type PageHeadProps = {
   title: ReactNode;
   content: ReactNode;
   page?: PageType;
-};
+} & PropsWithClassNames;

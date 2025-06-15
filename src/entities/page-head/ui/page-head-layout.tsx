@@ -11,9 +11,10 @@ const cnPageHead = cn('PageHead');
 export const PageHeadLayout: FC<PageHeadProps> = async ({
   title,
   content,
-  page = 'home'
+  page = 'home',
+  className
 }) => (
-  <section className={cnPageHead({ type: page as string }, ['pt-38', 'px-4'])}>
+  <section className={cnPageHead({ type: page as string }, [className])}>
     {title}
     {content}
   </section>
