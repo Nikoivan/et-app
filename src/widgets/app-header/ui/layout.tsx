@@ -27,7 +27,7 @@ export const Layout: FC<LayoutProps> = async ({ logo, nav, contacts }) => (
   <header
     className={cnAppHeader(null, ['absolute top-0 w-full border-b', 'z-10'])}
   >
-    <div className='container flex justify-between items-center px-5 py-12'>
+    <div className='container flex justify-between items-center px-5 pt-4 pb-12'>
       <div>
         <Sheet>
           <SheetTrigger asChild>

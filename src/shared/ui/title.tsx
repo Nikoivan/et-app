@@ -19,11 +19,11 @@ export const Title: FC<PropsWithChildren<TitleProps>> = ({
   return (
     <Tag
       className={cnTitle({ type }, [
-        className,
-        styles.Title,
         'text-center',
         'tracking-wider',
-        Tag === 'h2' ? 'text-3xl' : 'text-xl'
+        Tag === 'h2' ? 'text-3xl' : 'text-xl',
+        styles.Title,
+        className
       ])}
     >
       {children}

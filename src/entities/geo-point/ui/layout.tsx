@@ -24,13 +24,19 @@ export const GeoPointLayout: FC<PropsWithChildren<GeoPointProps>> = ({
 
   return (
     <a
-      className={cnGeoPoint(null, ['flex', 'items-center', 'justify-center'])}
+      className={cnGeoPoint(null, [
+        'flex',
+        'items-center',
+        'justify-center',
+        'gap-2'
+      ])}
       href={yandexGeoLink}
     >
       <GeoPointIcon />
       <span className={cnGeoPoint('Content')}>
         {content || 'от г. Бахчисарай'}
       </span>
+      {children}
     </a>
   );
 };

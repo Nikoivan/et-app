@@ -12,6 +12,7 @@ import {
 import { FavouriteLabelIcon } from '@/entities/favourite/ui/favourite-label-icon';
 
 import styles from '../assets/styles.module.scss';
+import { PropsWithClassNames } from '@/shared/model/types';
 
 const cnFavouriteLabel = cn('FavouriteLabel');
 
@@ -19,7 +20,9 @@ type FavouriteLabelProps = {
   id: number;
 };
 
-export const FavouriteLabel: FC<FavouriteLabelProps> = ({ id }) => {
+export const FavouriteLabel: FC<FavouriteLabelProps & PropsWithClassNames> = ({
+  id
+}) => {
   const [isFavourite, setFavourite] = useState<boolean>(false);
 
   const onFavouriteChange = () => {

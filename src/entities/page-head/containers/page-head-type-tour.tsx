@@ -48,15 +48,23 @@ export const PageHeadTour: FC<Props> = async ({ id, title, mainPhoto }) => (
           width={500}
           height={500}
         />
-        <div className='flex items-center justify-between z-2 relative'>
-          <button>LEFT ARROW</button>
-          <FavouriteLabel id={id} />
-        </div>
-        <Title className={cnPageTour('Title', ['z-2 relative'])} type='h1'>
+
+        <Title
+          className={cnPageTour('Title', [
+            'z-2',
+            'relative',
+            'px-4',
+            'mt-22',
+            'text-left',
+            styles.PageTour__Title
+          ])}
+          type='h1'
+        >
           {title}
         </Title>
-        <div className={cnPageTour('GeoPoint', ['z-2 relative'])}>
+        <div className='flex items-center justify-between z-2 relative px-4 mt-4'>
           <GeoPoint />
+          <FavouriteLabel id={id} />
         </div>
       </div>
     }

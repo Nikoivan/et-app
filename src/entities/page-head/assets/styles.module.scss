@@ -2,6 +2,12 @@
   &__MainImage {
     object-fit: cover;
     object-position: center top;
+  }
 
+  &__Title {
+    font-size: 35px;
+    color: #fff;
+    -webkit-text-stroke: 1px #ffffff;
+    line-height: 1.15 ;
   }
 }
