@@ -9,10 +9,10 @@ import {
   getFavouriteTours,
   removeFromFavourite
 } from '@/entities/favourite/services/client-service';
+import { PropsWithClassNames } from '@/shared/model/types';
 import { FavouriteLabelIcon } from '@/entities/favourite/ui/favourite-label-icon';
 
 import styles from '../assets/styles.module.scss';
-import { PropsWithClassNames } from '@/shared/model/types';
 
 const cnFavouriteLabel = cn('FavouriteLabel');
 

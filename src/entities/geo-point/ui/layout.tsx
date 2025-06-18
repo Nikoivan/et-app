@@ -5,6 +5,7 @@ import { GeoPointIcon } from '@/shared/ui/GeoPointIcon';
 import { getYandexGeoLink } from '@/shared/lib/geopoint-utils';
 import { DEFAULT_YANDEX_GEO_LINK } from '@/shared/constants/geo-constants';
 import { GeoPointEntity } from '@/entities/geo-point/domain';
+import styles from '../assets/styles.module.scss';
 
 export type GeoPointProps = {
   geoPoint?: GeoPointEntity;
@@ -28,7 +29,12 @@ export const GeoPointLayout: FC<PropsWithChildren<GeoPointProps>> = ({
         'flex',
         'items-center',
         'justify-center',
-        'gap-2'
+        'gap-2',
+        'rounded-full',
+        'backdrop-blur-xs',
+        'px-2',
+        'py-1',
+        styles.GeoPoint
       ])}
       href={yandexGeoLink}
     >

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, PropsWithChildren } from 'react';
 import { cn as cnBem } from '@bem-react/classname';
 
 import { RatingLayoutProps } from '@/entities/rating/model/types';
@@ -8,9 +8,10 @@ import styles from '../assets/styles.module.scss';
 
 const cnRatingLabel = cnBem('RatingLabel');
 
-export const RatingLabelLayout: FC<RatingLayoutProps> = ({
+export const RatingLabelLayout: FC<PropsWithChildren<RatingLayoutProps>> = ({
   rating,
-  className
+  className,
+  children
 }) => (
   <>
     {!!rating && (
@@ -35,6 +36,7 @@ export const RatingLabelLayout: FC<RatingLayoutProps> = ({
         >
           <span>{rating.toFixed(1)}/5</span>
         </div>
+        {children}
       </div>
     )}
   </>

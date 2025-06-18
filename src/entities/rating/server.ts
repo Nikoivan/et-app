@@ -1,1 +1,1 @@
-export { ServerRatingLabel } from '@/entities/rating/ui/server-rating-label';
+export { ServerRatingLabel } from '@/entities/rating/containers/server-rating-label';

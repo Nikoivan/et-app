@@ -6,7 +6,6 @@ import { cn } from '@bem-react/classname';
 import { PageHeadLayout } from '@/entities/page-head/ui/page-head-layout';
 import { Title } from '@/shared/ui/title';
 import { GeoPoint } from '@/entities/geo-point';
-import { FavouriteLabel } from '@/entities/favourite';
 
 import styles from '../assets/styles.module.scss';
 
@@ -18,7 +17,7 @@ type Props = {
 
 const cnPageTour = cn('PageTour');
 
-export const PageHeadTour: FC<Props> = async ({ id, title, mainPhoto }) => (
+export const PageHeadTour: FC<Props> = async ({ title, mainPhoto }) => (
   <PageHeadLayout
     title={null}
     page='tour'
@@ -28,7 +27,8 @@ export const PageHeadTour: FC<Props> = async ({ id, title, mainPhoto }) => (
           'h-[50vh]',
           'bg-white',
           'relative',
-          'pt-38'
+          'pt-38',
+          'pb-28'
         ])}
       >
         <Image
@@ -62,9 +62,12 @@ export const PageHeadTour: FC<Props> = async ({ id, title, mainPhoto }) => (
         >
           {title}
         </Title>
-        <div className='flex items-center justify-between z-2 relative px-4 mt-4'>
+        <div
+          className={cnPageTour('StartPlace', [
+            'flex items-center z-2 relative px-4 mt-2'
+          ])}
+        >
           <GeoPoint />
-          <FavouriteLabel id={id} />
         </div>
       </div>
     }

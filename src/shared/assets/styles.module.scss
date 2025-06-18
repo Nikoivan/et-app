@@ -12,3 +12,19 @@
     text-shadow: 0 4px 4px #00000026;
   }
 }
+
+.poiret_text_white {
+  font-family: var(--font-poire-one), serif;
+  -webkit-text-stroke: 1px #ffffff;
+  letter-spacing: 3px;
+}
+
+.poiret_text_black {
+  font-family: var(--font-poire-one), serif;
+  -webkit-text-stroke: 1px #000000;
+  letter-spacing: 3px;
+}
+
+.avatar {
+  box-shadow: 0 2px 2px 0 #00000026;
+}
