@@ -1,17 +1,18 @@
 import { FC } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 
 import styles from '@/shared/assets/styles.module.scss';
 import { cn } from '@/shared/lib/css';
+import { PropsWithClassNames } from '@/shared/model/types';
 
 type AvatarPhotoProps = {
   alt: string;
-  src: string;
-};
+  src: string | StaticImageData;
+} & PropsWithClassNames;
 
-export const AvatarPhoto: FC<AvatarPhotoProps> = ({ alt, src }) => (
+export const AvatarPhoto: FC<AvatarPhotoProps> = ({ alt, src, className }) => (
   <Image
-    className={cn('rounded-full', styles.avatar)}
+    className={cn('rounded-full', styles.avatar, className)}
     src={src}
     alt={alt}
     width={33}

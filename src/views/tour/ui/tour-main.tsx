@@ -8,6 +8,7 @@ import { AppMain } from '@/widgets/app-main/ui/app-main';
 import { TourKernel } from '@/kernel/tour/domain';
 import { cn } from '@/shared/lib/css';
 import styles from '@/shared/assets/styles.module.scss';
+import { MockReviewsAvatars } from '@/entities/mock-reviews-avatars';
 
 const cnPageTour = cnBem('PageTour');
 
@@ -29,10 +30,18 @@ export const TourMain: FC<TourKernel> = async props => {
           ])}
         >
           <div className={cnPageTour('DescriptionBlock', ['pb-20'])}>
-            <div className='flex justify-between items-end p-2'>
-              <span className={cn(styles.poiret_text_black, 'text-2xl')}>
+            <div className='flex justify-between pr-5'>
+              <span
+                className={cn(
+                  styles.poiret_text_black,
+                  'text-2xl',
+                  'block',
+                  'p-2'
+                )}
+              >
                 Описание тура
               </span>
+              <MockReviewsAvatars />
             </div>
           </div>
         </div>
