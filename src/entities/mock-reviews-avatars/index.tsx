@@ -8,25 +8,49 @@ import { AvatarPhoto } from '@/shared/ui/avatar-photo';
 import { cn } from '@/shared/lib/css';
 
 import styles from '@/entities/mock-reviews-avatars/assets/styles.module.scss';
+import { BlackStar } from '@/shared/ui/black-star';
 
 const cnMockReviewsAvatars = cnBem('MockReviewsAvatars');
 
-export const MockReviewsAvatars: FC = () => (
-  <div className={cnMockReviewsAvatars(null, ['flex', 'items-center'])}>
-    <AvatarPhoto
-      className='relative z-1'
-      alt='first author'
-      src={firstAvaUrl}
-    />
-    <AvatarPhoto
-      className={cn(styles.MockAvatar, 'relative z-2')}
-      alt='second author'
-      src={secondAvaUrl}
-    />
-    <AvatarPhoto
-      className={cn(styles.MockAvatar, 'relative z-3')}
-      alt='third author'
-      src={thirdAvaUrl}
-    />
+export const MockReviewsAvatars: FC<{ rating: number }> = ({ rating }) => (
+  <div
+    className={cnMockReviewsAvatars(null, [
+      'relative',
+      'mt-[-30px]',
+      styles.text__oswald
+    ])}
+  >
+    <div
+      className={cnMockReviewsAvatars('Rating', [
+        'bg-white',
+        'rounded-full',
+        'flex',
+        'justify-center',
+        'items-center',
+        'gap-0.5',
+        'py-1',
+        'mx-auto',
+        'w-16'
+      ])}
+    >
+      <BlackStar /> <span className='text-black text-sm'>{rating}/5</span>
+    </div>
+    <div className={cnMockReviewsAvatars('List', ['flex', 'items-center'])}>
+      <AvatarPhoto
+        className='relative z-1'
+        alt='first author'
+        src={firstAvaUrl}
+      />
+      <AvatarPhoto
+        className={cn(styles.MockAvatar, 'relative z-2')}
+        alt='second author'
+        src={secondAvaUrl}
+      />
+      <AvatarPhoto
+        className={cn(styles.MockAvatar, 'relative z-3')}
+        alt='third author'
+        src={thirdAvaUrl}
+      />
+    </div>
   </div>
 );

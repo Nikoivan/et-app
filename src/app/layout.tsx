@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Oswald, Poiret_One } from 'next/font/google';
+import { Caladea, Oswald, Poiret_One } from 'next/font/google';
 
 import { AppProvider } from '@/app/_providers/app-provider';
 import { cn } from '@/shared/lib/css';
@@ -15,6 +15,12 @@ const oswald = Oswald({
 const poireOne = Poiret_One({
   weight: ['400'],
   variable: '--font-poire-one',
+  subsets: ['latin']
+});
+
+const caladea = Caladea({
+  weight: ['400', '700'],
+  variable: '--caladea',
   subsets: ['latin']
 });
 
@@ -36,6 +42,7 @@ export default function RootLayout({
         className={cn(
           oswald.variable,
           poireOne.variable,
+          caladea.variable,
           'antialiased',
           'relative',
           'et-app'

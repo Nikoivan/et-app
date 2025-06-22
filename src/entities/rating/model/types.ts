@@ -2,4 +2,9 @@ import { PropsWithClassNames } from '@/shared/model/types';
 
 export type Rating = number | null;
 
-export type RatingLayoutProps = PropsWithClassNames & { rating: Rating };
+type Variants = 'clear-blur' | 'black-white';
+
+export type RatingLayoutProps = PropsWithClassNames & {
+  rating: Rating;
+  variant?: Variants;
+};

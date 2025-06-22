@@ -3,11 +3,15 @@ import { FC } from 'react';
 import { ClockIcon } from '@/shared/ui/clock-icon';
 import { DurationLabelProps } from '@/entities/duration/model/types';
 
-import styles from '../assets/styles.module.scss';
+import styles from '@/entities/duration/assets/styles.module.scss';
+import { BlackClockIcon } from '@/shared/ui/black-clock-icon';
 
 const cnDurationLabel = cnBem('DurationLabel');
 
-export const DurationLabelLayout: FC<DurationLabelProps> = ({ duration }) => (
+export const DurationLabelLayout: FC<DurationLabelProps> = ({
+  duration,
+  variant
+}) => (
   <>
     {!!duration && (
       <div
@@ -19,11 +23,14 @@ export const DurationLabelLayout: FC<DurationLabelProps> = ({ duration }) => (
           'py-1',
           'px-4',
           'rounded-full',
-          styles.DurationLabel
+          styles.DurationLabel,
+          variant === 'black-white'
+            ? styles.DurationLabel_type_blackWhite
+            : styles.DurationLabel_type_clearBlur
         ])}
       >
         <div>
-          <ClockIcon />
+          {variant === 'black-white' ? <BlackClockIcon /> : <ClockIcon />}
         </div>
         <div>От {duration}</div>
       </div>

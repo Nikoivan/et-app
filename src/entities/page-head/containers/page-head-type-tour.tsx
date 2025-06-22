@@ -48,6 +48,17 @@ export const PageHeadTour: FC<Props> = async ({ title, mainPhoto }) => (
           width={500}
           height={500}
         />
+        <div
+          className={cnPageTour('Filter', [
+            'absolute',
+            'z-2',
+            'top-0',
+            'right-0',
+            'bottom-0',
+            'left-0',
+            'bg-[#0000003a]'
+          ])}
+        ></div>
 
         <Title
           className={cnPageTour('Title', [

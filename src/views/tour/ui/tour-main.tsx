@@ -9,11 +9,16 @@ import { TourKernel } from '@/kernel/tour/domain';
 import { cn } from '@/shared/lib/css';
 import styles from '@/shared/assets/styles.module.scss';
 import { MockReviewsAvatars } from '@/entities/mock-reviews-avatars';
+import { BadgePrice } from '@/shared/ui/badge-price';
+import { ServerDurationLabel } from '@/entities/duration/server';
+import { TourPhotoSwiper } from '@/widgets/photo-swiper/server';
+import { TextContent } from '@/shared/ui/text-content';
 
 const cnPageTour = cnBem('PageTour');
 
 export const TourMain: FC<TourKernel> = async props => {
-  const { id, title, mainPhoto, ...other } = props;
+  const { id, title, mainPhoto, rating, price, duration, photos, content } =
+    props;
 
   return (
     <AppMain
@@ -29,7 +34,7 @@ export const TourMain: FC<TourKernel> = async props => {
             'z-3'
           ])}
         >
-          <div className={cnPageTour('DescriptionBlock', ['pb-20'])}>
+          <section className={cnPageTour('DescriptionBlock')}>
             <div className='flex justify-between pr-5'>
               <span
                 className={cn(
@@ -41,9 +46,33 @@ export const TourMain: FC<TourKernel> = async props => {
               >
                 Описание тура
               </span>
-              <MockReviewsAvatars />
+              <MockReviewsAvatars rating={rating} />
             </div>
-          </div>
+            <div
+              className={cnPageTour('TourProperties', [
+                'flex',
+                'items-center',
+                'gap-6',
+                'p-1',
+                'mt-3'
+              ])}
+            >
+              <BadgePrice
+                className={cnPageTour('TourPrice')}
+                price={price}
+                variant='black-white'
+              />
+              <ServerDurationLabel duration={duration} variant='black-white' />
+            </div>
+          </section>
+          <section className={cnPageTour('PhotoBlock', ['mt-1'])}>
+            <TourPhotoSwiper photos={photos} />
+          </section>
+          <section className={cnPageTour('Content', ['pb-30'])}>
+            <div>
+              <TextContent content={content} />
+            </div>
+          </section>
         </div>
       }
       mainBottom={null}

@@ -4,7 +4,7 @@ import { cn as cnBem } from '@bem-react/classname';
 import { RatingLayoutProps } from '@/entities/rating/model/types';
 import { Star } from '@/shared/ui/star';
 
-import styles from '../assets/styles.module.scss';
+import styles from '@/entities/rating/assets/styles.module.scss';
 
 const cnRatingLabel = cnBem('RatingLabel');
 

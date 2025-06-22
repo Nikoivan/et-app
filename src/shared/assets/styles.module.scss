@@ -2,6 +2,22 @@
   background-color: var(--light-green);
 }
 
+.BadgePrice {
+  font-size: 17px;
+  box-shadow: 0 4px 4px 0 #00000040;
+  font-family: var(--oswald), serif,;
+  letter-spacing: 1px;
+
+  &_type_clearBlur {
+    background-color: #ffffff1a;
+  }
+
+  &_type_blackWhite {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
 .Title {
   color: var(--orange);
   font-family: var(--font-poire-one), serif;
@@ -23,6 +39,19 @@
   font-family: var(--font-poire-one), serif;
   -webkit-text-stroke: 1px #000000;
   letter-spacing: 3px;
+}
+
+.oswald_text {
+  font-family: var(--oswald), serif;
+}
+
+.caladea_text {
+  font-family: var(--caladea), serif;
+}
+
+.calades_text_bold {
+  font-family: var(--caladea), serif;
+  font-weight: 700;
 }
 
 .avatar {

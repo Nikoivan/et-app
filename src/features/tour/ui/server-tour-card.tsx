@@ -5,13 +5,14 @@ import { FC } from 'react';
 import { TourCardEntity } from '@/features/tour';
 import { TourCardLayout } from '@/features/tour/ui/tour-card-layout';
 import { CardHeader } from '@/features/tour/ui/card-header';
-import { CardPrice } from '@/features/tour/ui/card-price';
+
 import { FavouriteLabel } from '@/entities/favourite';
 import { ServerRatingLabel } from '@/entities/rating/server';
 import { CardFooter } from '@/features/tour/ui/card-footer';
 import { ServerDurationLabel } from '@/entities/duration/server';
 import { LinkButton } from './link-button';
 import { ArrowLinkIcon } from '@/shared/ui/arrow-link-icon';
+import { BadgePrice } from '@/shared/ui/badge-price';
 
 const cnTourCard = cn('TourCard');
 
@@ -31,7 +32,7 @@ export const ServerTourCard: FC<TourCardEntity> = async ({
       <CardHeader
         leftNode={
           <div>
-            <CardPrice className={cnTourCard('Price')} price={price} />
+            <BadgePrice className={cnTourCard('Price')} price={price} />
           </div>
         }
         rightNode={
