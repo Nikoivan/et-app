@@ -22,8 +22,10 @@ export const PageHeadLayout: FC<PageHeadProps> = async ({
       className
     ])}
   >
-    {title}
-    {content}
+    <div className={cnPageHead('ContentWrap', ['relative', 'z-3'])}>
+      {title}
+      {content}
+    </div>
     <div
       className={cnPageHead('Filter', [
         'absolute',

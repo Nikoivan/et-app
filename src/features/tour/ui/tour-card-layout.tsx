@@ -35,6 +35,7 @@ export const TourCardLayout: FC<TourCardLayoutProps> = ({
           'text-left',
           'mt-[8%]',
           'min-h-24',
+          'font-normal',
           styles.CardTitle
         )}
       >
