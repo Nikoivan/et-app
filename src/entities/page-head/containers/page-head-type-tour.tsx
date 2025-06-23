@@ -24,10 +24,10 @@ export const PageHeadTour: FC<Props> = async ({ title, mainPhoto }) => (
     content={
       <div
         className={cnPageTour(null, [
-          'h-[50vh]',
+          'h-[75vh]',
           'bg-white',
           'relative',
-          'pt-38',
+          'pt-[40vh]',
           'pb-28'
         ])}
       >

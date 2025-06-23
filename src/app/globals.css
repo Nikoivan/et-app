@@ -119,6 +119,15 @@
   background-color: #E6E6E6;
 }
 
+h3 {
+  font-weight: 700;
+}
+
+li {
+  margin-top: 10px;
+  display: block;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

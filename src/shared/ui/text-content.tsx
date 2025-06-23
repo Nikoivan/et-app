@@ -1,6 +1,6 @@
 'use server';
 
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
 import styles from '@/shared/assets/styles.module.scss';
@@ -8,7 +8,7 @@ import styles from '@/shared/assets/styles.module.scss';
 const cnTextContent = cn('TextContent');
 
 type TextContentProps = {
-  content: ReactNode;
+  content: TrustedHTML;
   bold?: boolean;
 };
 
@@ -22,7 +22,6 @@ export const TextContent: FC<TextContentProps> = async ({ content, bold }) => (
       'rounded-xl',
       bold ? styles.caladea_text_bold : styles.text_caladea
     ])}
-  >
-    {content}
-  </div>
+    dangerouslySetInnerHTML={{ __html: content }}
+  ></div>
 );

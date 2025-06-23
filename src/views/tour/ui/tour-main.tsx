@@ -3,16 +3,17 @@
 import { FC } from 'react';
 import { cn as cnBem } from '@bem-react/classname';
 
-import { PageHeadTour } from '@/entities/page-head/containers/page-head-type-tour';
 import { AppMain } from '@/widgets/app-main/ui/app-main';
-import { TourKernel } from '@/kernel/tour/domain';
-import { cn } from '@/shared/lib/css';
-import styles from '@/shared/assets/styles.module.scss';
-import { MockReviewsAvatars } from '@/entities/mock-reviews-avatars';
-import { BadgePrice } from '@/shared/ui/badge-price';
-import { ServerDurationLabel } from '@/entities/duration/server';
 import { TourPhotoSwiper } from '@/widgets/photo-swiper/server';
+import { TourKernel } from '@/kernel/tour/domain';
+import { MockReviewsAvatars } from '@/entities/mock-reviews-avatars';
+import { ServerDurationLabel } from '@/entities/duration/server';
+import { PageHeadTour } from '@/entities/page-head/server';
+import { BadgePrice } from '@/shared/ui/badge-price';
 import { TextContent } from '@/shared/ui/text-content';
+import { cn } from '@/shared/lib/css';
+
+import styles from '@/shared/assets/styles.module.scss';
 
 const cnPageTour = cnBem('PageTour');
 
@@ -68,9 +69,9 @@ export const TourMain: FC<TourKernel> = async props => {
           <section className={cnPageTour('PhotoBlock', ['mt-1'])}>
             <TourPhotoSwiper photos={photos} />
           </section>
-          <section className={cnPageTour('Content', ['pb-30'])}>
+          <section className={cnPageTour('Content', ['mt-8', 'pb-14'])}>
             <div>
-              <TextContent content={content} />
+              <TextContent content={content as TrustedHTML} />
             </div>
           </section>
         </div>
