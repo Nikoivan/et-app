@@ -3,6 +3,6 @@ export type TourCardEntity = {
   title: string;
   price: number;
   rating: number | null;
-  duration: string | null;
+  duration: number | null;
   mainPhoto: string;
 };

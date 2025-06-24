@@ -25,6 +25,7 @@ model User {
   Activity     Activity[]
   Transaction  Transaction[]
   Order        Order[]
+  Photo        Photo[]
 
   @@map("user")
 }
@@ -65,24 +66,38 @@ model Review {
   tourId        Int
 }
 
+model Photo {
+  id         Int       @id @default(autoincrement())
+  title      String
+  keywords   String[]
+  source     String
+  authorId   Int       @map("author_id")
+  user       User      @relation(fields: [authorId], references: [id])
+  tourId     Int?      @map("tour_id")
+  tour       Tour?     @relation(fields: [tourId], references: [id])
+  activityId Int?      @map("activity_id")
+  activity   Activity? @relation(fields: [activityId], references: [id])
+}
+
 model Tour {
   id              Int        @id @default(autoincrement())
   title           String     @db.VarChar(180)
   description     String
-  mainPhoto       String     @map("main_photo")
+  mainPhotoId     Int        @map("main_photo_id")
   price           Int
-  duration        String     @db.VarChar(180)
+  duration        Int
   content         String     @map("content")
   categories      String[]
   authorId        Int        @map("author_id")
   author          User       @relation(fields: [authorId], references: [id])
-  photos          String[]
+  photosIds       Int[]
   reviews         Review[]
   activities      Activity[]
   Order           Order[]
   rating          Float?
   descriptionText String?    @map("description_text")
   startPlace      Json?      @map("start_place")
+  photos          Photo[]
 }
 
 model Order {
@@ -130,4 +145,5 @@ model Activity {
   tags         String[]
   categories   String[]
   discount     Int?
+  photos       Photo[]
 }

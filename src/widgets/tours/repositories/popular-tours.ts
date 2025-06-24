@@ -14,8 +14,8 @@ const getPopularTours = async (): Promise<TourCardEntity[]> => {
       title: true,
       price: true,
       rating: true,
-      mainPhoto: true,
-      duration: true
+      duration: true,
+      mainPhotoId: true
     }
   });
 };
