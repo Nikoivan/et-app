@@ -1,8 +1,8 @@
 export type PhotoEntity = {
-  src: string;
-  alt: string;
+  source: string;
+  title: string;
 };
 
 export type LayoutProps = {
-  photos: string[];
+  photos: PhotoEntity[];
 };

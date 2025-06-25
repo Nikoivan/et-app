@@ -11,29 +11,33 @@ const cnDurationLabel = cnBem('DurationLabel');
 export const DurationLabelLayout: FC<DurationLabelProps> = ({
   duration,
   variant
-}) => (
-  <>
-    {!!duration && (
-      <div
-        className={cnDurationLabel(null, [
-          'flex',
-          'justify-between',
-          'gap-2',
-          'backdrop-blur-xs',
-          'py-1',
-          'px-4',
-          'rounded-full',
-          styles.DurationLabel,
-          variant === 'black-white'
-            ? styles.DurationLabel_type_blackWhite
-            : styles.DurationLabel_type_clearBlur
-        ])}
-      >
-        <div>
-          {variant === 'black-white' ? <BlackClockIcon /> : <ClockIcon />}
+}) => {
+  const durationSting = `${(duration / 3600).toFixed(0)} ч`;
+
+  return (
+    <>
+      {!!duration && (
+        <div
+          className={cnDurationLabel(null, [
+            'flex',
+            'justify-between',
+            'gap-2',
+            'backdrop-blur-xs',
+            'py-1',
+            'px-4',
+            'rounded-full',
+            styles.DurationLabel,
+            variant === 'black-white'
+              ? styles.DurationLabel_type_blackWhite
+              : styles.DurationLabel_type_clearBlur
+          ])}
+        >
+          <div>
+            {variant === 'black-white' ? <BlackClockIcon /> : <ClockIcon />}
+          </div>
+          <div>От {durationSting}</div>
         </div>
-        <div>От {duration}</div>
-      </div>
-    )}
-  </>
-);
+      )}
+    </>
+  );
+};

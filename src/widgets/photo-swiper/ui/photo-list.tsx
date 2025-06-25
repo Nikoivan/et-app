@@ -14,7 +14,7 @@ const cnPhotoList = cn('PhotoList');
 
 export const PhotoList: FC<PhotoListProps> = async ({ photos }) => (
   <ul className={cnPhotoList(null, ['flex', 'items-center', 'w-full'])}>
-    {photos.slice(0, 3).map(({ alt, src }, idx) => (
+    {photos.slice(0, 3).map(({ title, source }, idx) => (
       <li
         className={cnPhotoList('Item', [
           'relative',
@@ -23,7 +23,7 @@ export const PhotoList: FC<PhotoListProps> = async ({ photos }) => (
         ])}
         key={idx}
       >
-        <Photo alt={alt} src={src} />
+        <Photo title={title} source={source} />
       </li>
     ))}
   </ul>

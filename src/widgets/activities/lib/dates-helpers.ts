@@ -11,5 +11,7 @@ export function getActivitiesDates(
 }
 
 export function getMonthesTitle(dates: ActivityDate[]): string {
+  console.log(dates);
+
   return 'Март';
 }

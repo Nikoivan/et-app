@@ -5,8 +5,8 @@ import { PhotoEntity } from '@/widgets/photo-swiper/domain';
 import { PropsWithClassNames } from '@/shared/model/types';
 
 export const Photo: FC<PhotoEntity & PropsWithClassNames> = ({
-  src,
-  alt,
+  title,
+  source,
   className
 }) => (
   <div className={cn('relative')}>
@@ -21,8 +21,8 @@ export const Photo: FC<PhotoEntity & PropsWithClassNames> = ({
         'z-1',
         className
       )}
-      alt={alt}
-      src={src}
+      alt={title}
+      src={source}
       width={117}
       height={134}
     />

@@ -7,7 +7,8 @@ function getTour(where: Prisma.TourWhereInput): Promise<TourWR | null> {
     where,
     include: {
       reviews: true,
-      activities: true
+      activities: true,
+      photos: true
     }
   });
 }

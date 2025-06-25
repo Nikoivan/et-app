@@ -7,7 +7,7 @@ import styles from '@/shared/assets/styles.module.scss';
 
 export const PhotoSwiperLayout: FC<LayoutProps> = ({ photos }) => (
   <div className={cn('p-3', 'w-full')}>
-    <PhotoList photos={photos.map(src => ({ alt: 'some', src }))} />
+    <PhotoList photos={photos} />
     <div className='text-right mt-1.5 px-4'>
       <span
         className={cn(styles.oswald_text, 'text-[#41503F]', 'tracking-wider')}

@@ -1,22 +1,28 @@
 'use server';
 
+import { FC, PropsWithChildren } from 'react';
+
 import { Separator } from '@/shared/ui/separator';
-import { FC } from 'react';
+import { ServerFCProps } from '@/shared/model/types';
 
-type ProfilePageProps = { params: { id: string } };
+const ProfilePage: FC<PropsWithChildren<ServerFCProps>> = async ({
+  params
+}) => {
+  const { id } = await params;
 
-const ProfilePage: FC<ProfilePageProps> = async ({ params: { id } }) => (
-  <main className='space-y-6 py-14 container  max-w-[600px]'>
-    <div>
-      <h3 className='text-lg font-medium'>Профиль</h3>
-      <p className='text-sm text-muted-foreground'>
-        Это как другие пользователи видят вас на сайте
-      </p>
-    </div>
-    <Separator />
-    <div> Форма профайла {id}</div>
-    {/*<UpdateProfileForm userId={params.id} />*/}
-  </main>
-);
+  return (
+    <main className='space-y-6 py-14 container  max-w-[600px]'>
+      <div>
+        <h3 className='text-lg font-medium'>Профиль</h3>
+        <p className='text-sm text-muted-foreground'>
+          Это как другие пользователи видят вас на сайте
+        </p>
+      </div>
+      <Separator />
+      <div> Форма профайла {id}</div>
+      {/*<UpdateProfileForm userId={params.id} />*/}
+    </main>
+  );
+};
 
 export default ProfilePage;

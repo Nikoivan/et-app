@@ -1,8 +1,7 @@
 import { dbClient } from '@/shared/lib/db';
+import { DraftTourCardEntity } from '@/widgets/tours/domain';
 
-import { TourCardEntity } from '@/features/tour';
-
-const getPopularTours = async (): Promise<TourCardEntity[]> => {
+const getDraftPopularTours = async (): Promise<DraftTourCardEntity[]> => {
   return dbClient.tour.findMany({
     where: {
       categories: {
@@ -15,9 +14,10 @@ const getPopularTours = async (): Promise<TourCardEntity[]> => {
       price: true,
       rating: true,
       duration: true,
-      mainPhotoId: true
+      mainPhotoId: true,
+      photos: true
     }
   });
 };
 
-export const popularToursRepositories = { getPopularTours };
+export const popularToursRepositories = { getDraftPopularTours };
