@@ -18,6 +18,7 @@ export const PhotoList: FC<PhotoListProps> = async ({ photos }) => (
       <li
         className={cnPhotoList('Item', [
           'relative',
+          'w-full',
           `z-${idx + 1}`,
           idx > 0 ? 'ml-[-8px]' : ''
         ])}

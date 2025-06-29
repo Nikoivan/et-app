@@ -17,6 +17,7 @@ export const Photo: FC<PhotoEntity & PropsWithClassNames> = ({
         'rounded-xl',
         'object-cover',
         'h-34',
+        'w-full',
         'relative',
         'z-1',
         className

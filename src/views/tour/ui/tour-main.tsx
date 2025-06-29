@@ -30,7 +30,7 @@ export const TourMain: FC<TourKernel> = async props => {
             'bg-white',
             'rounded-4xl',
             'p-2',
-            'mt-[-72px]',
+            'mt-[-3vh]',
             'relative',
             'z-3'
           ])}
