@@ -12,7 +12,7 @@ export const HomeView: FC = async () => (
   <AppMain
     mainHead={
       <PageHeadLayout
-        className='pt-38 px-4'
+        className='pt-[15vh] px-4'
         title={
           <PageTitle
             topTitle={{ text: 'Джип туры' }}
@@ -20,7 +20,7 @@ export const HomeView: FC = async () => (
           />
         }
         content={
-          <div className='mt-70 text-center'>
+          <div className='mt-[25vh] text-center'>
             <LinkButton href='tours'>Все туры</LinkButton>
           </div>
         }
@@ -28,7 +28,9 @@ export const HomeView: FC = async () => (
     }
     mainContent={
       <>
-        <PopularTours />
+        <div className='mt-[-15vh]'>
+          <PopularTours />
+        </div>
         <UpcomingActivities />
       </>
     }
