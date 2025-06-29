@@ -8,7 +8,9 @@ import { TourViewLayout } from '@/views/tour/server';
 
 export async function generateMetadata({
   params
-}: ServerFCProps): Promise<Metadata> {
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
   const { id } = await params;
 
   const either = await tourServices.getTourById(Number(id));

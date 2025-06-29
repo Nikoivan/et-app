@@ -13,7 +13,7 @@ export type UserEntity = {
   login: string;
   passwordHash: string;
   salt: string;
-  role: Role;
+  role: string;
 };
 
 export type SessionEntity = {

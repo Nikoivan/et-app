@@ -1,9 +1,7 @@
-type NotNull<T> = T extends undefined | null ? never : T;
+type TObject = Record<string | number | symbol, unknown>;
 
-type TObject<V> = Record<string | number | symbol, V>;
-
-export function removeEmptyProperties<T extends TObject<unknown>>(
-  obj: T
-): TObject<NotNull<unknown>> {
-  return Object.fromEntries(Object.entries(obj).filter(([, v]) => Boolean(v)));
+export function removeEmptyProperties<T extends TObject>(obj: T): T {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, v]) => Boolean(v))
+  ) as T;
 }

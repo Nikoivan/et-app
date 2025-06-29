@@ -45,7 +45,9 @@ export const ServerTourCard: FC<TourCardEntity> = async ({
     }
     cardFooter={
       <CardFooter
-        leftNode={<ServerDurationLabel duration={duration} />}
+        leftNode={
+          <>{!!duration && <ServerDurationLabel duration={duration} />}</>
+        }
         rightNode={
           <LinkButton href={`/tour/${id}`}>
             <ArrowLinkIcon />

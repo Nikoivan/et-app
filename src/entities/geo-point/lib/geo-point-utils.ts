@@ -1,4 +1,4 @@
-import { GeoPointEntity } from '@/shared/model/types';
+import { GeoPointEntity } from '@/entities/geo-point/domain';
 
 export const getYandexGeoLink = ({
   latitude,

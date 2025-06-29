@@ -6,7 +6,6 @@ import { ContactsWidget } from '@/widgets/contacts/containers/contacts-widget';
 
 type Props = {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export const TourViewLayout: FC<PropsWithChildren<Props>> = async ({
