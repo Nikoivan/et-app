@@ -8,6 +8,7 @@ const getDraftPopularTours = async (): Promise<DraftTourCardEntity[]> => {
         has: 'popular'
       }
     },
+    take: 3,
     select: {
       id: true,
       title: true,
