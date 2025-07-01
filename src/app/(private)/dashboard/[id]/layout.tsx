@@ -1,11 +1,11 @@
-import React from 'react';
+import { sessionService } from '@/entities/user/server';
+import { routes } from '@/kernel/routes';
+import { Button } from '@/shared/ui/button';
 import { redirect } from 'next/navigation';
 
-import { routes } from '@/kernel/routes';
-import { sessionService } from '@/entities/user/server';
-import { Button } from '@/shared/ui/button';
+import React from 'react';
 
-export default async function PrivateLayout({
+export default async function DashboardLayout({
   children
 }: {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ export default async function PrivateLayout({
           <form
             action={async () => {
               'use server';
-              await sessionService.deleteSession();
+              sessionService.deleteSession();
               redirect(routes.signIn());
             }}
           >

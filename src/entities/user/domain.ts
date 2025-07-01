@@ -19,6 +19,7 @@ export type UserEntity = {
 export type SessionEntity = {
   id: UserId;
   login: string;
+  role: string;
   expiredAt: string;
 };
 
@@ -29,6 +30,7 @@ export const userToSession = (
   return {
     id: user.id,
     login: user.login,
+    role: user.role,
     expiredAt
   };
 };

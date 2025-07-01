@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Caladea, Oswald, Poiret_One } from 'next/font/google';
 
-import { AppProvider } from '@/app/_providers/app-provider';
+import { AppProvider } from '@/shared/lib/providers/app-provider';
 import { cn } from '@/shared/lib/css';
 
 import './globals.css';
