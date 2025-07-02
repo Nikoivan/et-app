@@ -1,8 +1,15 @@
 'use client';
 
-import { ThemeProvider } from '@/features/theme/theme-provider';
 import { FC, PropsWithChildren } from 'react';
+import { ThemeProvider } from 'next-themes';
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => (
-  <ThemeProvider>{children}</ThemeProvider>
+  <ThemeProvider
+    attribute='class'
+    defaultTheme='dark'
+    enableSystem
+    disableTransitionOnChange
+  >
+    {children}
+  </ThemeProvider>
 );

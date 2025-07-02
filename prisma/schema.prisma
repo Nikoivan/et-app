@@ -14,18 +14,21 @@ datasource db {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  login        String        @unique
-  passwordHash String        @map("password_hash")
-  salt         String
-  role         String        @db.VarChar(80)
-  posts        Post[]
-  tours        Tour[]
-  Review       Review[]
-  Activity     Activity[]
-  Transaction  Transaction[]
-  Order        Order[]
-  Photo        Photo[]
+  id            Int           @id @default(autoincrement())
+  login         String        @unique
+  passwordHash  String        @map("password_hash")
+  salt          String
+  role          String        @db.VarChar(80)
+  firstName     String?       @map("first_name")
+  lastName      String?       @map("last_name")
+  avatarPhotoId Int?          @map("avatar_photo_id")
+  posts         Post[]
+  tours         Tour[]
+  Review        Review[]
+  Activity      Activity[]
+  Transaction   Transaction[]
+  Order         Order[]
+  Photo         Photo[]
 
   @@map("user")
 }

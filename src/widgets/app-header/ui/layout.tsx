@@ -19,12 +19,22 @@ type LayoutProps = {
   actions?: ReactNode;
   profile?: ReactNode;
   contacts?: ReactNode;
+  isStatic?: boolean;
 };
 
 // TODO: MenuIcon взять из макета Яны
 
-export const Layout: FC<LayoutProps> = async ({ logo, nav, contacts }) => (
-  <header className={cnAppHeader(null, ['absolute top-0 w-full', 'z-10'])}>
+export const Layout: FC<LayoutProps> = async ({
+  logo,
+  nav,
+  contacts,
+  isStatic
+}) => (
+  <header
+    className={cnAppHeader(null, [
+      !isStatic ? 'absolute top-0 w-full z-10' : ''
+    ])}
+  >
     <div className='container flex justify-between items-center px-5 pt-4 pb-12'>
       <div>
         <Sheet>
@@ -41,13 +51,6 @@ export const Layout: FC<LayoutProps> = async ({ logo, nav, contacts }) => (
       </div>
       <div className='mr-4'>{logo}</div>
       <div>{contacts}</div>
-      {/*<div className='flex flex-1 items-center'>*/}
-      {/*  <div className='hidden md:flex'>{nav}</div>*/}
-      {/*  <div className='flex flex-1 items-center justify-end space-x-3'>*/}
-      {/*    {actions}*/}
-      {/*    {profile}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   </header>
 );

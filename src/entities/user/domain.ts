@@ -16,10 +16,7 @@ export type UserEntity = {
   role: string;
 };
 
-export type SessionEntity = {
-  id: UserId;
-  login: string;
-  role: string;
+export type SessionEntity = Omit<UserEntity, 'passwordHash'> & {
   expiredAt: string;
 };
 
@@ -27,10 +24,12 @@ export const userToSession = (
   user: UserEntity,
   expiredAt: string
 ): SessionEntity => {
+  // Security
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { passwordHash, ...userSession } = user;
+
   return {
-    id: user.id,
-    login: user.login,
-    role: user.role,
+    ...userSession,
     expiredAt
   };
 };
