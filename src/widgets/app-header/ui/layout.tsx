@@ -1,11 +1,12 @@
 'use server';
 
-import { cn } from '@bem-react/classname';
 import { FC, ReactNode } from 'react';
+import { cn } from '@bem-react/classname';
 import {
   Sheet,
   SheetContent,
   SheetHeader,
+  SheetTitle,
   SheetTrigger
 } from '@/shared/ui/sheet';
 import { Button } from '@/shared/ui/button';
@@ -18,7 +19,7 @@ type LayoutProps = {
   nav?: ReactNode;
   actions?: ReactNode;
   profile?: ReactNode;
-  contacts?: ReactNode;
+  rightNode?: ReactNode;
   isStatic?: boolean;
 };
 
@@ -27,7 +28,7 @@ type LayoutProps = {
 export const Layout: FC<LayoutProps> = async ({
   logo,
   nav,
-  contacts,
+  rightNode,
   isStatic
 }) => (
   <header
@@ -44,13 +45,15 @@ export const Layout: FC<LayoutProps> = async ({
             </Button>
           </SheetTrigger>
           <SheetContent side='left'>
-            <SheetHeader className='border-b pb-5 mb-5'>{logo}</SheetHeader>
+            <SheetHeader className='border-b pb-5 mb-5'>
+              <SheetTitle>{logo}</SheetTitle>
+            </SheetHeader>
             {nav}
           </SheetContent>
         </Sheet>
       </div>
       <div className='mr-4'>{logo}</div>
-      <div>{contacts}</div>
+      <div>{rightNode}</div>
     </div>
   </header>
 );

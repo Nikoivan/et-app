@@ -49,8 +49,8 @@ async function deleteSession() {
 
 const getSessionCookies = () => cookies().then(c => c.get('session')?.value);
 
-const verifySession = async (cookies: string) => {
-  const session = await decrypt(cookies);
+const verifySession = async (cookies?: string) => {
+  const session = await decrypt(cookies || (await getSessionCookies()));
 
   const isAuth = session.type === 'right';
 

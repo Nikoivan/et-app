@@ -1,11 +1,30 @@
-import { DashboardView } from '@/views/dashboard/containers/dashboard-view';
+'use client';
 
-export default async function Page({
-  params
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+import { FC, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-  return <DashboardView>USER {id}</DashboardView>;
-}
+import { roleUtils, useUserSession } from '@/entities/user';
+import { Spinner } from '@/shared/ui/spinner';
+
+const Page: FC = () => {
+  const { session, isLoading } = useUserSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (
+      !session ||
+      !roleUtils.userHasPermissionOn(session?.role, 'dashboard')
+    ) {
+      router.back();
+    }
+  }, []);
+
+  return (
+    <>
+      <div>Page Dashboard</div>
+      {isLoading && <Spinner />}
+    </>
+  );
+};
+
+export default Page;

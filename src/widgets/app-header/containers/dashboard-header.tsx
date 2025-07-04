@@ -1,16 +1,26 @@
-import React, { FC } from 'react';
-import { cn } from '@bem-react/classname';
+'use server';
 
-const cnDashboardHeader = cn('DashboardHeader');
+import { FC } from 'react';
 
-export const DashboardHeader: FC = () => (
-  <header
-    className={cnDashboardHeader(null, [
-      'flex',
-      'justify-between',
-      'items-center'
-    ])}
-  >
-    <div>Dashboard Header</div>
-  </header>
-);
+import { Layout } from '@/widgets/app-header/ui/layout';
+import { Logo } from '@/widgets/app-header/ui/logo';
+import { ToggleTheme } from '@/features/theme/toogle-theme';
+import { MainNav } from '@/widgets/app-header/ui/main-nav';
+import { Profile } from '@/widgets/app-header/ui/profile';
+
+type AppHeaderProps = {
+  variant?: 'auth' | 'private' | 'public';
+};
+
+export const DashboardHeader: FC<AppHeaderProps> = async ({ variant }) => {
+  const isProfile = variant !== 'auth';
+
+  return (
+    <Layout
+      nav={<MainNav />}
+      logo={<Logo />}
+      profile={isProfile && <Profile />}
+      actions={<ToggleTheme />}
+    />
+  );
+};

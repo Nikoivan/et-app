@@ -6,16 +6,20 @@ import { getSessionRequest } from '@/entities/user/api/session-requests';
 
 export function useUserSession() {
   const [session, setSession] = useState<SessionEntity | null>(null);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const { session: newSession } = await getSessionRequest();
 
-      if (session === newSession) return;
+      if (session !== newSession) {
+        setSession(newSession);
+      }
 
-      setSession(newSession);
+      setLoading(false);
     })();
   }, []);
 
-  return { session };
+  return { session, isLoading };
 }

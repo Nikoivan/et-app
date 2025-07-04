@@ -18,11 +18,11 @@ export const AppHeader: FC<AppHeaderProps> = async ({ variant }) => {
 
   return (
     <Layout
-      logo={<Logo />}
       nav={<MainNav />}
+      logo={<Logo />}
       profile={isProfile && <Profile />}
       actions={<ToggleTheme />}
-      contacts={<Contacts />}
+      rightNode={<Contacts />}
     />
   );
 };
