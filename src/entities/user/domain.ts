@@ -14,6 +14,11 @@ export type UserEntity = {
   passwordHash: string;
   salt: string;
   role: string;
+  firstName?: string;
+  lastName?: string;
+  avatarPhotoId?: number;
+  email?: string;
+  rating?: number;
 };
 
 export type SessionEntity = Omit<UserEntity, 'passwordHash'> & {

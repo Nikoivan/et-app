@@ -22,13 +22,15 @@ model User {
   firstName     String?       @map("first_name")
   lastName      String?       @map("last_name")
   avatarPhotoId Int?          @map("avatar_photo_id")
+  email         String?
+  rating        Float?
   posts         Post[]
   tours         Tour[]
-  Review        Review[]
-  Activity      Activity[]
-  Transaction   Transaction[]
-  Order         Order[]
-  Photo         Photo[]
+  reviews       Review[]
+  activities    Activity[]
+  transactions  Transaction[]
+  orders        Order[]
+  photos        Photo[]
 
   @@map("user")
 }
@@ -65,7 +67,7 @@ model Review {
   estimateValue Int    @map("estimate_value")
   authorId      Int    @map("author_id")
   user          User   @relation(fields: [authorId], references: [id])
-  Tour          Tour   @relation(fields: [tourId], references: [id])
+  tour          Tour   @relation(fields: [tourId], references: [id])
   tourId        Int
 }
 
@@ -96,7 +98,7 @@ model Tour {
   photosIds       Int[]
   reviews         Review[]
   activities      Activity[]
-  Order           Order[]
+  orders          Order[]
   rating          Float?
   descriptionText String?    @map("description_text")
   startPlace      Json?      @map("start_place")
@@ -123,7 +125,7 @@ model Transaction {
   author   User  @relation(fields: [authorId], references: [id])
   amount   Int
   orderId  Int   @unique
-  Order    Order @relation(fields: [orderId], references: [id])
+  order    Order @relation(fields: [orderId], references: [id])
 }
 
 model Activity {
@@ -144,7 +146,7 @@ model Activity {
   type         String   @db.VarChar(80)
   tourId       Int      @map("tour_id")
   tour         Tour     @relation(fields: [tourId], references: [id])
-  Orders       Order[]
+  orders       Order[]
   tags         String[]
   categories   String[]
   discount     Int?

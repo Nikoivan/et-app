@@ -7,11 +7,11 @@ import { useUserSession } from '@/entities/user';
 import { Spinner } from '@/shared/ui/spinner';
 
 const Page: FC = () => {
-  const { isLoading } = useUserSession();
+  const { isLoading, session } = useUserSession();
 
   return (
     <>
-      {!isLoading && <ProfileView />}
+      {!isLoading && !!session && <ProfileView session={session} />}
       {isLoading && <Spinner />}
     </>
   );
