@@ -1,9 +1,25 @@
 import React, { FC, ReactNode } from 'react';
+import { redirect } from 'next/navigation';
 
-const DashboardLayout: FC<{ children: ReactNode }> = ({
+import { sessionService } from '@/entities/user/services/session';
+import { roleUtils } from '@/entities/user';
+
+const DashboardLayout: FC<{ children: ReactNode }> = async ({
   children
 }: {
   children: React.ReactNode;
-}) => <>{children}</>;
+}) => {
+  const { session } = await sessionService.verifySessionWithRedirect();
+  const hasPermissions = roleUtils.userHasPermissionOn(
+    session?.role,
+    'dashboard'
+  );
+
+  if (!hasPermissions) {
+    redirect('/');
+  }
+
+  return <>{children}</>;
+};
 
 export default DashboardLayout;

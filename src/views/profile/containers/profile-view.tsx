@@ -1,12 +1,11 @@
 import { FC } from 'react';
-
-import { SessionEntity } from '@/entities/user/domain';
 import { ProfileLayout } from '@/views/profile/ui/profile-view-layout';
+import { UserDomain } from '@/entities/user';
 
 type ProfileViewProps = {
-  session: SessionEntity;
+  user: UserDomain.UserEntity;
 };
 
-export const ProfileView: FC<ProfileViewProps> = ({ session }) => {
-  return <ProfileLayout id={session.id} role={session.role} />;
+export const ProfileView: FC<ProfileViewProps> = ({ user }) => {
+  return <ProfileLayout id={user.id} role={user.role} />;
 };

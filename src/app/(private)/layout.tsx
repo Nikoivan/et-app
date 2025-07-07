@@ -6,9 +6,12 @@ import { sessionService } from '@/entities/user/services/session';
 import { Button } from '@/shared/ui/button';
 import { cn } from '@/shared/lib/css';
 
-const PrivateLayout: FC<PropsWithChildren> = ({ children }) => {
+const PrivateLayout: FC<PropsWithChildren> = async ({ children }) => {
+  const { session } = await sessionService.verifySessionWithRedirect();
+
   return (
     <div className={cn('bg-gray-900 w-full h-screen')}>
+      <div className='text-lg'>{session?.login}</div>
       <form
         className='hidden'
         action={async () => {

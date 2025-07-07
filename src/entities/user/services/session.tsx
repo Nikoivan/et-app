@@ -27,7 +27,7 @@ async function decrypt(session: string | undefined = '') {
   }
 }
 
-async function addSession(user: UserEntity) {
+async function addSession(user: UserEntity): Promise<void> {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const sessionData = userToSession(user, expiresAt.toISOString());
   const session = await encrypt(sessionData);
@@ -36,6 +36,21 @@ async function addSession(user: UserEntity) {
   cookiesStore.set('session', session, {
     httpOnly: true,
     // secure: true,
+    expires: expiresAt,
+    sameSite: 'lax',
+    path: '/'
+  });
+}
+
+async function updateSession(user: UserEntity) {
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const sessionData = userToSession(user, expiresAt.toISOString());
+  const session = await encrypt(sessionData);
+  const cookiesStore = await cookies();
+
+  cookiesStore.set('session', session, {
+    httpOnly: true,
+    secure: true,
     expires: expiresAt,
     sameSite: 'lax',
     path: '/'
@@ -70,6 +85,7 @@ const verifySessionWithRedirect = async (getCookies = getSessionCookies) => {
 
 export const sessionService = {
   addSession,
+  updateSession,
   deleteSession,
   verifySession,
   verifySessionWithRedirect

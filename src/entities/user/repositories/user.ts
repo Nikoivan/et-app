@@ -1,4 +1,4 @@
-import { UserEntity } from '@/entities/user/domain';
+import { UserEntity, UserEntityUpdate } from '@/entities/user/domain';
 import { dbClient } from '@/shared/lib/db';
 import { Prisma } from '@prisma/client';
 import { objectUtils } from '@/shared/lib/object-utils';
@@ -14,7 +14,16 @@ export const saveUser = async (
   ) as WithoutNull<UserEntity>;
 };
 
-// export const updateUser = (use)
+const updateUser = async (
+  user: UserEntityUpdate
+): Promise<WithoutNull<UserEntity>> => {
+  return objectUtils.makeWithoutNull(
+    await dbClient.user.update({
+      where: { id: user.id },
+      data: user
+    })
+  ) as WithoutNull<UserEntity>;
+};
 
 export async function getUser(
   where: Prisma.UserWhereUniqueInput
@@ -24,4 +33,4 @@ export async function getUser(
   return user ? (objectUtils.makeWithoutNull(user) as UserEntity) : null;
 }
 
-export const userRepository = { getUser, saveUser };
+export const userRepository = { getUser, saveUser, updateUser };

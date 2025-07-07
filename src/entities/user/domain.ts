@@ -21,6 +21,8 @@ export type UserEntity = {
   rating?: number;
 };
 
+export type UserEntityUpdate = Partial<UserEntity> & { id: number };
+
 export type SessionEntity = Omit<UserEntity, 'passwordHash'> & {
   expiredAt: string;
 };

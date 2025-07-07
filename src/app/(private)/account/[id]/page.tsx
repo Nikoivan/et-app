@@ -1,20 +1,14 @@
-'use client';
+'use server';
 
 import { FC } from 'react';
 
 import { ProfileView } from '@/views/profile';
-import { useUserSession } from '@/entities/user';
-import { Spinner } from '@/shared/ui/spinner';
+import { getCurrentUser } from '@/entities/user/services/get-current-user';
 
-const Page: FC = () => {
-  const { isLoading, session } = useUserSession();
+const Page: FC = async () => {
+  const user = await getCurrentUser();
 
-  return (
-    <>
-      {!isLoading && !!session && <ProfileView session={session} />}
-      {isLoading && <Spinner />}
-    </>
-  );
+  return <>{!!user && <ProfileView user={user} />}</>;
 };
 
 export default Page;
