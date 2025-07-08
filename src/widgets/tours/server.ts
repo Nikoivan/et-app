@@ -1,1 +1,1 @@
-export { PopularTours } from '@/widgets/tours/ui/popular-tours';
+export { PopularTours } from '@/widgets/tours/containers/popular-tours';

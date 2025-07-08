@@ -10,6 +10,7 @@ const DashboardLayout: FC<{ children: ReactNode }> = async ({
   children: React.ReactNode;
 }) => {
   const { session } = await sessionService.verifySessionWithRedirect();
+
   const hasPermissions = roleUtils.userHasPermissionOn(
     session?.role,
     'dashboard'

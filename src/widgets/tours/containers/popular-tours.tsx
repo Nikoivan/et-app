@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { Layout } from '@/widgets/tours/ui/layout';
+import { ServerLayout } from '@/widgets/tours/ui/server-layout';
 
 import { getPopularTours } from '@/widgets/tours/services/get-popular-tours';
 import { ServerTourCard } from '@/features/tour/server';
@@ -16,7 +16,7 @@ export const PopularTours: FC = async () => {
   const tours = await getPopularTours();
 
   return (
-    <Layout
+    <ServerLayout
       className={cnPopularTours(null, ['text-center p-4', styles.PopularTours])}
       title={
         <Title type='h2' className={cnPopularTours('Title')}>

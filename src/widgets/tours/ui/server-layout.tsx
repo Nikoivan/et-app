@@ -9,7 +9,7 @@ type LayoutProps = {
   actions?: ReactNode;
 };
 
-export const Layout: FC<LayoutProps> = async ({
+export const ServerLayout: FC<LayoutProps> = async ({
   title,
   list,
   className,

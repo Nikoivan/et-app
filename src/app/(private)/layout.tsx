@@ -11,7 +11,7 @@ const PrivateLayout: FC<PropsWithChildren> = async ({ children }) => {
 
   return (
     <div className={cn('bg-gray-900 w-full h-screen')}>
-      <div className='text-lg'>{session?.login}</div>
+      <div className='hidden'>{session?.login}</div>
       <form
         className='hidden'
         action={async () => {
