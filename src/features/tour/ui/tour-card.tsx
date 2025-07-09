@@ -5,7 +5,7 @@ import { CircleFadingPlus } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 
-export const CardFeature = () => {
+export const TourCard = () => {
   return (
     <Card className='w-full max-w-lg'>
       <CardHeader>

@@ -99,10 +99,10 @@ model Tour {
   reviews         Review[]
   activities      Activity[]
   orders          Order[]
+  photos          Photo[]
   rating          Float?
   descriptionText String?    @map("description_text")
   startPlace      Json?      @map("start_place")
-  photos          Photo[]
 }
 
 model Order {

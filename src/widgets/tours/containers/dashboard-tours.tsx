@@ -5,7 +5,7 @@ import { cn } from '@bem-react/classname';
 
 import { ClientLayout } from '@/widgets/tours/ui/client-layout';
 import { SessionEntity } from '@/entities/user/domain';
-import CardFeature from '@/features/tour';
+import TourFeature from '@/features/tour';
 
 const cnDashboardTours = cn('DashboardTours');
 
@@ -17,7 +17,7 @@ export const DashboardTours: FC<{ session: SessionEntity }> = () => {
       list={
         <ul>
           <li>
-            <CardFeature />
+            <TourFeature />
           </li>
         </ul>
       }
