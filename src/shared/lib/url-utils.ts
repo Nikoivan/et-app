@@ -1,5 +1,8 @@
-function getOrigin(): string {
-  return globalThis.location.origin || 'https://ay-petry.ru';
-}
+import * as process from 'node:process';
 
-export const urlUtils = { getOrigin };
+const getOrigin = (): string =>
+  globalThis.location.origin || 'https://ay-petry.ru';
+const getApiRoute = (): string => process.env.API_ROUTE || '/api';
+const getApiUrl = (): string => `${getOrigin()}${getApiRoute()}`;
+
+export const urlUtils = { getOrigin, getApiRoute, getApiUrl };

@@ -1,13 +1,7 @@
 import { tourRepositories } from '@/entities/tour/repositories/tour';
 import { Prisma } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
-import { TourEntity } from '@/entities/tour/domain';
-
-type TourWithPhotos = Prisma.TourGetPayload<{
-  include: {
-    photos: true;
-  };
-}>;
+import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
 
 async function getUserTours(
   authorId: number
@@ -19,15 +13,15 @@ async function getUserTours(
     include: {
       photos: true;
     };
-  }>[] = await tourRepositories.getTours(where, tourIncludes);
+  }>[] = await tourRepositories.getTours({ where, include: tourIncludes });
 
   if (!tours) {
     return left('Ошибка при получение туров');
   }
-  //типизация вложенных photos
-  //тут остановились
 
-  const tourEntities: TourEntity[] = tours.length ? tours.map() : [];
+  const tourEntities: TourEntity[] = tours.length
+    ? tours.map(tourToTourEntity)
+    : [];
 
-  return right(tours);
+  return right(tourEntities);
 }
