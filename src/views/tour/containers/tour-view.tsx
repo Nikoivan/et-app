@@ -1,9 +1,10 @@
 'use server';
 
 import { FC } from 'react';
+
+import { TourMain } from '@/views/tour/ui/tour-main';
 import { tourServices } from '@/kernel/tour/services/tour-services';
 import { ServerFCProps } from '@/shared/model/types';
-import { TourMain } from '@/views/tour/ui/tour-main';
 
 export const TourView: FC<ServerFCProps> = async ({ params }) => {
   const { id } = await params;

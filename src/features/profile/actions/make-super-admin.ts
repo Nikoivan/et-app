@@ -10,6 +10,5 @@ export const makeSuperAdminAction = async (id: number) => {
     return;
   }
 
-  // await sessionService.deleteSession();
   await sessionService.updateSession(result.value);
 };
