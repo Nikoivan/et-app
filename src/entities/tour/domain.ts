@@ -22,6 +22,7 @@ export type TourEntity = {
   title: string;
   description: string;
   mainPhoto: PhotoEntity;
+  content: string;
   price: number;
   duration: number;
   categories: string[];

@@ -3,9 +3,9 @@ import { Prisma } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
 import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
 
-async function getUserTours(
+const getUserTours = async (
   authorId: number
-): Promise<Either<string, TourEntity[]>> {
+): Promise<Either<string, TourEntity[]>> => {
   const where: Prisma.TourWhereInput = { authorId };
   const tourIncludes: Prisma.TourInclude = { photos: true };
 
@@ -24,4 +24,6 @@ async function getUserTours(
     : [];
 
   return right(tourEntities);
-}
+};
+
+export const tourServices = { getUserTours };

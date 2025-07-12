@@ -10,7 +10,7 @@ const PrivateLayout: FC<PropsWithChildren> = async ({ children }) => {
   const { session } = await sessionService.verifySessionWithRedirect();
 
   return (
-    <div className={cn('bg-gray-900 w-full h-screen')}>
+    <div className={cn('bg-gray-900 w-full min-h-screen')}>
       <div className='hidden'>{session?.login}</div>
       <form
         className='hidden'

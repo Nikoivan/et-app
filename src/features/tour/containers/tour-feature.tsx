@@ -5,8 +5,8 @@ import { TourFeatureLayout } from '@/features/tour/ui/tour-feature-layout';
 import { TourDomain } from '@/entities/tour/server';
 import { TourCard } from '@/features/tour/ui/tour-card';
 
-export const TourFeature: FC<TourDomain.TourEntity> = ({ title }) => (
-  <TourFeatureLayout title={title || 'Название тура'}>
-    <TourCard />
+export const TourFeature: FC<TourDomain.TourEntity> = props => (
+  <TourFeatureLayout title={props.title || 'Название тура'}>
+    <TourCard {...props} />
   </TourFeatureLayout>
 );

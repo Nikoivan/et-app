@@ -1,9 +1,9 @@
 'use client';
 
 import { FC } from 'react';
+import { cn } from '@bem-react/classname';
 
 import { TourDomain } from '@/entities/tour/server';
-import { cn } from '@bem-react/classname';
 import TourFeature from '@/features/tour';
 
 type TourListProps = {
