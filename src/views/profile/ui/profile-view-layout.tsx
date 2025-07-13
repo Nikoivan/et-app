@@ -23,7 +23,9 @@ export const ProfileLayout: FC<{ id: number; role: string }> = ({
       </div>
       {permissionsServices.userHasPermissionsToDashboard(role) && (
         <div className='text-center mt-4'>
-          <Link href={`/dashboard/${id}`}>Мои туры</Link>
+          <Button variant='outline'>
+            <Link href={`/dashboard/${id}`}>Мои туры</Link>
+          </Button>
         </div>
       )}
       <div className='mt-4'>
