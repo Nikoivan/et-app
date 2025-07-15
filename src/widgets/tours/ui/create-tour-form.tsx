@@ -1,6 +1,5 @@
 'use client';
 
-import { SessionDomain } from '@/entities/user/server';
 import { cn } from '@bem-react/classname';
 import { Button } from '@/shared/ui/button';
 import {
@@ -20,20 +19,6 @@ import { Input } from '@/shared/ui/input';
 
 const cnCreateTourForm = cn('CreateTourForm');
 
-enum DialogTypes {
-  CREATE = 'create',
-  EDIT = 'edit',
-  READ = 'read'
-}
-
-type DialogType<T> = {
-  [K in keyof T]: T[K] extends string ? T[K] : never;
-}[keyof T];
-
-type Settings = {
-  dialogType: DialogType<DialogTypes>;
-};
-
 type FormData = {
   name: string;
   email: string;
@@ -52,17 +37,9 @@ const userSchema = z.object({
   phone: z.string().regex(/\+7\s\(\d{3}\)\s\d{3}\-\d{2}\-\d{2}/)
 });
 
-export function CreateTourForm<T extends Record<string, string> = FormData>({
-  session
-}: {
-  session: SessionDomain.SessionEntity;
-}) {
+export function CreateTourForm<T extends Record<string, string> = FormData>() {
   const [userFormData, setUserFormData] = useState<Partial<T>>({});
   const [showErrors, setShowErrors] = useState(false);
-
-  const settings: Settings = {
-    dialogType: 'create'
-  };
 
   const formData = {
     ...initialFormState,
