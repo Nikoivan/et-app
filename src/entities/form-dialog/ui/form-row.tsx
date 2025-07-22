@@ -3,43 +3,74 @@
 import { cn } from '@bem-react/classname';
 import { Label } from '@/shared/ui/label';
 import { Input } from '@/shared/ui/input';
+import { ReactNode } from 'react';
 
 enum FormRowTypes {
   STRING = 'string',
   NUMBER = 'number',
   BOOLEAN = 'boolean',
-  STRING_ARRAY = 'string array'
+  STRING_ARRAY = 'string array',
+  FILE = 'file',
+  CUSTOM = 'custom'
 }
 
-type FormRowType<T> = {
+type FormCheckTypes<
+  T extends Record<string, unknown> = Record<string, string>
+> = {
+  [FormRowTypes.STRING]: string;
+  [FormRowTypes.NUMBER]: number;
+  [FormRowTypes.BOOLEAN]: boolean;
+  [FormRowTypes.STRING_ARRAY]: string[];
+  [FormRowTypes.FILE]: File;
+  [FormRowTypes.CUSTOM]: T;
+};
+
+type Values<T> = {
   [K in keyof T]: T[K] extends string ? T[K] : never;
 }[keyof T];
 
-type FormValues = string | string[] | number | boolean | File;
+type keys = Values<FormCheckTypes>;
 
-type FormRowProps<T extends FormValues = string> = {
-  type: FormRowType<FormRowTypes>;
-  label: string;
-  name: string;
-  value: T;
-};
+type GetType<
+  T extends Record<string, unknown> = Record<string, string>,
+  K extends keyof FormCheckTypes & string = keyof FormCheckTypes
+> = FormCheckTypes<T>[K];
+
+type Some = GetType<Record<string, string>, FormRowTypes.FILE>;
+
+type FormRowProps<T extends Record<string, unknown> = Record<string, string>> =
+  {
+    type: FormRowTypes;
+    label: ReactNode;
+    name: string;
+    value: GetType<T, FormRowTypes>;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    error?: string;
+  };
 
 export const cnFormRow = cn('FormRow');
 
-export const FormRow = () => {
+export const FormRow = <
+  T extends Record<string, unknown> = Record<string, string>
+>({
+  type,
+  value,
+  label,
+  name,
+  onChange,
+  error
+}: FormRowProps<FormCheckTypes<T>>) => {
+  const someValue = value;
+
   return (
-    <div>
-      <Label>Имя</Label>
-      <Input
-        value={formData.name}
-        name='name'
-        onChange={e =>
-          setUserFormData({
-            ...userFormData,
-            [e.target.name]: e.target.value
-          })
-        }
-      />
+    <div className={cnFormRow(null)}>
+      <div>
+        <Label>{label}</Label>
+        {type === 'string' && (
+          <Input value={value} name={name} onChange={onChange} />
+        )}
+      </div>
+      <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>
     </div>
   );
 };
