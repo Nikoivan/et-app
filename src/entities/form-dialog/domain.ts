@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 enum DialogTypes {
   CREATE = 'create',
   EDIT = 'edit',
@@ -11,3 +13,34 @@ type DialogType<T> = {
 export type Settings = {
   dialogType: DialogType<DialogTypes>;
 };
+
+export enum FormRowTypes {
+  STRING = 'string',
+  NUMBER = 'number',
+  BOOLEAN = 'boolean',
+  FILES = 'files',
+  CUSTOM = 'custom'
+}
+
+export type FormCheckTypes<
+  T extends Record<string, unknown> = Record<string, string>
+> = {
+  [FormRowTypes.STRING]: string;
+  [FormRowTypes.NUMBER]: number;
+  [FormRowTypes.BOOLEAN]: boolean;
+  [FormRowTypes.FILES]: File[];
+  [FormRowTypes.CUSTOM]: T;
+};
+
+export type FormRowProps<
+  T extends Record<string, unknown> = Record<string, string>
+> = {
+  [K in keyof FormCheckTypes<T>]: {
+    type: K;
+    label: ReactNode;
+    name: string;
+    onChange: (value: Record<string, FormCheckTypes<T>[K]>) => void;
+    value?: FormCheckTypes<T>[K];
+    error?: string;
+  };
+}[keyof FormCheckTypes<T>];

@@ -1,52 +1,14 @@
 'use client';
 
+import { ChangeEvent, useState } from 'react';
 import { cn } from '@bem-react/classname';
+
+import { FormCheckTypes, FormRowProps } from '@/entities/form-dialog/domain';
 import { Label } from '@/shared/ui/label';
 import { Input } from '@/shared/ui/input';
-import { ReactNode } from 'react';
-
-enum FormRowTypes {
-  STRING = 'string',
-  NUMBER = 'number',
-  BOOLEAN = 'boolean',
-  STRING_ARRAY = 'string array',
-  FILE = 'file',
-  CUSTOM = 'custom'
-}
-
-type FormCheckTypes<
-  T extends Record<string, unknown> = Record<string, string>
-> = {
-  [FormRowTypes.STRING]: string;
-  [FormRowTypes.NUMBER]: number;
-  [FormRowTypes.BOOLEAN]: boolean;
-  [FormRowTypes.STRING_ARRAY]: string[];
-  [FormRowTypes.FILE]: File;
-  [FormRowTypes.CUSTOM]: T;
-};
-
-type Values<T> = {
-  [K in keyof T]: T[K] extends string ? T[K] : never;
-}[keyof T];
-
-type keys = Values<FormCheckTypes>;
-
-type GetType<
-  T extends Record<string, unknown> = Record<string, string>,
-  K extends keyof FormCheckTypes & string = keyof FormCheckTypes
-> = FormCheckTypes<T>[K];
-
-type Some = GetType<Record<string, string>, FormRowTypes.FILE>;
-
-type FormRowProps<T extends Record<string, unknown> = Record<string, string>> =
-  {
-    type: FormRowTypes;
-    label: ReactNode;
-    name: string;
-    value: GetType<T, FormRowTypes>;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    error?: string;
-  };
+import { Checkbox } from '@/shared/ui/checkbox';
+import { Button } from '@/shared/ui/button';
+import { CircleX } from 'lucide-react';
 
 export const cnFormRow = cn('FormRow');
 
@@ -60,14 +22,80 @@ export const FormRow = <
   onChange,
   error
 }: FormRowProps<FormCheckTypes<T>>) => {
-  const someValue = value;
+  const [files, setFiles] = useState<File[]>([]);
+
+  const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
+    if (type !== 'string') return;
+
+    onChange({ [name]: e.target.value });
+  };
+
+  const onChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    if (type !== 'number') return;
+
+    onChange({ [name]: Number(e.target.value) });
+  };
+
+  const onChangeBoolean = () => {
+    if (type !== 'boolean') return;
+
+    onChange({ [name]: !value });
+  };
+
+  const handleFilesChange = (files: File[]) => {
+    if (type !== 'files') return;
+
+    onChange({ [name]: files });
+    setFiles(files);
+  };
+
+  const onChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const { type: inputType, value } = e.target;
+
+    if (type !== 'files' || inputType !== 'file' || !value || !value.length)
+      return;
+
+    handleFilesChange([...value] as unknown as File[]);
+  };
+
+  const onDeleteFile = (fileName: string) => {
+    const filtredFiles = files.filter(file => file.name !== fileName);
+
+    handleFilesChange(filtredFiles);
+  };
 
   return (
     <div className={cnFormRow(null)}>
       <div>
         <Label>{label}</Label>
         {type === 'string' && (
-          <Input value={value} name={name} onChange={onChange} />
+          <Input value={value} name={name} onChange={onChangeString} />
+        )}
+        {type === 'number' && (
+          <Input value={value} name={name} onChange={onChangeNumber} />
+        )}
+        {type === 'boolean' && (
+          <Checkbox checked={value} name={name} onChange={onChangeBoolean} />
+        )}
+        {type === 'files' && (
+          <>
+            <Input name={name} onChange={onChangeFiles} type='file' />
+            {!!files.length && (
+              <ul>
+                {files.map((file, idx) => (
+                  <li key={idx}>
+                    <span>{file.name}</span>
+                    <Button
+                      onClick={() => onDeleteFile(file.name)}
+                      variant='ghost'
+                    >
+                      <CircleX />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </>
         )}
       </div>
       <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>
