@@ -14,7 +14,7 @@ import { CreateTourForm } from '@/widgets/tours/ui/create-tour-form';
 
 const cnDashboardTours = cn('DashboardTours');
 
-export const DashboardTours: FC<{ session: SessionEntity }> = ({ session }) => {
+export const DashboardTours: FC<{ session: SessionEntity }> = () => {
   const { data, error, isLoading } = useFetchRequest<TourDomain.TourEntity[]>({
     url: getOwnUserToursUrl()
   });
@@ -44,7 +44,7 @@ export const DashboardTours: FC<{ session: SessionEntity }> = ({ session }) => {
           }
           actions={
             <div className={cnDashboardTours('Actions', ['mt-8'])}>
-              <CreateTourForm session={session} />
+              <CreateTourForm />
             </div>
           }
         />

@@ -11,7 +11,7 @@ import {
   DialogTrigger
 } from '@/shared/ui/dialog';
 import { Button } from '@/shared/ui/button';
-import { FormRowProps, FormRowTypes } from '@/entities/form-dialog/domain';
+// import { FormRowProps, FormRowTypes } from '@/entities/form-dialog/domain';
 
 type FormDialogProps = {
   triggerButton?: ReactNode;
@@ -20,15 +20,15 @@ type FormDialogProps = {
   className?: string;
 };
 
-const testFields: FormRowProps[] = [
-  {
-    type: FormRowTypes.STRING,
-    label: 'Имя',
-    name: 'name',
-    value: '',
-    onChange: value => console.log(value)
-  }
-];
+// const testFields: FormRowProps[] = [
+//   {
+//     type: FormRowTypes.STRING,
+//     label: 'Имя',
+//     name: 'name',
+//     value: '',
+//     onChange: value => console.log(value)
+//   }
+// ];
 
 const cnFormDialog = cn('FormDialog');
 
