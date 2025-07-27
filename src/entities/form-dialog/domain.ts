@@ -32,6 +32,13 @@ export type FormCheckTypes<
   [FormRowTypes.CUSTOM]: T;
 };
 
+export type Value<T extends Record<string, unknown> = Record<string, string>> =
+  | boolean
+  | number
+  | string
+  | File[]
+  | T;
+
 export type FormRowProps<
   T extends Record<string, unknown> = Record<string, string>
 > = {
@@ -39,7 +46,7 @@ export type FormRowProps<
     type: K;
     label: ReactNode;
     name: string;
-    onChange: (value: Record<string, FormCheckTypes<T>[K]>) => void;
+    onChange: (value: Record<string, Value<T>>) => void;
     value?: FormCheckTypes<T>[K];
     error?: string;
   };
