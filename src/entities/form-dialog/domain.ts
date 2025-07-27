@@ -14,25 +14,26 @@ export type Settings = {
   dialogType: DialogType<DialogTypes>;
 };
 
-export enum FormRowTypes {
-  STRING = 'string',
-  NUMBER = 'number',
-  BOOLEAN = 'boolean',
-  FILES = 'files',
-  CUSTOM = 'custom'
-}
+export type ZErrors =
+  | {
+      _errors: string[];
+    }
+  | undefined;
+
+export type FormRowTypes = 'string' | 'number' | 'boolean' | 'files' | 'custom';
 
 export type FormCheckTypes<
   T extends Record<string, unknown> = Record<string, string>
 > = {
-  [FormRowTypes.STRING]: string;
-  [FormRowTypes.NUMBER]: number;
-  [FormRowTypes.BOOLEAN]: boolean;
-  [FormRowTypes.FILES]: File[];
-  [FormRowTypes.CUSTOM]: T;
+  string: string;
+  number: number;
+  boolean: boolean;
+  files: File[];
+  custom: T;
 };
 
 export type Value<T extends Record<string, unknown> = Record<string, string>> =
+  | undefined
   | boolean
   | number
   | string
