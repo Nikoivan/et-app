@@ -18,18 +18,20 @@ type FormData<T extends Record<string, unknown> = Record<string, unknown>> =
 
 type FormProps<T extends Record<string, unknown> = Record<string, unknown>> = {
   initialData: FormData<T>;
+  formDataModel: Omit<FormRowProps<FormCheckTypes<T>>, 'onChange' | 'value'>[];
   onSubmit: (data: FormData<T>) => void;
   schema: z.Schema;
   title?: ReactNode;
   description?: ReactNode;
 };
 
-const testFields: Omit<FormRowProps, 'onChange'>[] = [
+type FormDataModel = Omit<FormRowProps, 'onChange'>[];
+
+const testFields: Omit<FormRowProps, 'onChange' | 'value'> = [
   {
     type: 'string',
     label: 'Имя',
-    name: 'name',
-    value: ''
+    name: 'name'
   }
 ];
 
@@ -39,6 +41,7 @@ export const Form = <
   T extends Record<string, unknown> = Record<string, string>
 >({
   initialData,
+  formDataModel,
   onSubmit,
   schema,
   title,
@@ -68,12 +71,6 @@ export const Form = <
     return result.error.format();
   };
 
-  const dataIsFormData = (data: unknown): FormData<T> | null => {
-    const result = schema.safeParse(data);
-
-    return result.success ? result.data : null;
-  };
-
   const onChange = (value: Record<string, Value<FormCheckTypes<T>>>) => {
     setUserFormData(prev => ({ ...prev, ...value }));
   };
@@ -82,15 +79,14 @@ export const Form = <
     e.preventDefault();
 
     const errors = validate();
-    const validFormData = dataIsFormData(formData);
 
-    if (errors || !validFormData) {
+    if (errors) {
       setShowErrors(true);
 
       return;
     }
 
-    onSubmit(validFormData);
+    onSubmit(formData);
   };
 
   const errors = showErrors ? validate() : undefined;
@@ -101,14 +97,23 @@ export const Form = <
       {!!description && (
         <div className={cnForm('Description')}>{description}</div>
       )}
-      {testFields.map((row, idx) => (
+      {formDataModel.map((row, idx) => (
         <FormRow
           {...(row as FormRowProps<FormCheckTypes<T>>)}
+          value={formData[row.name] as unknown as Value<FormCheckTypes<T>>}
           error={(errors?.[row.name as never] as ZErrors)?._errors.join(', ')}
           onChange={onChange}
           key={idx}
         />
       ))}
+      {/*{testFields.map((row, idx) => (*/}
+      {/*  <FormRow*/}
+      {/*    {...(row as FormRowProps<FormCheckTypes<T>>)}*/}
+      {/*    error={(errors?.[row.name as never] as ZErrors)?._errors.join(', ')}*/}
+      {/*    onChange={onChange}*/}
+      {/*    key={idx}*/}
+      {/*  />*/}
+      {/*))}*/}
       <div className={cnForm('Actions')}>
         <Button variant='outline' onClick={reset} disabled={!isChanged}>
           Отмена
