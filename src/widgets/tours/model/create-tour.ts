@@ -85,9 +85,24 @@ export const createTourFormModel: FormDialogDomain.FormDataModelItem[] = [
     name: 'duration'
   },
   {
-    type: ,
-    label: 'Цена тура',
-    name: 'price'
+    type: 'stringArray',
+    label: 'Категории тура',
+    name: 'categories'
+  },
+  {
+    type: 'files',
+    label: 'Фотографии',
+    name: 'photos'
+  },
+  {
+    type: 'string',
+    label: 'Текст описание',
+    name: 'descriptionText'
+  },
+  {
+    type: 'string',
+    label: 'Место старта тура',
+    name: 'startPlace'
   }
 ];
 

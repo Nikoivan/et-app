@@ -21,14 +21,13 @@ export type ZErrors =
     }
   | undefined;
 
-export type FormRowTypes = 'string' | 'number' | 'boolean' | 'files' | 'custom';
-
 export type FormCheckTypes<
   T extends Record<string, unknown> = Record<string, string>
 > = {
   string: string;
   number: number;
   boolean: boolean;
+  stringArray: string[];
   files: File[];
   custom: T;
 };

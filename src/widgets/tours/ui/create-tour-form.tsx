@@ -4,9 +4,8 @@ import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
 import { FormDialog } from '@/entities/form-dialog';
-import { Button } from '@/shared/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
 import {
+  createTourFormModel,
   createTourSchema,
   initialCreateFormData
 } from '@/widgets/tours/model/create-tour';
@@ -21,19 +20,13 @@ export const CreateTourForm: FC = () => {
 
   return (
     <div className={cnCreateTourForm(null, ['text-center'])}>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant='outline'>Создать тур</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <FormDialog
-            formDataModel={}
-            initialData={initialCreateFormData}
-            onSubmit={onSubmit}
-            schema={createTourSchema}
-          />
-        </DialogContent>
-      </Dialog>
+      <FormDialog
+        title='Создать тур'
+        formDataModel={createTourFormModel}
+        initialData={initialCreateFormData}
+        onSubmit={onSubmit}
+        schema={createTourSchema}
+      />
     </div>
   );
 };

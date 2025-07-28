@@ -7,12 +7,14 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogPortal,
   DialogTitle,
   DialogTrigger
 } from '@/shared/ui/dialog';
 import { Button } from '@/shared/ui/button';
 import { Form } from '@/entities/form-dialog/ui/form';
 import { FormProps } from '@/entities/form-dialog/domain';
+import { ScrollArea, ScrollBar } from '@/shared/ui/scroll-area';
 
 type FormDialogProps = {
   triggerButton?: ReactNode;
@@ -27,17 +29,22 @@ export const FormDialog = (props: FormDialogProps) => {
   const { triggerButton, dialogTitle, dialogDescription, ...formProps } = props;
 
   return (
-    <Dialog>
+    <Dialog modal>
       <DialogTrigger asChild className={cnFormDialog('Trigger')}>
         <Button variant='ghost'>{triggerButton || 'Открыть диалог'}</Button>
       </DialogTrigger>
-      <DialogContent className={cnFormDialog()}>
-        <DialogHeader>
-          <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogDescription>{dialogDescription}</DialogDescription>
-        </DialogHeader>
-        <Form {...formProps} />
-      </DialogContent>
+      <DialogPortal>
+        <DialogContent>
+          <ScrollArea>
+            <DialogHeader>
+              <DialogTitle>{dialogTitle}</DialogTitle>
+              <DialogDescription>{dialogDescription}</DialogDescription>
+            </DialogHeader>
+            <Form {...formProps} />
+            <ScrollBar orientation='vertical' />
+          </ScrollArea>
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   );
 };
