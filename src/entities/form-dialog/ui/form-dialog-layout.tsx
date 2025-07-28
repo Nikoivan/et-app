@@ -11,29 +11,20 @@ import {
   DialogTrigger
 } from '@/shared/ui/dialog';
 import { Button } from '@/shared/ui/button';
-// import { FormRowProps, FormRowTypes } from '@/entities/form-dialog/domain';
+import { Form } from '@/entities/form-dialog/ui/form';
+import { FormProps } from '@/entities/form-dialog/domain';
 
 type FormDialogProps = {
   triggerButton?: ReactNode;
   dialogTitle?: ReactNode;
   dialogDescription?: ReactNode;
   className?: string;
-};
-
-// const testFields: FormRowProps[] = [
-//   {
-//     type: FormRowTypes.STRING,
-//     label: 'Имя',
-//     name: 'name',
-//     value: '',
-//     onChange: value => console.log(value)
-//   }
-// ];
+} & FormProps;
 
 const cnFormDialog = cn('FormDialog');
 
 export const FormDialog = (props: FormDialogProps) => {
-  const { triggerButton, dialogTitle, dialogDescription } = props;
+  const { triggerButton, dialogTitle, dialogDescription, ...formProps } = props;
 
   return (
     <Dialog>
@@ -45,7 +36,7 @@ export const FormDialog = (props: FormDialogProps) => {
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        <form></form>
+        <Form {...formProps} />
       </DialogContent>
     </Dialog>
   );

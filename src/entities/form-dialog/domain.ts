@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { z } from 'zod';
 
 enum DialogTypes {
   CREATE = 'create',
@@ -52,3 +53,22 @@ export type FormRowProps<
     error?: string;
   };
 }[keyof FormCheckTypes<T>];
+
+export type FormData<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = Record<string, Value<FormCheckTypes<T>>>;
+
+export type FormDataModelItem<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = Omit<FormRowProps<FormCheckTypes<T>>, 'onChange' | 'value'>;
+
+export type FormProps<
+  T extends Record<string, unknown> = Record<string, unknown>
+> = {
+  initialData: FormData<T>;
+  formDataModel: FormDataModelItem<T>[];
+  onSubmit: (data: FormData<T>) => void;
+  schema: z.Schema;
+  title?: ReactNode;
+  description?: ReactNode;
+};
