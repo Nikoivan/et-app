@@ -20,6 +20,7 @@ export const FormRow = <
   label,
   name,
   onChange,
+  multiple,
   error
 }: FormRowProps<FormCheckTypes<T>>) => {
   const [files, setFiles] = useState<File[]>([]);
@@ -31,6 +32,7 @@ export const FormRow = <
   };
 
   const onChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('onChangeNumber', typeof e.target.value);
     if (type !== 'number') return;
 
     onChange({ [name]: Number(e.target.value) });
@@ -50,12 +52,14 @@ export const FormRow = <
   };
 
   const onChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const { type: inputType, value } = e.target;
+    console.log('target', e.target.files);
 
-    if (type !== 'files' || inputType !== 'file' || !value || !value.length)
+    const { type: inputType, files } = e.target;
+
+    if (type !== 'files' || inputType !== 'file' || !files || !files.length)
       return;
 
-    handleFilesChange([...value] as unknown as File[]);
+    handleFilesChange([...files]);
   };
 
   const onDeleteFile = (fileName: string) => {
@@ -72,14 +76,24 @@ export const FormRow = <
           <Input value={value} name={name} onChange={onChangeString} />
         )}
         {type === 'number' && (
-          <Input value={value} name={name} onChange={onChangeNumber} />
+          <Input
+            type='number'
+            value={value}
+            name={name}
+            onChange={onChangeNumber}
+          />
         )}
         {type === 'boolean' && (
           <Checkbox checked={value} name={name} onChange={onChangeBoolean} />
         )}
         {type === 'files' && (
           <>
-            <Input name={name} onChange={onChangeFiles} type='file' />
+            <Input
+              name={name}
+              onChange={onChangeFiles}
+              type='file'
+              multiple={multiple}
+            />
             {!!files.length && (
               <ul>
                 {files.map((file, idx) => (

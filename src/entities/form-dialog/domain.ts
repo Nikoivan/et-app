@@ -48,6 +48,8 @@ export type FormRowProps<
     label: ReactNode;
     name: string;
     onChange: (value: Record<string, Value<T>>) => void;
+    required?: boolean;
+    multiple?: boolean;
     value?: FormCheckTypes<T>[K];
     error?: string;
   };

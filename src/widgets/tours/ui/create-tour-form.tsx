@@ -6,10 +6,10 @@ import { cn } from '@bem-react/classname';
 import { FormDialog } from '@/entities/form-dialog';
 import {
   createTourFormModel,
-  createTourSchema,
   initialCreateFormData
 } from '@/widgets/tours/model/create-tour';
 import { FormData } from '@/entities/form-dialog/domain';
+import { createTourSchema } from '@/features/tour';
 
 const cnCreateTourForm = cn('CreateTourForm');
 
