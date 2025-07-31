@@ -12,8 +12,8 @@ export type DraftCreateTourData = {
   description: string;
   mainPhoto: File[];
   content: string;
-  price: string;
-  duration: string;
+  price: number;
+  duration: number;
   categories: string[];
   photos?: File[];
   descriptionText?: string;
@@ -25,5 +25,5 @@ export type CreateTourData = Omit<
   'mainPhoto' | 'photos'
 > & {
   mainPhoto: File;
-  photos?: Record<string, File>;
+  photos?: File[];
 };

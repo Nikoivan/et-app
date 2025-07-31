@@ -1,27 +1,11 @@
 import { z } from 'zod';
 
-export const createTourSchema = z.object({
+const baseTourSchema = {
   title: z
     .string()
     .min(10, 'Название тура не может быть менее 10 символов')
     .max(180, 'Название тура не может быть более 180 символов'),
   description: z.string(),
-  mainPhoto: z
-    .array(
-      z
-        .instanceof(File)
-        .refine(
-          file =>
-            [
-              'application/photo',
-              'image/png',
-              'image/jpeg',
-              'image/webp'
-            ].includes(file.type),
-          { message: 'Неподдерживаемый формат фото' }
-        )
-    )
-    .max(1, 'Главным фото может быть только 1 фотография'),
   content: z.string(),
   price: z.number().min(1000, 'Стоимость тура не может быть менее 1000 рублей'),
   duration: z
@@ -50,4 +34,37 @@ export const createTourSchema = z.object({
   ),
   descriptionText: z.string().optional(),
   startPlace: z.string().optional()
+};
+
+export const createTourSchemas = z.object({
+  ...baseTourSchema,
+  mainPhoto: z
+    .array(
+      z
+        .instanceof(File)
+        .refine(
+          file =>
+            [
+              'application/photo',
+              'image/png',
+              'image/jpeg',
+              'image/webp'
+            ].includes(file.type),
+          { message: 'Неподдерживаемый формат фото' }
+        )
+    )
+    .max(1, 'Главным фото может быть только 1 фотография')
+});
+
+export const createTourSchema = z.object({
+  ...baseTourSchema,
+  mainPhoto: z
+    .instanceof(File)
+    .refine(
+      file =>
+        ['application/photo', 'image/png', 'image/jpeg', 'image/webp'].includes(
+          file.type
+        ),
+      { message: 'Неподдерживаемый формат фото' }
+    )
 });

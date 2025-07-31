@@ -32,7 +32,6 @@ export const FormRow = <
   };
 
   const onChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('onChangeNumber', typeof e.target.value);
     if (type !== 'number') return;
 
     onChange({ [name]: Number(e.target.value) });
@@ -52,8 +51,6 @@ export const FormRow = <
   };
 
   const onChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('target', e.target.files);
-
     const { type: inputType, files } = e.target;
 
     if (type !== 'files' || inputType !== 'file' || !files || !files.length)

@@ -1,9 +1,8 @@
 import { NextRequest } from 'next/server';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { sessionService } from '@/entities/user/server';
-import { TourDomain } from '@/entities/tour/server';
-import { tourServices } from '@/features/tour/services/tour-services';
-import { Either } from '@/shared/lib/either';
+import { roleUtils } from '@/entities/user';
+import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
 export async function postTour(req: NextRequest): Promise<Response> {
   try {
@@ -19,17 +18,29 @@ export async function postTour(req: NextRequest): Promise<Response> {
       return handleError({ body: 'Ошибка верификации' });
     }
 
-    //TODO: проверка полномочий на создание туров
-    // if (!session.role !== ) {}
-
-    const eitherResult: Either<string, TourDomain.TourEntity[]> =
-      await tourServices.getUserTours(session.id);
-
-    if (eitherResult.type === 'left') {
-      return handleError({ body: eitherResult.error });
+    if (!roleUtils.userHasPermissionOn(session?.role, 'dashboard')) {
+      return handleError({ body: 'У вас нет полномочий на создание туров' });
     }
 
-    return handleSuccess({ body: eitherResult.value });
+    const formData = await req.formData();
+    const data = prepareDataUtils.getTourData(formData);
+
+    if (!data) {
+      return handleSuccess({
+        body: 'Невозможно создать запись. Данные не валидны'
+      });
+    }
+
+    console.log('data', data);
+
+    // const eitherResult: Either<string, TourDomain.TourEntity[]> =
+    //   await tourServices.crea(session.id);
+    //
+    // if (eitherResult.type === 'left') {
+    //   return handleError({ body: eitherResult.error });
+    // }
+
+    return handleSuccess({ body: 'eitherResult.value' });
   } catch {
     return handleError({ body: 'Ошибка верификации' });
   }

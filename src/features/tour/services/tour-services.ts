@@ -26,4 +26,8 @@ const getUserTours = async (
   return right(tourEntities);
 };
 
+// const createTour = async (
+//   tour: TourEntity
+// ): Promise<Either<string, TourEntity>> => {};
+
 export const tourServices = { getUserTours };

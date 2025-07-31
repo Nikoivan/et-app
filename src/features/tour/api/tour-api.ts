@@ -1,13 +1,13 @@
+import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
+import { FormDialogDomain } from '@/entities/form-dialog';
 import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
-import { DraftCreateTourData } from '@/features/tour/domain';
-import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
 const errorMessage = 'Ошибка создания тура';
 
 export const createTour = async (
-  data: DraftCreateTourData
+  data: FormDialogDomain.FormData
 ): Promise<Either<string, string>> => {
   const dataForCreate: [string, string | File][] =
     prepareDataUtils.prepareDataToCreate(data);
