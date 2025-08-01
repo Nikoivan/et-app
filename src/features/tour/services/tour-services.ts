@@ -2,6 +2,8 @@ import { tourRepositories } from '@/entities/tour/repositories/tour';
 import { Prisma } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
 import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
+import { CreateTourData } from '@/features/tour/domain';
+import { PhotoDomain } from '@/entities/photo';
 
 const getUserTours = async (
   authorId: number
@@ -26,8 +28,16 @@ const getUserTours = async (
   return right(tourEntities);
 };
 
-// const createTour = async (
-//   tour: TourEntity
-// ): Promise<Either<string, TourEntity>> => {};
+const createTour = async (
+  data: Omit<CreateTourData, 'mainPhoto' | 'photos'> & {
+    authorId: number;
+    mainPhoto: Omit<PhotoDomain.PhotoEntity, 'id'>;
+    photos?: Omit<PhotoDomain.PhotoEntity, 'id'>[];
+  }
+): Promise<TourEntity | null> => {
+  const tour = await tourRepositories.createTour(data);
 
-export const tourServices = { getUserTours };
+  return tour ? tourToTourEntity(tour) : null;
+};
+
+export const tourServices = { getUserTours, createTour };

@@ -19,10 +19,7 @@ export const createTour = async (
   try {
     const response = await fetch(`${urlUtils.getApiUrl()}/tour`, {
       method: 'POST',
-      body: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      body: formData
     });
 
     if (response.status >= 300) {

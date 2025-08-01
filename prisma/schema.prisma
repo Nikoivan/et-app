@@ -76,6 +76,7 @@ model Photo {
   title      String
   keywords   String[]
   source     String
+  fileName   String    @map("file_name")
   authorId   Int       @map("author_id")
   user       User      @relation(fields: [authorId], references: [id])
   tourId     Int?      @map("tour_id")

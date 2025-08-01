@@ -47,6 +47,15 @@ const prepareNumberValues = (
   if ('duration' in value && typeof value.duration === 'string') {
     value.duration = Number(value.duration);
   }
+
+  if ('categories' in value && typeof value.categories === 'string') {
+    try {
+      value.categories = JSON.parse(value.categories);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return value;
 };
 
@@ -54,6 +63,7 @@ const getTourData = (formData: FormData): CreateTourData | null => {
   const data: Record<string, string | File> = Object.fromEntries(
     formData.entries()
   );
+
   const preparedData = prepareNumberValues(data);
 
   const result = createTourSchema.safeParse(preparedData);

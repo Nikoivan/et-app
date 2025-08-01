@@ -18,20 +18,22 @@ const baseTourSchema = {
       .min(3, 'Наименование категории не может быть менее 3-х симвоолов')
       .max(30, 'Наименование категории не может превышать 30 символов')
   ),
-  photos: z.array(
-    z
-      .instanceof(File)
-      .refine(
-        file =>
-          [
-            'application/photo',
-            'image/png',
-            'image/jpeg',
-            'image/webp'
-          ].includes(file.type),
-        { message: 'Неподдерживаемый формат фото' }
-      )
-  ),
+  photos: z
+    .array(
+      z
+        .instanceof(File)
+        .refine(
+          file =>
+            [
+              'application/photo',
+              'image/png',
+              'image/jpeg',
+              'image/webp'
+            ].includes(file.type),
+          { message: 'Неподдерживаемый формат фото' }
+        )
+    )
+    .optional(),
   descriptionText: z.string().optional(),
   startPlace: z.string().optional()
 };
