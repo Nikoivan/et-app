@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import File from 'undici';
 import { z } from 'zod';
 
 enum DialogTypes {
