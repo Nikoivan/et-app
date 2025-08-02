@@ -10,13 +10,13 @@ export async function getUsersTours(req: NextRequest): Promise<Response> {
     const cookies = req.cookies.get('session')?.value;
 
     if (!cookies) {
-      return handleError({ body: 'Ошибка верификации' });
+      return handleError({ body: 'Cookie not found' });
     }
 
     const { session } = await sessionService.verifySession(cookies);
 
     if (!session) {
-      return handleError({ body: 'Ошибка верификации' });
+      return handleError({ body: 'Session not found' });
     }
 
     const eitherResult: Either<string, TourDomain.TourEntity[]> =

@@ -12,10 +12,6 @@ export type Roles = {
   [K in keyof Role]: Role[K] extends string ? Role[K] : never;
 }[keyof Role];
 
-const test: Roles = 'USER';
-
-console.log(test);
-
 export type UserEntity = {
   id: UserId;
   login: string;

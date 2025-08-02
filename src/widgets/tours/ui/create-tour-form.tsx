@@ -15,8 +15,6 @@ const cnCreateTourForm = cn('CreateTourForm');
 
 export const CreateTourForm: FC = () => {
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    console.log('onSubmit', data);
-
     await createTour(data);
   };
 

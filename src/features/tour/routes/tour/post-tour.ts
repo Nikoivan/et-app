@@ -5,7 +5,7 @@ import { roleUtils } from '@/entities/user';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 import { getPhotoEntity } from '@/entities/photo/lib/photo-utils';
 import { tourServices } from '@/features/tour/services/tour-services';
-import { dbClient } from '@/shared/lib/db';
+import { PhotoDomain } from '@/entities/photo';
 
 export async function postTour(req: NextRequest): Promise<Response> {
   try {
@@ -43,35 +43,40 @@ export async function postTour(req: NextRequest): Promise<Response> {
       file: mainPhoto
     });
 
-    console.log('mainPhotoEntity', mainPhotoEntity);
-
     if (!mainPhotoEntity) {
       return handleSuccess({
         body: 'Невозможно создать главное фото тура'
       });
     }
 
+    const photosEntities = photos?.length
+      ? await Promise.all(
+          photos
+            ?.map(
+              async file =>
+                await getPhotoEntity({
+                  file,
+                  authorId: session.id,
+                  keywords: []
+                })
+            )
+            .filter(Boolean)
+        )
+      : undefined;
+
     const tour = await tourServices.createTour({
       authorId: session.id,
       ...rest,
       title,
-      mainPhoto: mainPhotoEntity
+      mainPhoto: mainPhotoEntity,
+      photos: photosEntities as Omit<PhotoDomain.PhotoEntity, 'id'>[]
     });
 
-    console.log('tour', tour);
-
-    if (tour) {
-      dbClient.tour.delete({ where: { id: tour.id } });
+    if (!tour) {
+      return handleError({ body: 'Ошибка. Не удалось создать тур' });
     }
 
-    // const eitherResult: Either<string, TourDomain.TourEntity[]> =
-    //   await tourServices.crea(session.id);
-    //
-    // if (eitherResult.type === 'left') {
-    //   return handleError({ body: eitherResult.error });
-    // }
-
-    return handleSuccess({ body: 'eitherResult.value' });
+    return handleSuccess({ body: tour });
   } catch (e) {
     console.error(e);
 

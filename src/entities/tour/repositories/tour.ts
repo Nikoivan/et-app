@@ -45,7 +45,10 @@ const createTour = async (
         ...rest,
         mainPhotoId: mainPhoto.id,
         photos: {
-          create: photosEntities
+          create: photosEntities,
+          connect: {
+            id: mainPhoto.id
+          }
         }
       },
       include: {

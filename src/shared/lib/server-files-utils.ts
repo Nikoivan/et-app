@@ -19,8 +19,7 @@ export const saveFileWithPath = async (
     revalidatePath('/');
 
     return fileSource;
-  } catch (e) {
-    console.log('error', e);
+  } catch {
     return null;
   }
 };
