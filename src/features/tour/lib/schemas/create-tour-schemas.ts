@@ -1,5 +1,16 @@
 import { z } from 'zod';
 
+const fileInstance =
+  typeof File !== 'undefined'
+    ? File
+    : class {
+        type: 'string';
+
+        constructor() {
+          this.type = 'string';
+        }
+      };
+
 const baseTourSchema = {
   title: z
     .string()
@@ -21,7 +32,7 @@ const baseTourSchema = {
   photos: z
     .array(
       z
-        .instanceof(File)
+        .instanceof(fileInstance)
         .refine(
           file =>
             [
