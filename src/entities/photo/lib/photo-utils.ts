@@ -1,5 +1,3 @@
-'use server';
-
 import { saveFileWithPath } from '@/shared/lib/server-files-utils';
 import { PhotoEntity } from '@/entities/photo/domain';
 
