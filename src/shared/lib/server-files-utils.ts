@@ -12,9 +12,9 @@ export const saveFileWithPath = async (
     const arrayBuffer = await file.arrayBuffer();
     const buffer: Uint8Array<ArrayBuffer> = new Uint8Array(arrayBuffer);
     const uniqName = getUniqName(file.name);
-    const fileSource = `./public/${path || 'uploads'}/${uniqName}`;
+    const fileSource = `/${path || 'uploads'}/${uniqName}`;
 
-    await fs.writeFile(fileSource, buffer);
+    await fs.writeFile(`./public${fileSource}`, buffer);
 
     revalidatePath('/');
 

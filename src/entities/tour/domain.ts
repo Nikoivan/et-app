@@ -44,7 +44,7 @@ export function tourToTourEntity(
   const mainPhoto = photos.find(photo => photo.id === mainPhotoId);
 
   if (!mainPhoto) {
-    throw new Error('Error of main photo id: ' + mainPhotoId);
+    console.warn('Error of main photo id: ' + mainPhotoId);
   }
 
   const tourEntity = objectUtils.makeWithoutNull(rest);
