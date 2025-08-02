@@ -6,7 +6,7 @@ import { cn } from '@bem-react/classname';
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
 import {
   createTourFormModel,
-  initialCreateFormData
+  initialCreateTourFormData
 } from '@/widgets/tours/model/create-tour';
 
 import { createTour, createTourSchemas } from '@/features/tour';
@@ -22,8 +22,9 @@ export const CreateTourForm: FC = () => {
     <div className={cnCreateTourForm(null, ['text-center'])}>
       <FormDialog
         title='Создать тур'
+        triggerButton='Создать тур'
         formDataModel={createTourFormModel}
-        initialData={initialCreateFormData}
+        initialData={initialCreateTourFormData}
         onSubmit={onSubmit}
         schema={createTourSchemas}
       />

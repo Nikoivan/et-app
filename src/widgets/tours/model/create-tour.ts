@@ -60,7 +60,7 @@ export const createTourFormModel: FormDialogDomain.FormDataModelItem[] = [
   }
 ];
 
-export const initialCreateFormData = {
+export const initialCreateTourFormData = {
   title: '',
   description: '',
   mainPhoto: undefined,
