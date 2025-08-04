@@ -37,6 +37,7 @@ export type Value<T extends Record<string, unknown> = Record<string, string>> =
   | boolean
   | number
   | string
+  | string[]
   | File[]
   | T;
 
@@ -72,4 +73,15 @@ export type FormProps<
   schema: z.Schema;
   title?: ReactNode;
   description?: ReactNode;
+};
+
+export type InputProps<
+  T extends Record<string, unknown> = Record<string, string>,
+  K extends Value<T> = string
+> = {
+  type: string;
+  name: string;
+  onChange: (value: Record<string, Value<T>>) => void;
+  value?: K extends Value<T> ? K : never;
+  multiple?: boolean;
 };

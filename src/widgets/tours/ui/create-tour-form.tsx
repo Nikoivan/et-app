@@ -10,12 +10,17 @@ import {
 } from '@/widgets/tours/model/create-tour';
 
 import { createTour, createTourSchemas } from '@/features/tour';
+import { DEFAULT_STATUS } from '@/features/tour/constants/default-create-data';
 
 const cnCreateTourForm = cn('CreateTourForm');
 
 export const CreateTourForm: FC = () => {
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    await createTour(data);
+    await createTour({
+      ...data,
+      status: DEFAULT_STATUS,
+      categories: ['popular']
+    });
   };
 
   return (

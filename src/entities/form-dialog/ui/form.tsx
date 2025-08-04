@@ -86,7 +86,6 @@ export const Form = <
 
         return <FormRow {...props} key={idx} />;
       })}
-
       <div className={cnForm('Actions')}>
         <Button variant='outline' onClick={reset} disabled={!isChanged}>
           Отмена

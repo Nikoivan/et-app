@@ -96,7 +96,7 @@ model Tour {
   categories      String[]
   authorId        Int        @map("author_id")
   author          User       @relation(fields: [authorId], references: [id])
-  photosIds       Int[]
+  status          String?
   reviews         Review[]
   activities      Activity[]
   orders          Order[]

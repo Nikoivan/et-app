@@ -1,14 +1,17 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
 import { cn } from '@bem-react/classname';
 
-import { FormCheckTypes, FormRowProps } from '@/entities/form-dialog/domain';
+import {
+  FormCheckTypes,
+  FormRowProps,
+  Value
+} from '@/entities/form-dialog/domain';
 import { Label } from '@/shared/ui/label';
-import { Input } from '@/shared/ui/input';
-import { Checkbox } from '@/shared/ui/checkbox';
-import { Button } from '@/shared/ui/button';
-import { CircleX } from 'lucide-react';
+import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
+import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
+import { Checkbox } from '@/entities/form-dialog/ui/checkbox';
+import { InputTypeFile } from '@/entities/form-dialog/ui/input-type-file';
 
 export const cnFormRow = cn('FormRow');
 
@@ -22,94 +25,47 @@ export const FormRow = <
   onChange,
   multiple,
   error
-}: FormRowProps<FormCheckTypes<T>>) => {
-  const [files, setFiles] = useState<File[]>([]);
-
-  const onChangeString = (e: ChangeEvent<HTMLInputElement>) => {
-    if (type !== 'string') return;
-
-    onChange({ [name]: e.target.value });
-  };
-
-  const onChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
-    if (type !== 'number') return;
-
-    onChange({ [name]: Number(e.target.value) });
-  };
-
-  const onChangeBoolean = () => {
-    if (type !== 'boolean') return;
-
-    onChange({ [name]: !value });
-  };
-
-  const handleFilesChange = (files: File[]) => {
-    if (type !== 'files') return;
-
-    onChange({ [name]: files });
-    setFiles(files);
-  };
-
-  const onChangeFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const { type: inputType, files } = e.target;
-
-    if (type !== 'files' || inputType !== 'file' || !files || !files.length)
-      return;
-
-    handleFilesChange([...files]);
-  };
-
-  const onDeleteFile = (fileName: string) => {
-    const filtredFiles = files.filter(file => file.name !== fileName);
-
-    handleFilesChange(filtredFiles);
-  };
-
-  return (
-    <div className={cnFormRow(null)}>
-      <div>
-        <Label>{label}</Label>
-        {type === 'string' && (
-          <Input value={value} name={name} onChange={onChangeString} />
-        )}
-        {type === 'number' && (
-          <Input
-            type='number'
-            value={value}
-            name={name}
-            onChange={onChangeNumber}
-          />
-        )}
-        {type === 'boolean' && (
-          <Checkbox checked={value} name={name} onChange={onChangeBoolean} />
-        )}
-        {type === 'files' && (
-          <>
-            <Input
-              name={name}
-              onChange={onChangeFiles}
-              type='file'
-              multiple={multiple}
-            />
-            {!!files.length && (
-              <ul>
-                {files.map((file, idx) => (
-                  <li key={idx}>
-                    <span>{file.name}</span>
-                    <Button
-                      onClick={() => onDeleteFile(file.name)}
-                      variant='ghost'
-                    >
-                      <CircleX />
-                    </Button>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
-        )}
-      </div>
-      <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>
+}: FormRowProps<FormCheckTypes<T>>) => (
+  <div className={cnFormRow(null)}>
+    <div>
+      <Label>{label}</Label>
+      {type === 'string' && (
+        <InputTypeString
+          name={name}
+          onChange={onChange}
+          value={value}
+          type={type}
+        />
+      )}
+      {type === 'number' && (
+        <InputTypeNumber
+          name={name}
+          onChange={onChange}
+          value={value}
+          type={type}
+        />
+      )}
+      {type === 'boolean' && (
+        <Checkbox
+          value={value}
+          name={name}
+          onChange={
+            onChange as (
+              value: Record<string, Value<Record<string, string>>>
+            ) => void
+          }
+          type={type}
+        />
+      )}
+      {type === 'files' && (
+        <InputTypeFile
+          name={name}
+          onChange={onChange}
+          type={type}
+          multiple={multiple}
+        />
+      )}
     </div>
-  );
-};
+    <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>
+  </div>
+);

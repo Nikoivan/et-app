@@ -15,6 +15,7 @@ export type DraftCreateTourData = {
   price: number;
   duration: number;
   categories: string[];
+  status: string;
   photos?: File[];
   descriptionText?: string;
   startPlace?: string;
