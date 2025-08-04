@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+//заглушка для типов
 class File {
   type: string;
   constructor(type: string) {
