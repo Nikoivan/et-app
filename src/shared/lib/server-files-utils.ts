@@ -22,8 +22,7 @@ export const saveFileWithPath = async (
 
     revalidatePath('/');
 
-    // return fileSource;
-    return `./public${fileSource}`;
+    return fileSource;
   } catch (e) {
     console.error(e);
 
