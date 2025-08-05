@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { File } from 'formdata-node';
 
 const baseTourSchema = {
   title: z
