@@ -68,7 +68,7 @@ const getTourData = (formData: FormData): CreateTourData | null => {
 
   const result = createTourSchema.safeParse(preparedData);
 
-  return result.success ? (result.data as CreateTourData) : null;
+  return result.success ? (result.data as unknown as CreateTourData) : null;
 };
 
 export const prepareDataUtils = { prepareDataToCreate, getTourData };

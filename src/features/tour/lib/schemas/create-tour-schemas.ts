@@ -36,7 +36,8 @@ const baseTourSchema = {
     )
     .optional(),
   descriptionText: z.string().optional(),
-  startPlace: z.string().optional()
+  startPlace: z.string().optional(),
+  status: z.string().optional()
 };
 
 export const createTourSchemas = z.object({
@@ -61,6 +62,7 @@ export const createTourSchemas = z.object({
 
 export const createTourSchema = z.object({
   ...baseTourSchema,
+  status: z.string(),
   mainPhoto: z
     .instanceof(File)
     .refine(
