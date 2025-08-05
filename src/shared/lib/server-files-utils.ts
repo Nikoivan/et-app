@@ -10,7 +10,13 @@ export const saveFileWithPath = async (
     const arrayBuffer = await file.arrayBuffer();
     const buffer: Uint8Array<ArrayBuffer> = new Uint8Array(arrayBuffer);
     const uniqName = getUniqName(file.name);
-    const fileSource = `/${path || 'images'}/${uniqName}`;
+    const fileSource = `/${path || 'uploads'}/${uniqName}`;
+
+    const directories = await fs.readdir('./public');
+
+    if (!directories.includes(path || 'uploads')) {
+      await fs.mkdir(`./public/${path || 'uploads'}`);
+    }
 
     await fs.writeFile(`./public${fileSource}`, buffer);
 

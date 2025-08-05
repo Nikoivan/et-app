@@ -65,6 +65,8 @@ export async function postTour(req: NextRequest): Promise<Response> {
         )
       : undefined;
 
+    console.log(photosEntities);
+
     const tour = await tourServices.createTour({
       authorId: session.id,
       ...rest,
