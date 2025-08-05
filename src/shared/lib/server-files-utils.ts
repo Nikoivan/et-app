@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import { File } from 'formdata-node';
 import { revalidatePath } from 'next/cache';
 import { getUniqName } from '@/shared/lib/string-utils';
 
@@ -8,7 +7,8 @@ export const saveFileWithPath = async (
   path?: string
 ): Promise<string | null> => {
   try {
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer: Uint8Array<ArrayBuffer> = new Uint8Array(arrayBuffer);
     const uniqName = getUniqName(file.name);
     const fileSource = `/${path || 'images'}/${uniqName}`;
 
