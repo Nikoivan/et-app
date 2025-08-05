@@ -1,3 +1,5 @@
+import { File } from 'formdata-node';
+
 import { saveFileWithPath } from '@/shared/lib/server-files-utils';
 import { PhotoEntity } from '@/entities/photo/domain';
 
