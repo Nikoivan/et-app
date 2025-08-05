@@ -76,6 +76,8 @@ export async function postTour(req: NextRequest): Promise<Response> {
       return handleError({ body: 'Ошибка. Не удалось создать тур' });
     }
 
+    console.log(tour);
+
     return handleSuccess({ body: tour });
   } catch (e) {
     console.error(e);

@@ -38,8 +38,6 @@ export async function deleteTour(req: NextRequest): Promise<Response> {
 
     const deletedTour = await tourRepositories.deleteTour(Number(tourId));
 
-    console.log('deletedTour', deletedTour);
-
     if (!deletedTour) {
       return handleError({ body: 'Ошибка при удаление тура' });
     }

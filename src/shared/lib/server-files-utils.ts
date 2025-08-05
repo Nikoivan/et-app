@@ -9,17 +9,19 @@ export const saveFileWithPath = async (
   path?: string
 ): Promise<string | null> => {
   try {
-    const arrayBuffer = await file.arrayBuffer();
+    const arrayBuffer = await file?.arrayBuffer();
     const buffer: Uint8Array<ArrayBuffer> = new Uint8Array(arrayBuffer);
     const uniqName = getUniqName(file.name);
-    const fileSource = `/${path || 'uploads'}/${uniqName}`;
+    const fileSource = `/${path || 'images'}/${uniqName}`;
 
     await fs.writeFile(`./public${fileSource}`, buffer);
 
     revalidatePath('/');
 
     return fileSource;
-  } catch {
+  } catch (e) {
+    console.error(e);
+
     return null;
   }
 };

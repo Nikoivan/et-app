@@ -17,6 +17,8 @@ export const getPhotoEntity = async ({
 }): Promise<Omit<PhotoEntity, 'id'> | null> => {
   const source = await savePhoto(file);
 
+  console.log('source', source);
+
   if (!source) {
     return null;
   }

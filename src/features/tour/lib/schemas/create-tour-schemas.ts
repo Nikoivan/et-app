@@ -1,12 +1,5 @@
 import { z } from 'zod';
-
-//заглушка для типов
-class File {
-  type: string;
-  constructor(type: string) {
-    this.type = type;
-  }
-}
+import { File } from 'formdata-node';
 
 const baseTourSchema = {
   title: z

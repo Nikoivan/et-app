@@ -16,7 +16,7 @@ const cnCreateTourForm = cn('CreateTourForm');
 
 export const CreateTourForm: FC = () => {
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    await createTour({
+    const result = await createTour({
       ...data,
       status: DEFAULT_STATUS,
       categories: ['popular']
