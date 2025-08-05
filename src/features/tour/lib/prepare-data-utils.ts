@@ -1,3 +1,5 @@
+import { File } from 'formdata-node';
+
 import { FormDialogDomain } from '@/entities/form-dialog';
 import { CreateTourData } from '@/features/tour/domain';
 import { createTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
@@ -17,6 +19,8 @@ const prepareDataToCreate = (
   }
 
   const preparedPhotos: [string, string | File][] = [
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     ['mainPhoto', mainPhoto?.[0]]
   ];
 
@@ -60,6 +64,8 @@ const prepareNumberValues = (
 };
 
 const getTourData = (formData: FormData): CreateTourData | null => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const data: Record<string, string | File> = Object.fromEntries(
     formData.entries()
   );
