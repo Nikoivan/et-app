@@ -13,11 +13,15 @@ import {
   CardHeader,
   CardTitle
 } from '@/shared/ui/card';
-import { BadgeRussianRuble, HeartIcon, UserPen } from 'lucide-react';
+import { BadgeRussianRuble, HeartIcon, UserPen, XCircle } from 'lucide-react';
 import { cn } from '@/shared/lib/css';
+import { deleteTour } from '@/features/tour/api/tour-api';
+import { ConfirmDialog } from '@/entities/confirm-dialog';
 
 export const TourCard: FC<TourDomain.TourEntity> = props => {
-  const { title, mainPhoto, content, rating, price } = props;
+  const { id, title, mainPhoto, content, rating, price } = props;
+
+  const onDelete = async () => await deleteTour(id);
 
   return (
     <Card className='max-w-md'>
@@ -49,8 +53,17 @@ export const TourCard: FC<TourDomain.TourEntity> = props => {
         </Button>
         <Button variant='ghost' size='sm'>
           <UserPen className='size-4' />
-          Редактировать
         </Button>
+        <ConfirmDialog
+          title='Удаление тура'
+          description='Вы уверенны, что хотите удалить этот тур?'
+          triggger={
+            <Button variant='ghost' size='sm'>
+              <XCircle className='size-4' />
+            </Button>
+          }
+          onSubmit={onDelete}
+        />
       </CardFooter>
     </Card>
   );

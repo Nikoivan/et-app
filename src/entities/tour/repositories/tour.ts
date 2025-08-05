@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, Tour } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
@@ -9,6 +9,13 @@ type Params<T extends Prisma.TourInclude | undefined = undefined> = {
   select?: Prisma.TourSelect;
   orderBy?: Prisma.TourOrderByWithRelationInput;
 };
+
+const getTour = (id: number): Promise<Tour | null> =>
+  dbClient.tour.findUnique({
+    where: {
+      id
+    }
+  });
 
 const getTours = <TInclude extends Prisma.TourInclude | undefined = undefined>(
   params: Params<TInclude>
@@ -57,4 +64,11 @@ const createTour = async (
     });
   });
 
-export const tourRepositories = { getTours, createTour };
+const deleteTour = async (id: number): Promise<Tour | null> =>
+  dbClient.tour.delete({
+    where: {
+      id
+    }
+  });
+
+export const tourRepositories = { getTour, getTours, createTour, deleteTour };
