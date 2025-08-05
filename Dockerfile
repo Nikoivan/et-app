@@ -1,27 +1,26 @@
-# Используем Node.js 22
 FROM node:22-alpine
 
-  # Рабочая директория внутри контейнера
 WORKDIR /app
 
-  # Копируем package.json и package-lock.json
 COPY package*.json ./
-
-  # Устанавливаем зависимости
 RUN npm install
 
-  # Копируем остальной код
-COPY .. .
+COPY . .
 
-  # Сборка проекта
 RUN npm run build
 
-  # Устанавливаем переменные окружения
+FROM node:22-alpine AS runner
+
+WORKDIR /app
+
 ENV NODE_ENV=production
 ENV PORT=3000
 
-  # Пробрасываем порт
+COPY --from=0 /app/public ./public
+COPY --from=0 /app/.next/standalone ./
+COPY --from=0 /app/.next/static ./.next/static
+COPY --from=0 /app/node_modules ./node_modules
+
 EXPOSE 3000
 
-  # Команда запуска
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
