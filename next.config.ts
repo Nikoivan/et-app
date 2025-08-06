@@ -8,9 +8,6 @@ const nextConfig: NextConfig = {
       {
         pathname: '/images/**'
       }
-    ],
-    remotePatterns: [
-      { protocol: 'https', hostname: 'ay-petry.ru', pathname: '/images/**' }
     ]
   }
 };
