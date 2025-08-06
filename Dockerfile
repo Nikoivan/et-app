@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -7,20 +7,10 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build && npm run export
 
-FROM node:22-alpine AS runner
+FROM nginx:alpine
 
-WORKDIR /app
+COPY --from=builder /app/out /usr/share/nginx/html
 
-ENV NODE_ENV=production
-ENV PORT=3000
-
-COPY --from=0 /app/public ./public
-COPY --from=0 /app/.next/standalone ./
-COPY --from=0 /app/.next/static ./.next/static
-COPY --from=0 /app/node_modules ./node_modules
-
-EXPOSE 3000
-
-CMD ["node", "server.js"]
+EXPOSE 80
