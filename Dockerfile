@@ -15,10 +15,20 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-COPY --from=builder /app ./
-
+# Создаём пользователя
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+
+# Копируем всё, что нужно для `next start`
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
+COPY --from=builder --chown=nextjs:nodejs /app/next.config.* ./
+COPY --from=builder --chown=nextjs:nodejs /app/src ./src  # если есть нужда
+COPY --from=builder --chown=nextjs:nodejs /app/components.json ./components.json
+
+# Права
 RUN chown -R nextjs:nodejs /app
 
 EXPOSE 3000
