@@ -16,33 +16,33 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
+# 1. Создаём пользователя
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# копируем всё, что нужно для запуска
+# 2. Копируем файлы
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
-## Set the correct permission for prerender cache
-#RUN mkdir .next
-#RUN chown nextjs:nodejs .next
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
+# 3. Копируем .next/standalone + .next/static с нужными правами
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# 4. [!] Создаём директорию .next/cache, если нужно
+RUN mkdir -p .next && chown -R nextjs:nodejs .next
+
+# 5. Обеспечиваем права на /app (рабочая директория)
+RUN chown -R nextjs:nodejs /app
+
+# 6. Переключаемся на безопасного пользователя
 USER nextjs
 
 EXPOSE 3000
 
-ENV PORT 3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+# Старт сервера (уже в standalone-сборке)
 CMD HOSTNAME="0.0.0.0" node server.js
+
 
 ## 🔁 Проксирование через Traefik (Coolify)
 #LABEL traefik.enable="true"
