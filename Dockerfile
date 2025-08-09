@@ -1,7 +1,7 @@
 FROM node:22-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm install --frozen-lockfile
 
 FROM node:22-alpine AS builder
 WORKDIR /app
@@ -14,14 +14,15 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
+EXPOSE 3000
 
-# Копируем весь проект (кроме dev-файлов)
+# Копируем всё приложение
 COPY --from=builder /app ./
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-RUN chown -R nextjs:nodejs /app
+# Создаём папку для картинок и даём права
+RUN mkdir -p /app/public/images && chown -R node:node /app/public/images
 
-EXPOSE 3000
+# Запускаем под обычным пользователем
+USER node
 
 CMD ["npm", "start"]
