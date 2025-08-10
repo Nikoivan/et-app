@@ -1,5 +1,3 @@
-'use server';
-
 import { FC } from 'react';
 import { cn as cnBem } from '@bem-react/classname';
 
@@ -12,10 +10,7 @@ type CardDatesProps = {
   finishTime: Date;
 };
 
-export const CardDates: FC<CardDatesProps> = async ({
-  startTime,
-  finishTime
-}) => (
+export const CardDates: FC<CardDatesProps> = ({ startTime, finishTime }) => (
   <div className={cnCardDates(null, ['text-xl', styles.CardDates])}>
     {('0' + startTime.getDate()).slice(-2)}-
     {('0' + finishTime.getDate()).slice(-2)}

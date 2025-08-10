@@ -56,7 +56,7 @@ export type ActivityEntity = {
   categories: string[];
   author?: UserEntity;
   tour?: Tour;
-  discount?: number | null;
+  discount?: number;
 };
 
 export type ActivityCardEntity = {

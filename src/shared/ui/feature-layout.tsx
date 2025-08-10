@@ -1,6 +1,5 @@
-'use client';
-
 import { FC, PropsWithChildren, ReactNode } from 'react';
+
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +7,7 @@ import {
   AccordionTrigger
 } from '@/shared/ui/accordion';
 
-export const TourFeatureLayout: FC<PropsWithChildren<{ title: ReactNode }>> = ({
+export const FeatureLayout: FC<PropsWithChildren<{ title: ReactNode }>> = ({
   title,
   children
 }) => (

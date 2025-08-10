@@ -6,6 +6,7 @@ import { DashboardLayout } from '@/views/dashboard/ui/dashboard-layout';
 import { DashboardTours } from '@/widgets/tours';
 import { SessionEntity } from '@/entities/user/domain';
 import { cn } from '@/shared/lib/css';
+// import { DashboardActivities } from '@/widgets/activities';
 
 export const DashboardView: FC<
   PropsWithChildren<{ session: SessionEntity }>
@@ -13,6 +14,7 @@ export const DashboardView: FC<
   <DashboardLayout className={cn('p-4')}>
     <h1 className={cn('text-center')}>Панель управления гида</h1>
     <DashboardTours session={session} />
+    {/*<DashboardActivities />*/}
     {children}
   </DashboardLayout>
 );

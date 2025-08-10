@@ -1,3 +1,3 @@
-import { getUsersTours } from '@/features/tour/server';
+import { getUserTours } from '@/features/tour/server';
 
-export const GET = getUsersTours;
+export const GET = getUserTours;

@@ -5,7 +5,7 @@ import { TourDomain } from '@/entities/tour/server';
 import { tourServices } from '@/features/tour/services/tour-services';
 import { Either } from '@/shared/lib/either';
 
-export async function getUsersTours(req: NextRequest): Promise<Response> {
+export async function getUserTours(req: NextRequest): Promise<Response> {
   try {
     const cookies = req.cookies.get('session')?.value;
 

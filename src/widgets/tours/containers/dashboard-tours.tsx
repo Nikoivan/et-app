@@ -19,7 +19,7 @@ export const DashboardTours: FC<{ session: SessionEntity }> = () => {
     url: getOwnUserToursUrl()
   });
 
-  const canShowList = !!data?.length && !error;
+  const hasList = !!data?.length && !error;
 
   return (
     <>
@@ -33,7 +33,7 @@ export const DashboardTours: FC<{ session: SessionEntity }> = () => {
           title={<h2 className='text-center'>Мои туры</h2>}
           list={
             <>
-              {canShowList ? (
+              {hasList ? (
                 <TourList list={data} />
               ) : (
                 <div className={cnDashboardTours('Error', ['text-red-600'])}>

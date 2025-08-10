@@ -51,8 +51,6 @@ export const deleteTour = async (id: number): Promise<Either<string, Tour>> => {
       method: 'DELETE'
     });
 
-    console.log('response', response);
-
     if (response.status >= 300) {
       return left(deleteErrorMessage);
     }
