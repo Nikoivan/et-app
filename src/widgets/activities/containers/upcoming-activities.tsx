@@ -4,7 +4,7 @@ import { cn } from '@bem-react/classname';
 import { FC } from 'react';
 import { ActivitiesLayout } from '@/widgets/activities/ui/activities-layout';
 import { getActivitiesDates } from '@/widgets/activities/lib/dates-helpers';
-import { getUpcominglActivities } from '@/widgets/activities/services/get-upcomingl-activities';
+import { getUpcomingActivities } from '@/widgets/activities/services/get-upcoming-activities';
 import { ActivityCard } from '@/entities/activity/server';
 import { Months } from '@/widgets/activities/ui/months';
 
@@ -13,7 +13,7 @@ import styles from '../assets/styles.module.scss';
 const cnUpcomingActivities = cn('UpcomingActivities');
 
 export const UpcomingActivities: FC = async () => {
-  const upcomingActivities = await getUpcominglActivities();
+  const upcomingActivities = await getUpcomingActivities();
   const activitiesDates = getActivitiesDates(upcomingActivities);
 
   return (

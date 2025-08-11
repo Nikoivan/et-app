@@ -28,7 +28,7 @@ export const DashboardActivities: FC = () => {
       ) : (
         <ClientLayout
           className={cnDashboardActivities()}
-          title='Мои мероприятия'
+          title={<div className='text-center'>Мои мероприятия</div>}
           list={
             <>
               {hasList ? (

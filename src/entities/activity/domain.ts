@@ -1,5 +1,6 @@
 import { Activity, Tour } from '@prisma/client';
 import { UserEntity } from '@/entities/user/domain';
+import { dateUtils } from '@/entities/activity/lib/date-utils';
 
 enum ActivityTypes {
   PERSONAL = 'personal',
@@ -70,6 +71,18 @@ export type ActivityCardEntity = {
 
 export function activityToActivityEntity(activity: Activity): ActivityEntity {
   const discount = activity.discount || undefined;
+  const { createdAt, updatedAt, startTime, finishTime, ...rest } = activity;
+  const validCreatedAt = dateUtils.prepareDate(createdAt);
+  const validUpdatedAt = dateUtils.prepareDate(updatedAt);
+  const validStartTime = dateUtils.prepareDate(startTime);
+  const validFinishTime = dateUtils.prepareDate(finishTime);
 
-  return { ...activity, discount };
+  return {
+    ...rest,
+    discount,
+    createdAt: validCreatedAt,
+    updatedAt: validUpdatedAt,
+    startTime: validStartTime,
+    finishTime: validFinishTime
+  };
 }
