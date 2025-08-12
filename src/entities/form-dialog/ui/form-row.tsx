@@ -12,6 +12,7 @@ import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
 import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
 import { Checkbox } from '@/entities/form-dialog/ui/checkbox';
 import { InputTypeFile } from '@/entities/form-dialog/ui/input-type-file';
+import { DatePicker } from '@/entities/form-dialog/ui/date-picker';
 
 export const cnFormRow = cn('FormRow');
 
@@ -64,6 +65,9 @@ export const FormRow = <
           type={type}
           multiple={multiple}
         />
+      )}
+      {type === 'date' && (
+        <DatePicker name={name} onChange={onChange} type={type} />
       )}
     </div>
     <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>

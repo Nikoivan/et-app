@@ -2,12 +2,12 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { FormDialog } from '@/entities/form-dialog';
 import {
   createActivityFormModel,
   initialCreateActivityFormData
-} from '@/widgets/tours/model/create-activity';
-import { createActivitySchema } from '@/features/tour/lib/schemas/create-activity-schemas';
+} from '@/widgets/activities/model/create-activity';
+import { createActivitySchema } from '@/features/activities';
+import { FormDialog } from '@/entities/form-dialog';
 
 const cnCreateActivityForm = cn('CreateActivityForm');
 

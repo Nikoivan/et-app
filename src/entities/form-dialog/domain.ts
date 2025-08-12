@@ -26,6 +26,7 @@ export type FormCheckTypes<
 > = {
   string: string;
   number: number;
+  date: string;
   boolean: boolean;
   stringArray: string[];
   files: File[];

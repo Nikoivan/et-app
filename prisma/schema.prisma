@@ -138,8 +138,8 @@ model Activity {
   author       User     @relation(fields: [authorId], references: [id])
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp()
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp()
-  startTime    DateTime @map("start_time") @db.Timestamp()
-  finishTime   DateTime @map("finish_time") @db.Timestamp()
+  startTime    DateTime @map("start_time")
+  finishTime   DateTime @map("finish_time")
   places       Int
   participants Int[]
   groupPrice   Int      @map("group_price")
