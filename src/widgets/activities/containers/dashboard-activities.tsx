@@ -9,10 +9,12 @@ import { Spinner } from '@/shared/ui/spinner';
 import { ClientLayout } from '@/widgets/activities/ui/client-layout';
 import { ActivitiesList } from '@/widgets/activities/ui/activities-list';
 import { getOwnUserActivitiesUrl } from '@/widgets/activities/lib/url-utils';
+import { SessionEntity } from '@/entities/user/domain';
+import { CreateActivityForm } from '@/widgets/activities/ui/create-activity-form';
 
 const cnDashboardActivities = cn('DashboardActivities');
 
-export const DashboardActivities: FC = () => {
+export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
   const { data, isLoading, error } = useFetchRequest<
     ActivityDomain.ActivityEntity[]
   >({ url: getOwnUserActivitiesUrl() });
@@ -42,6 +44,7 @@ export const DashboardActivities: FC = () => {
               )}
             </>
           }
+          actions={<CreateActivityForm />}
         />
       )}
     </>

@@ -7,13 +7,13 @@ import {
   initialCreateActivityFormData
 } from '@/widgets/activities/model/create-activity';
 import { createActivitySchema } from '@/features/activities';
-import { FormDialog } from '@/entities/form-dialog';
+import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
 
 const cnCreateActivityForm = cn('CreateActivityForm');
 
 export const CreateActivityForm: FC = () => {
-  const onSubmit = () => {
-    console.log('OnSubmitCreateActivity');
+  const onSubmit = (data: FormDialogDomain.FormData) => {
+    console.log('OnSubmitCreateActivity', data);
   };
 
   return (

@@ -14,13 +14,13 @@ export const createActivityFormModel: FormDialogDomain.FormDataModelItem[] = [
     required: true
   },
   {
-    type: 'string',
+    type: 'date',
     label: 'Время начала',
     name: 'startTime',
     required: true
   },
   {
-    type: 'string',
+    type: 'date',
     label: 'Время окончания',
     name: 'finishTime',
     required: true
