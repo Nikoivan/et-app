@@ -14,7 +14,7 @@ export const DashboardView: FC<
   <DashboardLayout className={cn('p-4')}>
     <h1 className={cn('text-center')}>Панель управления гида</h1>
     <DashboardTours session={session} />
-    <DashboardActivities />
+    <DashboardActivities session={session} />
     {children}
   </DashboardLayout>
 );
