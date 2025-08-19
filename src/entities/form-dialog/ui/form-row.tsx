@@ -2,17 +2,15 @@
 
 import { cn } from '@bem-react/classname';
 
-import {
-  FormCheckTypes,
-  FormRowProps,
-  Value
-} from '@/entities/form-dialog/domain';
+import { FormCheckTypes, FormRowProps, Value } from '@/entities/form-dialog/domain';
 import { Label } from '@/shared/ui/label';
 import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
 import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
 import { Checkbox } from '@/entities/form-dialog/ui/checkbox';
 import { InputTypeFile } from '@/entities/form-dialog/ui/input-type-file';
 import { DatePicker } from '@/entities/form-dialog/ui/date-picker';
+import { Select } from '@/entities/form-dialog/ui/select';
+import { MultiSelect } from '@/entities/form-dialog/ui/multi-select';
 
 export const cnFormRow = cn('FormRow');
 
@@ -25,6 +23,7 @@ export const FormRow = <
   name,
   onChange,
   multiple,
+  options,
   error
 }: FormRowProps<FormCheckTypes<T>>) => (
   <div className={cnFormRow(null)}>
@@ -68,6 +67,24 @@ export const FormRow = <
       )}
       {type === 'date' && (
         <DatePicker name={name} onChange={onChange} type={type} />
+      )}
+      {type === 'select' && !!options?.length && (
+        <Select
+          name={name}
+          onChange={onChange}
+          value={value}
+          type={type}
+          options={options}
+        />
+      )}
+      {type === 'stringArray' && !!options?.length && (
+        <MultiSelect
+          name={name}
+          onChange={onChange}
+          value={value}
+          type={type}
+          options={options}
+        />
       )}
     </div>
     <div className={cnFormRow('Error', ['text-red-600', 'h-6'])}>{error}</div>

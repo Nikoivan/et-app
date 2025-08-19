@@ -59,6 +59,8 @@ export const Form = <
 
     const errors = validate();
 
+    console.log(errors, formData);
+
     if (errors) {
       setShowErrors(true);
 

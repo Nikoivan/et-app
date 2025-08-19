@@ -37,8 +37,6 @@ export const DatePicker = <
 
     if (!date) return;
 
-    console.log(`${date.toISOString()}`);
-
     onChange({
       [name]: date.toISOString()
     });
@@ -58,8 +56,6 @@ export const DatePicker = <
       [name]: date.toISOString()
     });
   };
-
-  console.log(date?.toISOString());
 
   return (
     <div className='flex gap-4'>

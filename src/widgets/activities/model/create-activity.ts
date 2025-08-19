@@ -44,12 +44,13 @@ export const createActivityFormModel: FormDialogDomain.FormDataModelItem[] = [
     required: true
   },
   {
-    type: 'string',
+    type: 'select',
     label: 'Тип активности',
-    name: 'type'
+    name: 'type',
+    options: ['авто']
   },
   {
-    type: 'string',
+    type: 'number',
     label: 'Идентификатор тура',
     name: 'tourId',
     multiple: true
@@ -57,15 +58,17 @@ export const createActivityFormModel: FormDialogDomain.FormDataModelItem[] = [
   {
     type: 'stringArray',
     label: 'Теги',
-    name: 'tags'
+    name: 'tags',
+    options: ['джип тур', 'пеший тур']
   },
   {
     type: 'stringArray',
     label: 'Категории',
-    name: 'categories'
+    name: 'categories',
+    options: ['авто', 'пеший']
   },
   {
-    type: 'string',
+    type: 'number',
     label: 'Скидка',
     name: 'discount'
   }
@@ -74,8 +77,6 @@ export const createActivityFormModel: FormDialogDomain.FormDataModelItem[] = [
 export const initialCreateActivityFormData = {
   title: '',
   description: '',
-  status: '',
-  authorId: '',
   startTime: '',
   finishTime: '',
   places: '',

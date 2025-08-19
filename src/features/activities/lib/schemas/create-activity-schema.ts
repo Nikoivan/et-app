@@ -10,13 +10,13 @@ export const createActivitySchema = z.object({
   startTime: z
     .string()
     .regex(
-      /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+      /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T([01]\d|2[0-3]):[0-5]\d:[0-5]\d\.\d{3}Z$/,
       'Неверный формат даты'
     ),
   finishTime: z
     .string()
     .regex(
-      /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z)/,
+      /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T([01]\d|2[0-3]):[0-5]\d:[0-5]\d\.\d{3}Z$/,
       'Неверный формат даты'
     ),
   places: z.number(),
@@ -29,9 +29,8 @@ export const createActivitySchema = z.object({
     .min(1000, 'Сумма не может быть менее 1000')
     .max(50000, 'Превышает допустимое значение'),
   type: z.string().max(80),
-  tourId: z.number(),
   tags: z.array(z.string()),
   categories: z.array(z.string()),
-  discount: z.number().optional(),
-  photos: z.array(z.instanceof(File))
+  discount: z.union([z.string().max(0), z.number()]).optional(),
+  photos: z.array(z.instanceof(File)).optional()
 });

@@ -27,6 +27,7 @@ export type FormCheckTypes<
   string: string;
   number: number;
   date: string;
+  select: string;
   boolean: boolean;
   stringArray: string[];
   files: File[];
@@ -50,6 +51,7 @@ export type FormRowProps<
     label: ReactNode;
     name: string;
     onChange: (value: Record<string, Value<T>>) => void;
+    options?: string[];
     required?: boolean;
     multiple?: boolean;
     value?: FormCheckTypes<T>[K];
