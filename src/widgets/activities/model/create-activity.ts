@@ -86,5 +86,7 @@ export const initialCreateActivityFormData = {
   tourId: '',
   tags: [],
   categories: [],
-  discount: ''
+  discount: '',
+  status: 'active',
+  photos: []
 };

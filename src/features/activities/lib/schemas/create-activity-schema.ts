@@ -5,8 +5,8 @@ export const createActivitySchema = z.object({
     .string()
     .min(10, 'Не менее 10 символов')
     .max(180, 'Не может превышать 180 символов'),
-  description: z.string().optional(),
-  status: z.string().max(80).optional(),
+  description: z.string(),
+  status: z.string().max(80),
   startTime: z
     .string()
     .regex(
@@ -30,7 +30,7 @@ export const createActivitySchema = z.object({
     .max(50000, 'Превышает допустимое значение'),
   type: z.string().max(80),
   tags: z.array(z.string()),
+  tourId: z.number(),
   categories: z.array(z.string()),
-  discount: z.union([z.string().max(0), z.number()]).optional(),
-  photos: z.array(z.instanceof(File)).optional()
+  discount: z.number().optional()
 });

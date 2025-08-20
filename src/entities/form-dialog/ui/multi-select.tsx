@@ -40,8 +40,6 @@ export const MultiSelect = <
     onChange({ [name]: values?.filter(item => item !== value) });
   };
 
-  console.log('options:', options);
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

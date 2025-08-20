@@ -14,6 +14,7 @@ const cnUpcomingActivities = cn('UpcomingActivities');
 
 export const UpcomingActivities: FC = async () => {
   const upcomingActivities = await getUpcomingActivities();
+
   const activitiesDates = getActivitiesDates(upcomingActivities);
 
   return (

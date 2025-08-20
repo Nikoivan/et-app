@@ -1,11 +1,16 @@
 import { Activity, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
+import { CreateActivityData } from '@/features/activities/domain';
 
 type Params<T extends Prisma.ActivityInclude | undefined = undefined> = {
   where: Prisma.ActivityWhereInput | undefined;
   include?: T;
   select?: Prisma.ActivitySelect;
   orderBy?: Prisma.ActivityOrderByWithRelationInput;
+};
+
+const createActivity = (data: CreateActivityData & { authorId: number }) => {
+  return dbClient.activity.create({ data });
 };
 
 const getActivity = (id: number): Promise<Activity | null> =>
@@ -32,6 +37,7 @@ const deleteActivity = async (id: number): Promise<Activity | null> =>
   });
 
 export const activityRepositories = {
+  createActivity,
   getActivity,
   getActivities,
   deleteActivity

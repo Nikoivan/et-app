@@ -65,8 +65,6 @@ export async function postTour(req: NextRequest): Promise<Response> {
         )
       : undefined;
 
-    console.log(photosEntities);
-
     const tour = await tourServices.createTour({
       authorId: session.id,
       ...rest,
@@ -78,8 +76,6 @@ export async function postTour(req: NextRequest): Promise<Response> {
     if (!tour) {
       return handleError({ body: 'Ошибка. Не удалось создать тур' });
     }
-
-    console.log(tour);
 
     return handleSuccess({ body: tour });
   } catch (e) {

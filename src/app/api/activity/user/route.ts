@@ -1,3 +1,3 @@
-import { getUserActivities } from '@/features/activities/routes/user/get-activities';
+import { getUserActivities } from '@/features/activities/server';
 
 export const GET = getUserActivities;

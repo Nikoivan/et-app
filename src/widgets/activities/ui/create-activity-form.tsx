@@ -8,12 +8,19 @@ import {
 } from '@/widgets/activities/model/create-activity';
 import { createActivitySchema } from '@/features/activities';
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
+import { createActivity } from '@/features/activities/api/activity-api';
 
 const cnCreateActivityForm = cn('CreateActivityForm');
 
 export const CreateActivityForm: FC = () => {
-  const onSubmit = (data: FormDialogDomain.FormData) => {
-    console.log('OnSubmitCreateActivity', data);
+  const onSubmit = async (data: FormDialogDomain.FormData) => {
+    const createActivityData = createActivitySchema.safeParse(data);
+
+    if (!createActivityData.success) {
+      throw new Error('Ошибка повторной валидации активности');
+    }
+
+    await createActivity(createActivityData.data);
   };
 
   return (
