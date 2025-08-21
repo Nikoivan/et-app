@@ -1,5 +1,5 @@
 import { Either, left, right } from '@/shared/lib/either';
-import { Activity, Tour } from '@prisma/client';
+import { Activity } from '@prisma/client';
 import { urlUtils } from '@/shared/lib/url-utils';
 
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
@@ -40,7 +40,7 @@ export const createActivity = async (
 
 export const deleteActivity = async (
   id: number
-): Promise<Either<string, Tour>> => {
+): Promise<Either<string, Activity>> => {
   try {
     const response = await fetch(`${urlUtils.getApiUrl()}/activity?id=${id}`, {
       method: 'DELETE'
