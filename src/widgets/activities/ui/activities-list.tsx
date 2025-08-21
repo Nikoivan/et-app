@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { ActivityFeature } from '@/features/activities';
 
 type ActivitiesListProps = {

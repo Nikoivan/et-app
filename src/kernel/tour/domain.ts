@@ -1,6 +1,6 @@
 import { TourWR } from '@/kernel/tour/model/types';
 import { ReviewDomain } from '@/entities/review';
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { GeoPointDomain } from '@/entities/geo-point';
 import { isGeoPointEntity } from '@/entities/geo-point/lib/typeguadrs';
 import { Photo } from '@prisma/client';

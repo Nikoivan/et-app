@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { FeatureLayout } from '@/shared/ui/feature-layout';
 import { ActivityCard } from '@/features/activities';
 

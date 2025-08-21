@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 
 import { activityServices } from '@/features/activities/services/activity-services';
 import { sessionService } from '@/entities/user/server';
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { Either } from '@/shared/lib/either';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 

@@ -6,9 +6,10 @@ import {
   createActivityFormModel,
   initialCreateActivityFormData
 } from '@/widgets/activities/model/create-activity';
-import { createActivitySchema } from '@/features/activities';
+
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
 import { createActivity } from '@/features/activities/api/activity-api';
+import { createActivitySchema } from '@/entities/activity/server';
 
 const cnCreateActivityForm = cn('CreateActivityForm');
 

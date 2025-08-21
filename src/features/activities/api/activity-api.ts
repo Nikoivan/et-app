@@ -1,16 +1,15 @@
-import { Either, left, right } from '@/shared/lib/either';
 import { Activity } from '@prisma/client';
-import { urlUtils } from '@/shared/lib/url-utils';
 
+import { ActivityDomain } from '@/entities/activity/server';
+import { urlUtils } from '@/shared/lib/url-utils';
+import { Either, left, right } from '@/shared/lib/either';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
-import { CreateActivityData } from '@/features/activities/domain';
-import { ActivityDomain } from '@/entities/activity/';
 
 const createErrorMessage = 'Ошибка создания мероприятия';
 const deleteErrorMessage = 'Ошибка удаления мероприятия';
 
 export const createActivity = async (
-  data: CreateActivityData
+  data: ActivityDomain.CreateActivityData
 ): Promise<Either<string, ActivityDomain.ActivityEntity>> => {
   try {
     const response = await fetch(`${urlUtils.getApiUrl()}/activity`, {

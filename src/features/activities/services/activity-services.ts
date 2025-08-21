@@ -1,18 +1,11 @@
 import { Prisma } from '@prisma/client';
 
-import {
-  ActivityEntity,
-  activityRepositories
-} from '@/entities/activity/server';
+import { ActivityDomain, ActivityEntity, activityRepositories } from '@/entities/activity/server';
 import { activityToActivityEntity } from '@/entities/activity/domain';
-import { ActivityDomain } from '@/entities/activity';
 import { Either, left, right } from '@/shared/lib/either';
 
-import { CreateActivityData } from '@/features/activities/domain';
-
-
 const createActivity = async (
-  data: CreateActivityData & { authorId: number }
+  data: ActivityDomain.CreateActivityData & { authorId: number }
 ): Promise<ActivityEntity | null> => {
   const activity = await activityRepositories.createActivity(data);
 

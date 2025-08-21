@@ -3,7 +3,7 @@
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { useFetchRequest } from '@/shared/lib/hooks/use-fetch-request';
 import { Spinner } from '@/shared/ui/spinner';
 import { ClientLayout } from '@/widgets/activities/ui/client-layout';

@@ -7,3 +7,6 @@ export type { ActivityEntity } from '@/entities/activity/domain';
 
 export { ActivityCard } from '@/entities/activity/ui/activity-card';
 export { secureUtils } from '@/entities/activity/lib/secure-utils';
+export { createActivitySchema } from '@/entities/activity/lib/schemas/create-activity-schema';
+
+export * as ActivityDomain from './domain';

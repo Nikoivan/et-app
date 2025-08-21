@@ -1,6 +1,10 @@
 import { Activity, Tour } from '@prisma/client';
 import { UserEntity } from '@/entities/user/domain';
 import { dateUtils } from '@/entities/activity/lib/date-utils';
+import { z } from 'zod';
+import { createActivitySchema } from '@/entities/activity/server';
+
+export type CreateActivityData = z.infer<typeof createActivitySchema>;
 
 enum ActivityTypes {
   PERSONAL = 'personal',

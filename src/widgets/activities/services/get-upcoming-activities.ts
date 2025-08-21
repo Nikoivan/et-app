@@ -1,5 +1,4 @@
-import { ActivityDomain } from '@/entities/activity';
-import { secureUtils } from '@/entities/activity/server';
+import { ActivityDomain, secureUtils } from '@/entities/activity/server';
 import { activitiesRepository } from '@/widgets/activities/repositories/activities';
 
 export const getUpcomingActivities = async (): Promise<

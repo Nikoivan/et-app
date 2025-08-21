@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { BadgeRussianRuble, HeartIcon, UserPen, XCircle } from 'lucide-react';
 
 import { deleteActivity } from '@/features/activities/api/activity-api';
-import { ActivityDomain } from '@/entities/activity';
+import { ActivityDomain } from '@/entities/activity/server';
 import { ConfirmDialog } from '@/entities/confirm-dialog';
 import { cn } from '@/shared/lib/css';
 import { Button } from '@/shared/ui/button';

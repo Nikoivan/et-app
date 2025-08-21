@@ -1,6 +1,6 @@
 import { Activity, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
-import { CreateActivityData } from '@/features/activities/domain';
+import { CreateActivityData } from '@/entities/activity/domain';
 
 type Params<T extends Prisma.ActivityInclude | undefined = undefined> = {
   where: Prisma.ActivityWhereInput | undefined;
