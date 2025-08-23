@@ -33,7 +33,8 @@ export const MockReviewsAvatars: FC<{ rating: number }> = ({ rating }) => (
         'w-16'
       ])}
     >
-      <BlackStar /> <span className='text-black text-sm'>{rating}/5</span>
+      <BlackStar />{' '}
+      <span className='text-black text-sm'>{rating || '4.9'}/5</span>
     </div>
     <div className={cnMockReviewsAvatars('List', ['flex', 'items-center'])}>
       <AvatarPhoto
