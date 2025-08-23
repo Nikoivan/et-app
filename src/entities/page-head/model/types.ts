@@ -4,6 +4,7 @@ import { PropsWithClassNames } from '@/shared/model/types';
 enum Pages {
   HOME = 'home',
   TOUR = 'tour',
+  SERVICES = 'services',
   OTHER = 'other'
 }
 

@@ -1,6 +1,10 @@
 import { Prisma } from '@prisma/client';
 
-import { ActivityDomain, ActivityEntity, activityRepositories } from '@/entities/activity/server';
+import {
+  ActivityDomain,
+  ActivityEntity,
+  activityRepositories
+} from '@/entities/activity/server';
 import { activityToActivityEntity } from '@/entities/activity/domain';
 import { Either, left, right } from '@/shared/lib/either';
 

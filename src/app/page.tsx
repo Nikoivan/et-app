@@ -1,10 +1,9 @@
 'use server';
 
 import { FC } from 'react';
-
-import { AppHeader } from '@/widgets/app-header/server';
 import { HomeView } from '@/views/home/server';
-import { ContactsWidget } from '@/widgets/contacts/containers/contacts-widget';
+import { AppHeader } from '@/widgets/app-header/server';
+import { ContactsWidget } from '@/widgets/contacts/server';
 
 const Home: FC = async () => (
   <>
