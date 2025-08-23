@@ -34,7 +34,6 @@ export const PageHeadLayout: FC<PageHeadProps> = async ({
         'right-0',
         'bottom-0',
         'left-0',
-        'rounded-xl',
         'bg-[#0000002a]'
       ])}
     ></div>

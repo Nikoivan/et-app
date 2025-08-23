@@ -34,7 +34,7 @@ export const ActivityCardLayout: FC<LayoutProps> = async ({
       'rounded-xl',
       className
     ])}
-    href={`activity/${id}`}
+    href={`activities?id=${id}`}
   >
     <div className={cnActivityCard('LeftWrap')}>{leftNode}</div>
     <div className={cnActivityCard('RightWrap')}>
