@@ -2,13 +2,13 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { ServerLayout } from '@/widgets/tours/ui/server-layout';
 
+import { ServerLayout } from '@/widgets/tours/ui/server-layout';
 import { getPopularTours } from '@/widgets/tours/services/get-popular-tours';
 import { ServerTourCard } from '@/features/tour/server';
-import styles from '../assets/styles.module.scss';
-
 import { Title } from '@/shared/ui/title';
+
+import styles from '../assets/styles.module.scss';
 
 const cnPopularTours = cn('PopularTours');
 

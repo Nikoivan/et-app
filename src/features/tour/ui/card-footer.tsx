@@ -18,7 +18,7 @@ export const CardFooter: FC<CardFooterProps> = ({
       'justify-between',
       'items-end',
       'w-full',
-      'mt-[45%]',
+      'mt-auto',
       'CardHeader',
       className
     )}
