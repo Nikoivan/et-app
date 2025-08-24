@@ -9,6 +9,7 @@ import { PageHeadLayout } from '@/entities/page-head/server';
 import { PageTitle } from '@/entities/page-title/server';
 import { LinkButton } from '@/shared/ui/link-button';
 import { AppHeader } from '@/widgets/app-header/containers/app-header';
+import { BaseApplicationForm } from '@/features/application-form';
 
 export const ServicesView: FC = async () => (
   <>
@@ -34,7 +35,7 @@ export const ServicesView: FC = async () => (
           <UpcomingActivities />
         </>
       }
-      mainBottom={null}
+      mainBottom={<BaseApplicationForm />}
     />
   </>
 );

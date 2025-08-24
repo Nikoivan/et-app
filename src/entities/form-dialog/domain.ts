@@ -54,6 +54,7 @@ export type FormRowProps<
     options?: string[];
     required?: boolean;
     multiple?: boolean;
+    hidden?: boolean;
     value?: FormCheckTypes<T>[K];
     error?: string;
   };
@@ -87,4 +88,5 @@ export type InputProps<
   onChange: (value: Record<string, Value<T>>) => void;
   value?: K extends Value<T> ? K : never;
   multiple?: boolean;
+  hidden?: boolean;
 };

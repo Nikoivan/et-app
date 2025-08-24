@@ -2,11 +2,7 @@
 
 import { cn } from '@bem-react/classname';
 
-import {
-  FormCheckTypes,
-  FormRowProps,
-  Value
-} from '@/entities/form-dialog/domain';
+import { FormCheckTypes, FormRowProps, Value } from '@/entities/form-dialog/domain';
 import { Label } from '@/shared/ui/label';
 import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
 import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
@@ -27,11 +23,12 @@ export const FormRow = <
   name,
   onChange,
   multiple,
+  hidden,
   options,
   error
 }: FormRowProps<FormCheckTypes<T>>) => (
   <div className={cnFormRow(null)}>
-    <div>
+    <div className={hidden ? 'absolute top-[-1000px]' : undefined}>
       <Label>{label}</Label>
       {type === 'string' && (
         <InputTypeString
@@ -39,6 +36,7 @@ export const FormRow = <
           onChange={onChange}
           value={value}
           type={type}
+          multiple={multiple}
         />
       )}
       {type === 'number' && (
