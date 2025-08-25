@@ -8,6 +8,7 @@ import { initialFormData } from '@/features/application-form/constants/initial-f
 import { applicationFormModel } from '@/features/application-form/model/form-model';
 import { ApplicationData } from '@/features/application-form/domain';
 import { applicationFormSchema } from '@/features/application-form/model/schema';
+import { sendCallbackRequest } from '@/features/application-form/api/callback-api';
 
 type Props = {
   triggerButton?: ReactNode;
@@ -21,13 +22,14 @@ export const ApplicationFormLayout: FC<Props> = ({
   appData
 }) => {
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    //отправкак заявки на сервер
+    const formDataResult = applicationFormSchema.safeParse(data);
 
-    console.log('appData', appData);
-    console.log('formData', data);
+    if (!formDataResult.success) return;
+
+    const result = await sendCallbackRequest(formDataResult.data, appData);
+
+    console.log('requestResult', result);
   };
-
-  console.log('has render');
 
   return (
     <div className={cnApplicationForm()}>

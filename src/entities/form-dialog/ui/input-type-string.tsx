@@ -21,8 +21,6 @@ export const InputTypeString = <
     onChange({ [name]: e.target.value });
   };
 
-  console.log('multiple', multiple);
-
   return (
     <>
       {multiple ? (

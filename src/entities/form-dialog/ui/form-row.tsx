@@ -2,7 +2,11 @@
 
 import { cn } from '@bem-react/classname';
 
-import { FormCheckTypes, FormRowProps, Value } from '@/entities/form-dialog/domain';
+import {
+  FormCheckTypes,
+  FormRowProps,
+  Value
+} from '@/entities/form-dialog/domain';
 import { Label } from '@/shared/ui/label';
 import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
 import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
