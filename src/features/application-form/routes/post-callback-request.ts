@@ -19,7 +19,9 @@ export async function postCallbackRequest(req: NextRequest): Promise<Response> {
     return handleSuccess({
       body: 'Заявка успешно отправлена. Ожидайте обратного звонка'
     });
-  } catch {
+  } catch (e) {
+    console.log(e);
+
     return handleError({
       body: 'Ошибка на сервере. Во время отправки заявки на обратный звонок.'
     });

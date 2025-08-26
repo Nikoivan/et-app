@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import * as process from 'node:process';
 
 type MailData = {
   name: string;
@@ -7,17 +8,16 @@ type MailData = {
   description?: string;
 };
 
+console.log('login', process.env.EMAIL_LOGIN);
 const transport = nodemailer.createTransport({
   host: 'smtp.yandex.ru',
-  port: 587,
+  port: 465,
   secure: false,
   auth: {
-    user: 'nixonivan-studio',
-    pass: '2215081VfndtqYanus'
+    user: process.env.EMAIL_LOGIN || '',
+    pass: process.env.EMAIL_PASSWORD || ''
   }
 });
-
-console.log('transport', transport);
 
 export const sendMail = ({
   name,
