@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
 import { ActivityDomain } from '@/entities/activity/server';
-import { ActivityFeature } from '@/features/activities';
+import { ActivityFeature } from '@/features/activity';
 
 type ActivitiesListProps = {
   list: ActivityDomain.ActivityEntity[];

@@ -1,3 +1,3 @@
-import { postActivity } from '@/features/activities/server';
+import { postActivity } from '@/features/activity/server';
 
 export const POST = postActivity;

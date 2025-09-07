@@ -3,7 +3,7 @@
 import { FC, ReactNode } from 'react';
 
 type LayoutProps = {
-  title: ReactNode;
+  title?: ReactNode;
   list: ReactNode;
   className?: string;
   actions?: ReactNode;

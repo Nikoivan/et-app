@@ -2,28 +2,33 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
+import { useQuery } from '@tanstack/react-query';
 
 import { ClientLayout } from '@/widgets/tours/ui/client-layout';
-import { SessionEntity } from '@/entities/user/domain';
-import { useFetchRequest } from '@/shared/lib/hooks/use-fetch-request';
-import { TourDomain } from '@/entities/tour/server';
-import { getOwnUserToursUrl } from '@/widgets/tours/lib/url-utils';
-import { TourList } from '@/widgets/tours/ui/tour-list';
-import { Spinner } from '@/shared/ui/spinner';
 import { CreateTourForm } from '@/widgets/tours/ui/create-tour-form';
+import { TourFeatureList } from '@/widgets/tours/ui/tour-feature-list';
+import { SessionDomain } from '@/entities/user/server';
+import { TourDomain } from '@/entities/tour/server';
+import { Spinner } from '@/shared/ui/spinner';
+import { getOwnTours } from '../api/own-tour';
 
 const cnDashboardTours = cn('DashboardTours');
 
-export const DashboardTours: FC<{ session: SessionEntity }> = () => {
-  const { data, error, isLoading } = useFetchRequest<TourDomain.TourEntity[]>({
-    url: getOwnUserToursUrl()
+export const DashboardTours: FC<{
+  session: SessionDomain.SessionEntity;
+}> = () => {
+  const { data, isPending, error } = useQuery<{
+    list: TourDomain.TourEntity[];
+  }>({
+    queryKey: ['own', 'user', 'tours'],
+    queryFn: () => getOwnTours()
   });
 
-  const hasList = !!data?.length && !error;
+  const hasList = !!data?.list?.length && !error;
 
   return (
     <>
-      {isLoading ? (
+      {isPending ? (
         <div className='flex justify-center items-center w-full h-full min-h-96'>
           <Spinner />
         </div>
@@ -34,10 +39,10 @@ export const DashboardTours: FC<{ session: SessionEntity }> = () => {
           list={
             <>
               {hasList ? (
-                <TourList list={data} />
+                <TourFeatureList list={data.list} />
               ) : (
                 <div className={cnDashboardTours('Error', ['text-red-600'])}>
-                  {error}
+                  {error?.message}
                 </div>
               )}
             </>

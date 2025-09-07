@@ -3,11 +3,13 @@ import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
 
-type Params<T extends Prisma.TourInclude | undefined = undefined> = {
-  where: Prisma.TourWhereInput;
+export type Params<T extends Prisma.TourInclude | undefined = undefined> = {
+  where?: Prisma.TourWhereInput;
   include?: T;
   select?: Prisma.TourSelect;
   orderBy?: Prisma.TourOrderByWithRelationInput;
+  take?: number;
+  skip?: number;
 };
 
 const getTour = (id: number): Promise<Tour | null> =>
@@ -18,7 +20,7 @@ const getTour = (id: number): Promise<Tour | null> =>
   });
 
 const getTours = <TInclude extends Prisma.TourInclude | undefined = undefined>(
-  params: Params<TInclude>
+  params?: Params<TInclude>
 ): Promise<Prisma.TourGetPayload<{ include: TInclude }>[]> =>
   dbClient.tour.findMany(params) as Promise<
     Prisma.TourGetPayload<{ include: TInclude }>[]

@@ -5,7 +5,7 @@ import { sessionService } from '@/entities/user/server';
 import { roleUtils } from '@/entities/user';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 import { getPhotoEntity } from '@/entities/photo/lib/photo-utils';
-import { tourServices } from '@/features/tour/services/tour-services';
+import { tourService } from '@/features/tour/services/tour-service';
 import { PhotoDomain } from '@/entities/photo';
 
 export async function postTour(req: NextRequest): Promise<Response> {
@@ -65,7 +65,7 @@ export async function postTour(req: NextRequest): Promise<Response> {
         )
       : undefined;
 
-    const tour = await tourServices.createTour({
+    const tour = await tourService.createTour({
       authorId: session.id,
       ...rest,
       title,

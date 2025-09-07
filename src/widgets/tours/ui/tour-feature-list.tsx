@@ -12,7 +12,7 @@ type TourListProps = {
 
 const cnTourList = cn('TourList');
 
-export const TourList: FC<TourListProps> = ({ list }) => (
+export const TourFeatureList: FC<TourListProps> = ({ list }) => (
   <ul className={cnTourList()}>
     {list.map(tour => (
       <li key={tour.id}>
