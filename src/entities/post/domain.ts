@@ -1,35 +1,28 @@
-// данный файл содержит
-// структуры данных и чистые функции
-// тут описываем данные не так как удобно хранить в БЭК, а как удобно тут работать
-
-export type UserEntity = {
-  id: string;
+type UserEntity = {
+  id: number;
   login: string;
+  role: string;
+  firstName?: string;
+  lastName?: string;
 };
 
-export type Field = Cell;
-export type Cell = PostSymbol | null;
-export type PostSymbol = string;
+type PostStatus = 'legacy' | 'fresh';
 
-export type PostArchiveEntity = {
-  id: string;
-  author: UserEntity;
-  status: 'archive';
+export type PostEntity = {
+  id: number;
+  title: string;
+  description: string;
+  content: string;
+  user: UserEntity;
+  postAuthorId: number;
+  type: string;
+  guid: string;
+  image: string;
+  status: PostStatus;
+  route: string;
+  categories: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  link?: string;
+  pubDate?: string;
 };
-
-export type PostPublishedEntity = {
-  id: string;
-  author: UserEntity;
-  status: 'published';
-};
-
-export type PostNewEntity = {
-  id: string;
-  author: UserEntity;
-  status: 'new';
-};
-
-export type PostEntity =
-  | PostNewEntity
-  | PostArchiveEntity
-  | PostPublishedEntity;

@@ -17,7 +17,7 @@ const cnDashboardTours = cn('DashboardTours');
 export const DashboardTours: FC<{
   session: SessionDomain.SessionEntity;
 }> = () => {
-  const { data, isPending, error } = useQuery<{
+  const { data, isLoading, error } = useQuery<{
     list: TourDomain.TourEntity[];
   }>({
     queryKey: ['own', 'user', 'tours'],
@@ -28,7 +28,7 @@ export const DashboardTours: FC<{
 
   return (
     <>
-      {isPending ? (
+      {isLoading ? (
         <div className='flex justify-center items-center w-full h-full min-h-96'>
           <Spinner />
         </div>

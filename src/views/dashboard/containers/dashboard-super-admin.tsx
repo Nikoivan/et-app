@@ -8,11 +8,13 @@ import { SessionEntity } from '@/entities/user/domain';
 import { cn } from '@/shared/lib/css';
 import { DashboardActivities } from '@/widgets/activities';
 
-export const DashboardView: FC<
+export const DashboardSuperAdmin: FC<
   PropsWithChildren<{ session: SessionEntity }>
 > = async ({ session, children }) => (
-  <DashboardLayout className={cn('p-4')}>
-    <h1 className={cn('text-center')}>Панель управления гида</h1>
+  <DashboardLayout className={cn('p-4')} type='guide'>
+    <h1 className={cn('text-center')}>
+      Панель управления cупер администратора
+    </h1>
     <DashboardTours session={session} />
     <DashboardActivities session={session} />
     {children}

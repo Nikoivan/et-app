@@ -33,7 +33,7 @@ export const FormRow = <
 }: FormRowProps<FormCheckTypes<T>>) => (
   <div className={cnFormRow(null)}>
     <div className={hidden ? 'absolute top-[-1000px]' : undefined}>
-      <Label>{label}</Label>
+      <Label className='mb-3 px-3'>{label}</Label>
       {type === 'string' && (
         <InputTypeString
           name={name}

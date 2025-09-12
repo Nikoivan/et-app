@@ -2,24 +2,26 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-
-import { ActivityDomain } from '@/entities/activity/server';
-import { useFetchRequest } from '@/shared/lib/hooks/use-fetch-request';
 import { Spinner } from '@/shared/ui/spinner';
 import { ClientLayout } from '@/widgets/activities/ui/client-layout';
 import { ActivitiesList } from '@/widgets/activities/ui/activities-list';
-import { getOwnUserActivitiesUrl } from '@/widgets/activities/lib/url-utils';
 import { SessionEntity } from '@/entities/user/domain';
 import { CreateActivityForm } from '@/widgets/activities/ui/create-activity-form';
+import { useQuery } from '@tanstack/react-query';
+import { getOwnUserActivities } from '@/widgets/activities/api/own-activities';
+import { ActivityDomain } from '@/entities/activity/server';
 
 const cnDashboardActivities = cn('DashboardActivities');
 
 export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
-  const { data, isLoading, error } = useFetchRequest<
-    ActivityDomain.ActivityEntity[]
-  >({ url: getOwnUserActivitiesUrl() });
+  const { data, isLoading, error } = useQuery<{
+    list: ActivityDomain.ActivityEntity[];
+  }>({
+    queryKey: ['activities', 'user', 'own'],
+    queryFn: getOwnUserActivities
+  });
 
-  const hasList = !!data?.length;
+  const hasList = !!data?.list.length;
 
   return (
     <>
@@ -29,22 +31,31 @@ export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
         </div>
       ) : (
         <ClientLayout
-          className={cnDashboardActivities()}
+          className={cnDashboardActivities(null, ['mt-10'])}
           title={<div className='text-center'>Мои мероприятия</div>}
           list={
             <>
               {hasList ? (
-                <ActivitiesList list={data} />
+                <ActivitiesList list={data.list} />
               ) : (
                 <div
                   className={cnDashboardActivities('Error', ['text-red-600'])}
                 >
-                  {error}
+                  {error?.message}
                 </div>
               )}
             </>
           }
-          actions={<CreateActivityForm />}
+          actions={
+            <div
+              className={cnDashboardActivities('Actions', [
+                'mt-8',
+                'text-center'
+              ])}
+            >
+              <CreateActivityForm />
+            </div>
+          }
         />
       )}
     </>

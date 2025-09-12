@@ -29,7 +29,7 @@ export const FormDialog = (props: FormDialogProps) => {
   return (
     <Dialog modal>
       <DialogTrigger asChild className={cnFormDialog('Trigger')}>
-        <Button variant='ghost'>{triggerButton || 'Открыть диалог'}</Button>
+        <Button variant='outline'>{triggerButton || 'Открыть диалог'}</Button>
       </DialogTrigger>
       <DialogContent className='h-full overflow-y-auto'>
         <DialogHeader>

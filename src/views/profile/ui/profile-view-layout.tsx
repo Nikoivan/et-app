@@ -14,6 +14,9 @@ export const ProfileLayout: FC<{ id: number; role: string }> = ({
   id,
   role
 }) => {
+  const dashboardLabel =
+    role === 'SUPER_ADMIN' ? 'Открыть панель управления' : 'Мои предложения';
+
   return (
     <main className={cnProfileView(null, ['px-4', 'pt-[15vh]'])}>
       <h1 className='text-center'>Профиль</h1>
@@ -23,7 +26,7 @@ export const ProfileLayout: FC<{ id: number; role: string }> = ({
       {permissionsServices.userHasPermissionsToDashboard(role) && (
         <div className='text-center mt-4'>
           <Button variant='outline'>
-            <Link href={`/dashboard/${id}`}>Мои предложения</Link>
+            <Link href={`/dashboard/${id}`}>{dashboardLabel}</Link>
           </Button>
         </div>
       )}

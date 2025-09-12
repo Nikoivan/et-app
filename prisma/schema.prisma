@@ -17,7 +17,7 @@ model User {
   id            Int           @id @default(autoincrement())
   login         String        @unique
   passwordHash  String        @map("password_hash")
-  salt          String
+  salt          String        @db.VarChar(800)
   role          String        @db.VarChar(80)
   firstName     String?       @map("first_name")
   lastName      String?       @map("last_name")
@@ -36,28 +36,24 @@ model User {
 }
 
 model Post {
-  id           Int    @id @default(autoincrement())
-  title        String
-  content      String
-  user         User   @relation(fields: [postAuthorId], references: [id])
-  postAuthorId Int    @map("post_author_id")
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(180)
+  description     String
+  content         String
+  user            User     @relation(fields: [postAuthorId], references: [id])
+  postAuthorId    Int      @map("post_author_id")
+  type            String   @db.VarChar(20)
+  guid            String   @db.VarChar(80)
+  image           String   @db.VarChar(512)
+  status          String   @db.VarChar(20)
+  route           String   @db.VarChar(512)
+  categories      String[]
+  metaTitle       String?  @map("meta_title")
+  metaDescription String?  @map("meta_descriptions")
+  link            String?
+  pubDate         String?
 
   @@map("post")
-}
-
-model LegacyPosts {
-  id           Int     @id @default(autoincrement())
-  postAuthorId Int     @map("post_author_id")
-  postDate     String  @map("post_date")
-  guid         String
-  postContent  String? @map("post_content")
-  postTitle    String? @map("post_title")
-  postStatus   String? @map("post_status") @db.VarChar(80)
-  postName     String? @map("post_name")
-  postModified String? @map("post_modified")
-  postParent   Int?    @map("post_parent")
-
-  @@map("legacy_post")
 }
 
 model Review {
@@ -101,6 +97,9 @@ model Tour {
   activities      Activity[]
   orders          Order[]
   photos          Photo[]
+  metaTitle       String?    @map("meta_title")
+  metaDescription String?    @map("meta_description")
+  metaKeywords    String?    @map("meta_keywords")
   rating          Float?
   descriptionText String?    @map("description_text")
   startPlace      Json?      @map("start_place")

@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import { sessionService } from '@/entities/user/services/session';
 import { roleUtils } from '@/entities/user';
 
-const DashboardLayout: FC<{ children: ReactNode }> = async ({
+const DashboardView: FC<{ children: ReactNode }> = async ({
   children
 }: {
   children: React.ReactNode;
@@ -23,4 +23,4 @@ const DashboardLayout: FC<{ children: ReactNode }> = async ({
   return <>{children}</>;
 };
 
-export default DashboardLayout;
+export default DashboardView;
