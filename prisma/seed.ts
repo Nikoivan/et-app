@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -9,7 +9,7 @@ async function main() {
   //   create: {
   //     email: "alice@prisma.io",
   //     name: "Alice",
-  //     posts: {
+  //     post: {
   //       create: {
   //         title: "Check out Prisma with Next.js",
   //         content: "https://www.prisma.io/nextjs",
@@ -24,7 +24,7 @@ async function main() {
   //   create: {
   //     email: "bob@prisma.io",
   //     name: "Bob",
-  //     posts: {
+  //     post: {
   //       create: [
   //         {
   //           title: "Follow Prisma on Twitter",
@@ -47,7 +47,7 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
+  .catch(async e => {
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);

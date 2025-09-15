@@ -1,36 +1,21 @@
-import { Prisma } from '@prisma/client';
-import { Params } from '@/entities/tour/repositories/tour';
-
 export type DbQueryParams = { take: number; skip?: number };
 
 const pageCount = 10;
 
-const getQueryParamsByPage = (
-  params: (Prisma.TourFindManyArgs & { page?: number }) | undefined
-): Params | void => {
+export type Params<T> = ({ page?: number } & Partial<T>) | undefined;
+
+const getDbQueryParamsByPage = <T>(params: Params<T>) => {
   if (!params) return;
 
-  const { where, select, include, page } = params;
-
-  const validParams = select
-    ? {
-        where,
-        select
-      }
-    : include
-      ? {
-          where,
-          include
-        }
-      : { where };
+  const { page, ...rest } = params;
 
   if (!page || page === 1) {
-    return { ...validParams, take: 10 } as Params;
+    return { ...rest, take: 10 };
   }
 
   const take = page * pageCount;
 
-  return { ...validParams, take, skip: take - pageCount } as Params;
+  return { ...rest, take, skip: take - pageCount };
 };
 
-export const qbQueryUtils = { getQueryParamsByPage };
+export const qbQueryUtils = { getDbQueryParamsByPage };

@@ -1,9 +1,8 @@
 import { NextRequest } from 'next/server';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { TourDomain } from '@/entities/tour/server';
-
-import { Either } from '@/shared/lib/either';
 import { tourService } from '@/features/tour/server';
+import { TourCardEntity } from '@/features/tour';
 
 export async function getTours(req: NextRequest): Promise<Response> {
   try {
@@ -11,13 +10,14 @@ export async function getTours(req: NextRequest): Promise<Response> {
 
     const getFn = isTourCards ? tourService.getTourCards : tourService.getTours;
 
-    const eitherResult: Either<string, TourDomain.TourEntity[]> = await getFn();
+    const result: TourCardEntity[] | TourDomain.TourEntity[] =
+      (await getFn()) as TourCardEntity[] | TourDomain.TourEntity[];
 
-    if (eitherResult.type === 'left') {
-      return handleError({ body: eitherResult.error });
+    if (!result) {
+      return handleError({ body: 'Ошибка получения туров' });
     }
 
-    return handleSuccess({ body: eitherResult.value });
+    return handleSuccess({ body: result });
   } catch {
     return handleError({ body: 'Ошибка при получение карточек туров' });
   }
