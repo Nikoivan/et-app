@@ -1,3 +1,8 @@
+import { Prisma } from '@prisma/client';
+import { objectUtils } from '@/shared/lib/object-utils';
+import { postUtils } from '@/entities/post/lib/post-utils';
+import { WithoutNull } from '@/shared/model/types';
+
 type UserEntity = {
   id: number;
   login: string;
@@ -6,7 +11,7 @@ type UserEntity = {
   lastName?: string;
 };
 
-type PostStatus = 'legacy' | 'fresh';
+export type PostStatus = 'legacy' | 'fresh' | 'unknown';
 
 export type PostEntity = {
   id: number;
@@ -25,4 +30,15 @@ export type PostEntity = {
   metaDescription?: string;
   link?: string;
   pubDate?: string;
+};
+
+export const postToPostEntity = (
+  post: Prisma.PostGetPayload<{ include: { user: true } }>
+): PostEntity => {
+  const entity = objectUtils.makeWithoutNull(post);
+
+  return {
+    ...entity,
+    status: postUtils.getValidStatus(entity.status)
+  } as WithoutNull<PostEntity>;
 };

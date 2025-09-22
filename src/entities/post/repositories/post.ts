@@ -1,5 +1,6 @@
 import { Post, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
+import { PostEntity } from '@/entities/post/domain';
 
 export type Params<T extends Prisma.PostInclude | undefined = undefined> = {
   where?: Prisma.PostWhereInput;
@@ -24,7 +25,7 @@ const createPost = (post: Omit<Post, 'id'>): Promise<Post> =>
   dbClient.post.create({ data: post });
 
 const createManyPosts = (
-  posts: Omit<Post, 'id'>
+  posts: Omit<PostEntity, 'id' | 'user'>[]
 ): Prisma.PrismaPromise<Prisma.BatchPayload> =>
   dbClient.post.createMany({ data: posts });
 

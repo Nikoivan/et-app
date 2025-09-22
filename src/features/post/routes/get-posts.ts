@@ -1,26 +1,16 @@
 import { NextRequest } from 'next/server';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
-import { sessionService } from '@/entities/user/server';
-import { TourDomain } from '@/entities/tour/server';
-import { tourService } from '@/features/tour/services/tour-service';
+
 import { Either } from '@/shared/lib/either';
+import { postServices } from '@/features/post/services/post-services';
+import { PostDomain } from '@/entities/post/server';
 
 export async function getPosts(req: NextRequest): Promise<Response> {
   try {
-    const cookies = req.cookies.get('session')?.value;
+    const page = req.nextUrl.searchParams.get('page');
 
-    if (!cookies) {
-      return handleError({ body: 'Cookies not found' });
-    }
-
-    const { session } = await sessionService.verifySession(cookies);
-
-    if (!session) {
-      return handleError({ body: 'Session not found' });
-    }
-
-    const eitherResult: Either<string, TourDomain.TourEntity[]> =
-      await tourService.getUserTours(session.id);
+    const eitherResult: Either<string, PostDomain.PostEntity[]> =
+      await postServices.getPosts(page ? { page: Number(page) } : undefined);
 
     if (eitherResult.type === 'left') {
       return handleError({ body: eitherResult.error });

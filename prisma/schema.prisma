@@ -48,10 +48,10 @@ model Post {
   status          String   @db.VarChar(20)
   route           String   @db.VarChar(512)
   categories      String[]
-  metaTitle       String?  @map("meta_title")
-  metaDescription String?  @map("meta_descriptions")
-  link            String?
-  pubDate         String?
+  metaTitle       String?  @map("meta_title") @db.VarChar(512)
+  metaDescription String?  @map("meta_descriptions") @db.VarChar(512)
+  link            String?  @db.VarChar(512)
+  pubDate         String?  @db.VarChar(128)
 
   @@map("post")
 }
