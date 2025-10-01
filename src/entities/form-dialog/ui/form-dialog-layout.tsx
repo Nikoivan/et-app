@@ -15,6 +15,8 @@ import { Form } from '@/entities/form-dialog/ui/form';
 import { FormProps } from '@/entities/form-dialog/domain';
 
 type FormDialogProps = {
+  isOpen?: boolean;
+  onOpenChange?: (value: boolean) => void;
   triggerButton?: ReactNode;
   dialogTitle?: ReactNode;
   dialogDescription?: ReactNode;
@@ -24,10 +26,17 @@ type FormDialogProps = {
 const cnFormDialog = cn('FormDialog');
 
 export const FormDialog = (props: FormDialogProps) => {
-  const { triggerButton, dialogTitle, dialogDescription, ...formProps } = props;
+  const {
+    isOpen,
+    onOpenChange,
+    triggerButton,
+    dialogTitle,
+    dialogDescription,
+    ...formProps
+  } = props;
 
   return (
-    <Dialog modal>
+    <Dialog open={isOpen} onOpenChange={onOpenChange} modal>
       <DialogTrigger asChild className={cnFormDialog('Trigger')}>
         <Button variant='outline'>{triggerButton || 'Открыть диалог'}</Button>
       </DialogTrigger>

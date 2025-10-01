@@ -2,10 +2,7 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import {
-  createActivityFormModel,
-  initialCreateActivityFormData
-} from '@/widgets/activities/model/create-activity';
+import { createActivityFormModel, initialCreateActivityFormData } from '@/widgets/activities/model/create-activity';
 
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
 import { createActivity } from '@/features/activity/api/activity-api';
@@ -25,14 +22,13 @@ export const CreateActivityForm: FC = () => {
   };
 
   return (
-    <div className={cnCreateActivityForm()}>
-      <FormDialog
-        triggerButton='Создать активность'
-        formDataModel={createActivityFormModel}
-        initialData={initialCreateActivityFormData}
-        onSubmit={onSubmit}
-        schema={createActivitySchema}
-      />
-    </div>
+    <FormDialog
+      className={cnCreateActivityForm()}
+      triggerButton='Создать активность'
+      formDataModel={createActivityFormModel}
+      initialData={initialCreateActivityFormData}
+      onSubmit={onSubmit}
+      schema={createActivitySchema}
+    />
   );
 };

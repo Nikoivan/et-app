@@ -26,7 +26,7 @@ export async function postPosts(req: NextRequest): Promise<Response> {
 
     const hasJSONFile = !!req.nextUrl.searchParams.get('by_json');
     const dataSource = hasJSONFile ? await req.formData() : await req.json();
-    const posts = await postUtils.getDataSourcePosts(dataSource);
+    const posts = await postUtils.getDataSourcePosts(dataSource, session.id);
 
     if (!posts.length) {
       return handleError({ body: 'Посты отсутствуют' });
@@ -41,6 +41,7 @@ export async function postPosts(req: NextRequest): Promise<Response> {
           : 'Ну удалось создать посты.'
     });
   } catch (error) {
+    console.log('catch');
     return handleError({ error });
   }
 }

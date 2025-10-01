@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { objectUtils } from '@/shared/lib/object-utils';
 import { postUtils } from '@/entities/post/lib/post-utils';
 import { WithoutNull } from '@/shared/model/types';
@@ -32,13 +32,30 @@ export type PostEntity = {
   pubDate?: string;
 };
 
+const userToUserEntity = ({
+  id,
+  login,
+  role,
+  firstName,
+  lastName
+}: User): WithoutNull<UserEntity> =>
+  objectUtils.makeWithoutNull<UserEntity>({
+    id,
+    login,
+    role,
+    firstName: firstName || undefined,
+    lastName: lastName || undefined
+  }) as WithoutNull<UserEntity>;
+
 export const postToPostEntity = (
   post: Prisma.PostGetPayload<{ include: { user: true } }>
 ): PostEntity => {
   const entity = objectUtils.makeWithoutNull(post);
+  userToUserEntity(post.user);
 
   return {
     ...entity,
-    status: postUtils.getValidStatus(entity.status)
+    status: postUtils.getValidStatus(entity.status),
+    user: userToUserEntity(post.user)
   } as WithoutNull<PostEntity>;
 };

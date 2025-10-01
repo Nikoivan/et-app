@@ -15,7 +15,7 @@ datasource db {
 
 model User {
   id            Int           @id @default(autoincrement())
-  login         String        @unique
+  login         String
   passwordHash  String        @map("password_hash")
   salt          String        @db.VarChar(800)
   role          String        @db.VarChar(80)
@@ -46,12 +46,15 @@ model Post {
   guid            String   @db.VarChar(80)
   image           String   @db.VarChar(512)
   status          String   @db.VarChar(20)
-  route           String   @db.VarChar(512)
+  route           String   @unique
+  metaKeywords    String[] @map("meta_keywords")
   categories      String[]
   metaTitle       String?  @map("meta_title") @db.VarChar(512)
   metaDescription String?  @map("meta_descriptions") @db.VarChar(512)
   link            String?  @db.VarChar(512)
   pubDate         String?  @db.VarChar(128)
+  duration        String?  @db.VarChar(512)
+  price           String?  @db.VarChar(256)
 
   @@map("post")
 }

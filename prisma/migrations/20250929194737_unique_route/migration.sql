@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "post" ALTER COLUMN "route" SET DATA TYPE TEXT;

@@ -1,6 +1,7 @@
 import { Post, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { PostEntity } from '@/entities/post/domain';
+import PostGetPayload = Prisma.PostGetPayload;
 
 export type Params<T extends Prisma.PostInclude | undefined = undefined> = {
   where?: Prisma.PostWhereInput;
@@ -11,8 +12,15 @@ export type Params<T extends Prisma.PostInclude | undefined = undefined> = {
   skip?: number;
 };
 
-const getPost = (id: number): Promise<Post | null> =>
-  dbClient.post.findUnique({ where: { id } });
+type UniquePostParams = { id: number } | { route: string };
+
+const getPost = (
+  params: UniquePostParams
+): Promise<PostGetPayload<{ include: { user: true } }> | null> =>
+  dbClient.post.findUnique({
+    where: params,
+    include: { user: true }
+  }) as Promise<PostGetPayload<{ include: { user: true } }> | null>;
 
 const getPosts = <TInclude extends Prisma.PostInclude>(
   params: Params<TInclude>
@@ -27,7 +35,7 @@ const createPost = (post: Omit<Post, 'id'>): Promise<Post> =>
 const createManyPosts = (
   posts: Omit<PostEntity, 'id' | 'user'>[]
 ): Prisma.PrismaPromise<Prisma.BatchPayload> =>
-  dbClient.post.createMany({ data: posts });
+  dbClient.post.createMany({ data: posts, skipDuplicates: true });
 
 const updatePost = (post: Post): Promise<Post> =>
   dbClient.post.update({ where: { id: post.id }, data: post });
