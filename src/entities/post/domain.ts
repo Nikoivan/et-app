@@ -23,6 +23,7 @@ export type PostEntity = {
   type: string;
   guid: string;
   image: string;
+  images: string[];
   status: PostStatus;
   route: string;
   categories: string[];

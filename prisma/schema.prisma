@@ -37,24 +37,25 @@ model User {
 
 model Post {
   id              Int      @id @default(autoincrement())
-  title           String   @db.VarChar(180)
+  title           String   @db.VarChar(256)
   description     String
   content         String
   user            User     @relation(fields: [postAuthorId], references: [id])
   postAuthorId    Int      @map("post_author_id")
   type            String   @db.VarChar(20)
   guid            String   @db.VarChar(80)
-  image           String   @db.VarChar(512)
+  images          String[] @db.VarChar(512)
   status          String   @db.VarChar(20)
   route           String   @unique
   metaKeywords    String[] @map("meta_keywords")
   categories      String[]
+  image           String?  @db.VarChar(512)
   metaTitle       String?  @map("meta_title") @db.VarChar(512)
   metaDescription String?  @map("meta_descriptions") @db.VarChar(512)
   link            String?  @db.VarChar(512)
   pubDate         String?  @db.VarChar(128)
-  duration        String?  @db.VarChar(512)
-  price           String?  @db.VarChar(256)
+  metaDuration    String?  @map("meta_duration") @db.VarChar(512)
+  metaPrice       String?  @map("meta_price") @db.VarChar(256)
 
   @@map("post")
 }

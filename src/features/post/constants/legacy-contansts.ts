@@ -5,12 +5,13 @@ import { legacyPostSchema } from '@/features/post/lib/validation-schemas';
 
 export const initialLegacyPost: z.infer<typeof legacyPostSchema> = {
   title: '',
-  description: '',
+  description: 'description',
   content: '',
   postAuthorId: 1,
   type: 'post',
   guid: v4(),
   image: '',
+  images: [],
   status: 'legacy',
   route: '',
   categories: ['legacy'],

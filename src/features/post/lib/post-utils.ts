@@ -1,5 +1,8 @@
 import { z } from 'zod';
-import { legacyPostJSONSchema } from '@/features/post/lib/validation-schemas';
+import {
+  legacyPostJSONSchema,
+  legacyPostSchema
+} from '@/features/post/lib/validation-schemas';
 import { PostDomain } from '@/entities/post/server';
 import { convertJsonToPostEntity } from '@/features/post/lib/legacy-utils';
 
@@ -33,7 +36,7 @@ const getDataSourcePosts = async (
     convertJsonToPostEntity(post, authorId)
   );
 
-  return posts;
+  return posts.filter(post => legacyPostSchema.safeParse(post).success);
 };
 
 export const postUtils = { getDataSourcePosts };
