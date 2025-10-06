@@ -1,8 +1,6 @@
 import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 
-type RestMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-
 type RequestParams = {
   url: string;
   queryParams?: Record<string, string>;

@@ -5,8 +5,6 @@ import { sessionService } from '@/entities/user/server';
 import { roleUtils } from '@/entities/user';
 import { postUtils } from '@/features/post/lib/post-utils';
 import { postServices } from '@/features/post/services/post-services';
-import z from 'zod';
-import { legacyPostSchema } from '@/features/post/lib/validation-schemas';
 
 export async function postPosts(req: NextRequest): Promise<Response> {
   try {
@@ -33,10 +31,6 @@ export async function postPosts(req: NextRequest): Promise<Response> {
     if (!posts.length) {
       return handleError({ body: 'Посты отсутствуют' });
     }
-
-    const result = z.array(legacyPostSchema).safeParse(posts);
-
-    console.log('result', result.error?.errors);
 
     const createResult = await postServices.createPosts(posts);
 

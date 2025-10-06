@@ -31,8 +31,6 @@ const getPostByRoute = async (
   const result: PostGetPayload<{ include: { user: true } }> | null =
     await postRepositories.getPost({ route });
 
-  console.log('result', result);
-
   if (!result) {
     return left('Ошибка получения данных поста из базы данных');
   }

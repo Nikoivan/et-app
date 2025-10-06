@@ -55,7 +55,7 @@ export const PostMain: FC<PostDomain.PostEntity> = async props => {
               ])}
             ></div>
           </section>
-          <section className={cnPagePost('Content', ['mt-8', 'pb-14'])}>
+          <section className={cnPagePost('Content', ['mt-1', 'pb-14'])}>
             <div>
               <TextContent content={content as TrustedHTML} />
             </div>

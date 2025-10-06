@@ -1,6 +1,7 @@
 import { left, right } from '@/shared/lib/either';
 import { userRepository } from '../repositories/user';
 import { passwordService } from './password';
+import { Prisma } from '.prisma/client';
 
 export async function verifyUserPassword({
   login,
@@ -9,7 +10,9 @@ export async function verifyUserPassword({
   login: string;
   password: string;
 }) {
-  const user = await userRepository.getUser({ login });
+  const user = await userRepository.getUser({
+    login
+  } as Prisma.UserWhereUniqueInput);
 
   if (!user) {
     return left('Неверный логин или пароль' as const);

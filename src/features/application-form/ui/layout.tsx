@@ -26,9 +26,7 @@ export const ApplicationFormLayout: FC<Props> = ({
 
     if (!formDataResult.success) return;
 
-    const result = await sendCallbackRequest(formDataResult.data, appData);
-
-    console.log('requestResult', result);
+    await sendCallbackRequest(formDataResult.data, appData);
   };
 
   return (
