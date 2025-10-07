@@ -29,6 +29,8 @@ export type PostEntity = {
   categories: string[];
   metaTitle?: string;
   metaDescription?: string;
+  metaDuration?: string;
+  metaPrice?: string;
   link?: string;
   pubDate?: string;
 };

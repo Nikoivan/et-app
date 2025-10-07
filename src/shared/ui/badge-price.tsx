@@ -6,7 +6,7 @@ import styles from '@/shared/assets/styles.module.scss';
 type Variants = 'clear-blur' | 'black-white';
 
 type CardPriceProps = {
-  price: number;
+  price: number | string;
   className?: string;
   variant?: Variants;
 };
@@ -28,6 +28,15 @@ export const BadgePrice: FC<CardPriceProps> = ({
         : styles.BadgePrice_type_clearBlur
     ])}
   >
-    {`От ${price} ₽`}
+    {typeof price === 'number' ? (
+      `От ${price} ₽`
+    ) : (
+      <span
+        className={
+          typeof price === 'number' ? undefined : 'whitespace-nowrap text-xs'
+        }
+        dangerouslySetInnerHTML={{ __html: price }}
+      ></span>
+    )}
   </div>
 );

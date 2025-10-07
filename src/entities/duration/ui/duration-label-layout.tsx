@@ -1,10 +1,8 @@
 import { cn as cnBem } from '@bem-react/classname';
 import { FC } from 'react';
-import { ClockIcon } from '@/shared/ui/clock-icon';
 import { DurationLabelProps } from '@/entities/duration/model/types';
 
 import styles from '@/entities/duration/assets/styles.module.scss';
-import { BlackClockIcon } from '@/shared/ui/black-clock-icon';
 
 const cnDurationLabel = cnBem('DurationLabel');
 
@@ -12,7 +10,11 @@ export const DurationLabelLayout: FC<DurationLabelProps> = ({
   duration,
   variant
 }) => {
-  const durationSting = `${(duration / 3600).toFixed(0)} ч`;
+  const isDurationNumber = typeof duration === 'number';
+
+  const durationSting = isDurationNumber
+    ? `${(duration / 3600).toFixed(0)} ч`
+    : duration;
 
   return (
     <>
@@ -32,10 +34,17 @@ export const DurationLabelLayout: FC<DurationLabelProps> = ({
               : styles.DurationLabel_type_clearBlur
           ])}
         >
-          <div>
-            {variant === 'black-white' ? <BlackClockIcon /> : <ClockIcon />}
+          <div className={isDurationNumber ? undefined : 'text-xs'}>
+            {isDurationNumber ? 'От ' : ''}
+            {isDurationNumber ? (
+              durationSting
+            ) : (
+              <span
+                className='whitespace-nowrap'
+                dangerouslySetInnerHTML={{ __html: durationSting }}
+              ></span>
+            )}
           </div>
-          <div>От {durationSting}</div>
         </div>
       )}
     </>

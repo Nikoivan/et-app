@@ -11,11 +11,13 @@ import { cn } from '@/shared/lib/css';
 import styles from '@/shared/assets/styles.module.scss';
 import { PostDomain } from '@/entities/post/server';
 import { PageHeadPost } from '@/views/post/ui/page-head-post';
+import { BadgePrice } from '@/shared/ui/badge-price';
+import { ServerDurationLabel } from '@/entities/duration/ui/server-duration-label';
 
 const cnPagePost = cnBem('PagePost');
 
 export const PostMain: FC<PostDomain.PostEntity> = async props => {
-  const { id, title, image, content } = props;
+  const { id, title, image, content, metaDuration, metaPrice } = props;
 
   return (
     <AppMain
@@ -48,12 +50,28 @@ export const PostMain: FC<PostDomain.PostEntity> = async props => {
             <div
               className={cnPagePost('TourProperties', [
                 'flex',
-                'items-center',
+                !!metaPrice || !!metaDuration
+                  ? 'flex-col items-start'
+                  : 'items-center',
                 'gap-6',
                 'p-1',
                 'mt-3'
               ])}
-            ></div>
+            >
+              {!!metaPrice && (
+                <BadgePrice
+                  className={cnPagePost('TourPrice')}
+                  price={metaPrice}
+                  variant='black-white'
+                />
+              )}
+              {!!metaDuration && (
+                <ServerDurationLabel
+                  duration={metaDuration}
+                  variant='black-white'
+                />
+              )}
+            </div>
           </section>
           <section className={cnPagePost('Content', ['mt-1', 'pb-14'])}>
             <div>
