@@ -11,5 +11,7 @@ export function getActivitiesDates(
 }
 
 export function getMonthesTitle(dates: ActivityDate[]): string {
-  return 'Март' + dates.join(', ').slice(0, 0);
+  const monthName = new Date().toLocaleString('ru-RU', { month: 'long' });
+
+  return monthName + dates.join(', ').slice(0, 0);
 }

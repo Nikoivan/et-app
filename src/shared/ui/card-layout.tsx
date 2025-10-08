@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import styles from '../assets/styles.module.scss';
 
-type TourCardLayoutProps = {
+type CardLayoutProps = {
   bgImage: string;
   title: string;
   className?: string;
@@ -12,7 +12,7 @@ type TourCardLayoutProps = {
   cardFooter?: ReactNode;
 };
 
-export const TourCardLayout: FC<TourCardLayoutProps> = ({
+export const CardLayout: FC<CardLayoutProps> = ({
   cardHeader,
   cardFooter,
   className,

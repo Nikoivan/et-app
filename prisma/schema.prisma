@@ -54,6 +54,8 @@ model Post {
   metaDescription String?  @map("meta_descriptions") @db.VarChar(512)
   link            String?  @db.VarChar(512)
   pubDate         String?  @db.VarChar(128)
+  price           Int?
+  duration        Int?
   metaDuration    String?  @map("meta_duration") @db.VarChar(512)
   metaPrice       String?  @map("meta_price") @db.VarChar(256)
 

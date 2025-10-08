@@ -14,4 +14,14 @@
     font-family: var(--font-poire-one), serif;
     -webkit-text-stroke: 1px #ffffff;
   }
+
+  &_EmptyBadge {
+    display: block;
+    height: 100%;
+    margin-top: 20vh;
+    text-align: center;
+    vertical-align: center;
+    font-family: var(--font-poire-one), serif;
+    -webkit-text-stroke: 1px #ffffff;
+  }
 }

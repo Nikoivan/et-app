@@ -12,9 +12,5 @@ const cnMonths = cn('Months');
 export const Months: FC<MonthsProps> = ({ dates }) => {
   const monthsTitle = getMonthesTitle(dates);
 
-  return (
-    <span className={cnMonths(null, ['uppercase', 'block'])}>
-      {monthsTitle}
-    </span>
-  );
+  return <span className={cnMonths(null, ['uppercase'])}>{monthsTitle}</span>;
 };

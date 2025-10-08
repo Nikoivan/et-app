@@ -34,7 +34,8 @@ export const UpcomingActivities: FC = async () => {
             <span
               className={cnUpcomingActivities('DescriptionText', [
                 styles.UpcomingActivities_DescriptionText,
-                'text-xl'
+                'text-xl',
+                'whitespace-nowrap'
               ])}
             >
               выбирай свои даты на <Months dates={activitiesDates} />
@@ -64,6 +65,16 @@ export const UpcomingActivities: FC = async () => {
               )
             )}
           </ul>
+          {!upcomingActivities.length && (
+            <span
+              className={cnUpcomingActivities('EmptyBadge', [
+                styles.UpcomingActivities_EmptyBadge,
+                'text-2xl'
+              ])}
+            >
+              Предстоящих мероприятий нет
+            </span>
+          )}
         </div>
       }
     />

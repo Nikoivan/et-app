@@ -28,7 +28,7 @@ const getPopularTourCards = async (): Promise<TourCardEntity[]> => {
       }
     },
     select: tourCardsSelect,
-    take: 10
+    take: 4
   })) as unknown as DraftTourCardEntity[];
 
   return draftPopularTours.map(draftTourToTourCardEntity);

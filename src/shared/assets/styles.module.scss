@@ -57,3 +57,12 @@
 .avatar {
   box-shadow: 0 2px 2px 0 #00000026;
 }
+
+.CardTitle {
+  font-family: var(--font-poire-one), serif;
+  -webkit-text-stroke: 2px #FFFFFFEA;
+  font-size: 35px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 1.35;
+}

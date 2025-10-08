@@ -16,7 +16,7 @@ export const LinkButton: FC<LinkButtonProps> = ({
 }) => (
   <Link
     className={cnLinkButton(null, [
-      '--font-poire-one text-white text-xl py-4 px-23 bg-green-500 rounded-full tracking-widest',
+      '--font-poire-one text-xl p-4 bg-green-500 rounded-full tracking-widest',
       className
     ])}
     href={href}

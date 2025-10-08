@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { DurationLabelProps } from '@/entities/duration/model/types';
 
 import styles from '@/entities/duration/assets/styles.module.scss';
+import { ClockIcon } from '@/shared/ui/clock-icon';
 
 const cnDurationLabel = cnBem('DurationLabel');
 
@@ -34,7 +35,8 @@ export const DurationLabelLayout: FC<DurationLabelProps> = ({
               : styles.DurationLabel_type_clearBlur
           ])}
         >
-          <div className={isDurationNumber ? undefined : 'text-xs'}>
+          <div className={isDurationNumber ? 'flex gap-2' : 'text-xs'}>
+            <ClockIcon />
             {isDurationNumber ? 'От ' : ''}
             {isDurationNumber ? (
               durationSting
