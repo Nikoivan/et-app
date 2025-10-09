@@ -15,12 +15,12 @@ export type PostCardEntity = {
   id: number;
   title: string;
   route: string;
+  mainPhoto: string;
   price: number | null;
   rating: number | null;
   duration: number | null;
   metaPrice: string | null;
   metaDuration: string | null;
-  mainPhoto: string;
 };
 
 export type PostStatus = 'legacy' | 'fresh' | 'unknown';

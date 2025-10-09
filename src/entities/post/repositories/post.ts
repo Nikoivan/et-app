@@ -22,12 +22,13 @@ const getPost = (
     include: { user: true }
   }) as Promise<PostGetPayload<{ include: { user: true } }> | null>;
 
-const getPosts = <TInclude extends Prisma.PostInclude>(
-  params: Params<TInclude>
-): Promise<Prisma.PostGetPayload<{ include: TInclude }>[]> =>
-  dbClient.post.findMany(params) as Promise<
-    Prisma.PostGetPayload<{ include: TInclude }>[]
-  >;
+export function getPosts<T extends Prisma.PostFindManyArgs>(
+  params?: Prisma.SelectSubset<T, Prisma.PostFindManyArgs>
+): Promise<Prisma.PostGetPayload<T>[]> {
+  return dbClient.post.findMany(
+    params as Prisma.SelectSubset<T, Prisma.PostFindManyArgs>
+  ) as Promise<Prisma.PostGetPayload<T>[]>;
+}
 
 const createPost = (post: Omit<Post, 'id'>): Promise<Post> =>
   dbClient.post.create({ data: post });

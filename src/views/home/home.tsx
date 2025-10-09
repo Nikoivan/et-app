@@ -22,7 +22,9 @@ export const HomeView: FC = async () => {
           }
           content={
             <div className='mt-[25vh] text-center'>
-              <LinkButton href='tours'>Все туры</LinkButton>
+              <LinkButton className='px-22' href='tours'>
+                Все туры
+              </LinkButton>
             </div>
           }
         />

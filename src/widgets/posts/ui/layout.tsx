@@ -1,5 +1,3 @@
-'use client';
-
 import { FC, ReactNode } from 'react';
 
 type LayoutProps = {
@@ -9,7 +7,7 @@ type LayoutProps = {
   actions?: ReactNode;
 };
 
-export const ClientLayout: FC<LayoutProps> = ({
+export const Layout: FC<LayoutProps> = ({
   title,
   list,
   className,

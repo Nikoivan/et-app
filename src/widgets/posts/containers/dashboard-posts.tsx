@@ -2,7 +2,7 @@
 
 import { cn } from '@bem-react/classname';
 import { FC } from 'react';
-import { ClientLayout } from '../ui/client-layout';
+import { Layout } from '../ui/layout';
 import { Spinner } from '@/shared/ui/spinner';
 import { CreatePosts } from '@/features/post';
 
@@ -18,7 +18,7 @@ export const DashboardPosts: FC = () => {
           <Spinner />
         </div>
       )}
-      <ClientLayout
+      <Layout
         className={cnDashboardPosts()}
         title='Список постов'
         actions={<CreatePosts />}
