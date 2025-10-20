@@ -5,6 +5,7 @@ import { PageTitle } from '@/entities/page-title/server';
 import { PopularTours } from '@/widgets/tours/server';
 import { UpcomingActivities } from '@/widgets/activities/server';
 import { LinkButton } from '@/shared/ui/link-button';
+import { HomePosts } from '@/widgets/posts/containers/home-posts';
 
 export const HomeView: FC = async () => {
   'use cache';
@@ -33,6 +34,7 @@ export const HomeView: FC = async () => {
         <>
           <div className='mt-[-15vh]'>
             <PopularTours />
+            <HomePosts />
           </div>
           <UpcomingActivities />
         </>

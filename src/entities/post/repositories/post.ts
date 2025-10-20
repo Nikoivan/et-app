@@ -1,7 +1,8 @@
 import { Post, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
-import { PostEntity } from '@/entities/post/domain';
+import { PostEntity, WithUser } from '@/entities/post/domain';
 import PostGetPayload = Prisma.PostGetPayload;
+import PostWhereInput = Prisma.PostWhereInput;
 
 export type Params<T extends Prisma.PostInclude | undefined = undefined> = {
   where?: Prisma.PostWhereInput;
@@ -21,14 +22,35 @@ const getPost = (
     where: params,
     include: { user: true }
   }) as Promise<PostGetPayload<{ include: { user: true } }> | null>;
-
-export function getPosts<T extends Prisma.PostFindManyArgs>(
+const getPosts = <
+  T extends Prisma.PostFindManyArgs & {
+    select?: never;
+    include: { user: true };
+  }
+>(
   params?: Prisma.SelectSubset<T, Prisma.PostFindManyArgs>
-): Promise<Prisma.PostGetPayload<T>[]> {
-  return dbClient.post.findMany(
-    params as Prisma.SelectSubset<T, Prisma.PostFindManyArgs>
-  ) as Promise<Prisma.PostGetPayload<T>[]>;
-}
+): Promise<Prisma.PostGetPayload<WithUser<T>>[]> => {
+  const base = (params ?? {}) as Prisma.PostFindManyArgs;
+
+  const args = {
+    ...base,
+    include: {
+      ...(base.include ?? {}),
+      user: true
+    }
+  } as WithUser<T>;
+
+  return dbClient.post.findMany(args) as Promise<
+    Prisma.PostGetPayload<WithUser<T>>[]
+  >;
+};
+
+const getPostsBySelect = <T extends Prisma.PostSelect>(params?: {
+  where?: PostWhereInput;
+  select?: T;
+}) => {
+  return dbClient.post.findMany(params);
+};
 
 const createPost = (post: Omit<Post, 'id'>): Promise<Post> =>
   dbClient.post.create({ data: post });
@@ -51,6 +73,7 @@ const deletePost = (id: number): Promise<Post> =>
 export const postRepositories = {
   getPost,
   getPosts,
+  getPostsBySelect,
   createPost,
   createManyPosts,
   updatePost,

@@ -4,10 +4,10 @@ import { Prisma } from '@prisma/client';
 
 const getPostCards = (
   where?: Prisma.PostWhereInput
-): Promise<PostDomain.PostCardEntity[]> =>
-  postRepositories.getPosts({
+): PostDomain.PostCardEntity[] =>
+  postRepositories.getPostsBySelect({
     where,
     select: postCardFields
-  });
+  }) as unknown as PostDomain.PostCardEntity[];
 
 export const postsServices = { getPostCards };

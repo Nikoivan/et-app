@@ -14,24 +14,30 @@ import { LinkButton } from '@/shared/ui/link-button';
 import { CardHeader } from '@/shared/ui/card-header';
 import { CardFooter } from '@/shared/ui/card-footer';
 
+import reserveImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
+
 const cnTourCard = cn('TourCard');
 
 export const PostCard: FC<PostCardEntity> = async ({
   id,
   route,
   price,
-  mainPhoto,
+  images,
   title,
-  rating,
   duration,
   metaPrice
 }) => (
   <CardLayout
-    className={cnTourCard({ type: 'server' }, ['min-h-[420px]'])}
-    bgImage={mainPhoto}
+    className={cnTourCard({ type: 'server' }, ['min-h-[420px]', 'mt-10'])}
+    bgImage={
+      images?.length && !!images[0]
+        ? images[0]
+        : (reserveImage as unknown as string)
+    }
     title={title}
     cardHeader={
       <CardHeader
+        className={cnTourCard('CardHeader', ['justify-end'])}
         leftNode={
           <>
             {(!!price || !!metaPrice) && (
@@ -47,13 +53,14 @@ export const PostCard: FC<PostCardEntity> = async ({
         rightNode={
           <div className='flex flex-col items-end'>
             <FavouriteLabel id={id} />
-            <ServerRatingLabel rating={rating} />
+            <ServerRatingLabel rating={4.9} />
           </div>
         }
       />
     }
     cardFooter={
       <CardFooter
+        className='justify-end'
         leftNode={
           <>{!!duration && <ServerDurationLabel duration={duration} />}</>
         }

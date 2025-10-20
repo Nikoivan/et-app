@@ -11,7 +11,7 @@ type Props = {
 const cnPostCardList = cn('ServerPostCardList');
 
 export const ServerPostCardList: FC<Props> = async ({ list }) => (
-  <ul className={cnPostCardList()}>
+  <ul className={cnPostCardList(null, ['pt-15'])}>
     {list.map(card => (
       <li key={card.id}>
         <ServerPostCard {...card} />

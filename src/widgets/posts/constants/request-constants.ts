@@ -1,10 +1,12 @@
-export const postCardFields = {
+import { Prisma } from '@prisma/client';
+
+export const postCardFields: Prisma.PostSelect = {
   title: true,
   id: true,
+  user: true,
   route: true,
-  mainPhoto: true,
+  images: true,
   price: true,
-  rating: true,
   duration: true,
   metaPrice: true,
   metaDuration: true

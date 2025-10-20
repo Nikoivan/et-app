@@ -27,7 +27,8 @@ export const CardLayout: FC<CardLayoutProps> = ({
       src={bgImage}
       alt={title}
     />
-    <div className='relative flex flex-col justify-between z-2 p-4 mt h-full grow-1'>
+    <div className={styles.CardMask} />
+    <div className='relative flex flex-col justify-between z-3 p-4 mt h-full grow-1'>
       {cardHeader}
       <h3
         className={cn(

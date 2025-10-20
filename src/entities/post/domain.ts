@@ -2,6 +2,7 @@ import { Prisma, User } from '@prisma/client';
 import { objectUtils } from '@/shared/lib/object-utils';
 import { postUtils } from '@/entities/post/lib/post-utils';
 import { WithoutNull } from '@/shared/model/types';
+import { PostCreateSchema } from '@/entities/post/model/schemas';
 
 type UserEntity = {
   id: number;
@@ -15,9 +16,9 @@ export type PostCardEntity = {
   id: number;
   title: string;
   route: string;
-  mainPhoto: string;
+  user: UserEntity;
+  images: string[];
   price: number | null;
-  rating: number | null;
   duration: number | null;
   metaPrice: string | null;
   metaDuration: string | null;
@@ -47,6 +48,27 @@ export type PostEntity = {
   pubDate?: string;
 };
 
+type UserSelectValue = true | { select: Prisma.UserSelect };
+
+export type EnforceUserSelect<
+  T extends Prisma.PostFindManyArgs & { include?: never }
+> = Omit<T, 'select'> & {
+  select: T extends { select: infer S }
+    ? S extends Prisma.PostSelect
+      ? Omit<S, 'user'> & { user: UserSelectValue }
+      : { user: true }
+    : { user: true };
+};
+
+export type WithUser<T extends Prisma.PostFindManyArgs & { select?: never }> =
+  T & {
+    include: T extends { include: infer I }
+      ? I extends Prisma.PostInclude
+        ? Omit<I, 'user'> & { user: true }
+        : { user: true }
+      : { user: true };
+  };
+
 const userToUserEntity = ({
   id,
   login,
@@ -62,15 +84,18 @@ const userToUserEntity = ({
     lastName: lastName || undefined
   }) as WithoutNull<UserEntity>;
 
-export const postToPostEntity = (
-  post: Prisma.PostGetPayload<{ include: { user: true } }>
-): PostEntity => {
-  const entity = objectUtils.makeWithoutNull(post);
-  userToUserEntity(post.user);
+export const postToPostEntity = (post: unknown): PostEntity => {
+  const result = PostCreateSchema.safeParse(post);
+
+  if (!result.success) {
+    throw new Error('Ошибка в типах данных');
+  }
+
+  const entity = objectUtils.makeWithoutNull(result.data);
 
   return {
     ...entity,
     status: postUtils.getValidStatus(entity.status),
-    user: userToUserEntity(post.user)
+    user: userToUserEntity(result.data.user as User)
   } as WithoutNull<PostEntity>;
 };
