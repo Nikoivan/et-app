@@ -46,6 +46,9 @@ export type PostEntity = {
   metaPrice?: string;
   link?: string;
   pubDate?: string;
+  price?: number;
+  rating?: number;
+  duration?: number;
 };
 
 type UserSelectValue = true | { select: Prisma.UserSelect };

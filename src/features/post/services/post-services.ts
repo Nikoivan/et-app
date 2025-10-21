@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Post, Prisma } from '@prisma/client';
 import { qbQueryUtils } from '@/shared/lib/db-client-utils';
 
 import { PostDomain, postRepositories } from '@/entities/post/server';
@@ -32,6 +32,7 @@ const getPostByRoute = async (
 
   if (!result) {
     return left('Ошибка получения данных поста из базы данных');
+    console.log(result);
   }
 
   const postEntity = PostDomain.postToPostEntity(result);
@@ -51,4 +52,19 @@ const createPosts = async (
   return right(createResult);
 };
 
-export const postServices = { getPosts, getPostByRoute, createPosts };
+const deletePost = async (id: number): Promise<Either<string, Post>> => {
+  const result = await postRepositories.deletePost(id);
+
+  if (!result) {
+    return left<string>('Не удалось удалить данный пост');
+  }
+
+  return right<Post>(result);
+};
+
+export const postServices = {
+  getPosts,
+  getPostByRoute,
+  createPosts,
+  deletePost
+};

@@ -22,6 +22,7 @@ const getPost = (
     where: params,
     include: { user: true }
   }) as Promise<PostGetPayload<{ include: { user: true } }> | null>;
+
 const getPosts = <
   T extends Prisma.PostFindManyArgs & {
     select?: never;
