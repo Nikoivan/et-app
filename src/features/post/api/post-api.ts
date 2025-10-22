@@ -4,8 +4,8 @@ import { GetPostsData } from '@/features/post/domain';
 const jsonFlagKey = 'by_json';
 const baseUrl = 'posts';
 
-const createPostsByFile = async (formData: FormData) => {
-  const response = await apiClient.post({
+const createPostsByFile = async <T>(formData: FormData): Promise<T> => {
+  const response = await apiClient.post<T>({
     url: baseUrl,
     body: formData,
     queryParams: { [jsonFlagKey]: 'true' }

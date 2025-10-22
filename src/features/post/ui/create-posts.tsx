@@ -24,15 +24,15 @@ export const CreatePosts: FC = () => {
 
     formData.append('posts_file', data.files[0]);
 
-    const result = await postApi.createPostsByFile(formData);
+    const result = await postApi.createPostsByFile<string>(formData);
 
-    if (!(result?.type === 'right')) {
-      toast.error(result.error);
+    if (!result) {
+      toast.error('Не удалось создать посты');
 
       return;
     }
 
-    toast.success(String(result.value));
+    toast.success(String(result));
 
     onOpenChange(false);
   };

@@ -25,7 +25,8 @@ const request = async <T>({
 const get = <T>(params: RequestParams): Promise<T> =>
   request<T>({ ...params, method: 'GET', body: undefined });
 
-const post = (params: RequestParams) => request({ ...params, method: 'POST' });
+const post = <T>(params: RequestParams) =>
+  request<T>({ ...params, method: 'POST' });
 
 const put = (params: RequestParams) => request({ ...params, method: 'PUT' });
 
