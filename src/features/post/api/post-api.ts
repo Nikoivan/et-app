@@ -1,7 +1,7 @@
 import { apiClient } from '@/shared/api/api-client';
+import { GetPostsData } from '@/features/post/domain';
 
 const jsonFlagKey = 'by_json';
-
 const baseUrl = 'posts';
 
 const createPostsByFile = async (formData: FormData) => {
@@ -22,4 +22,11 @@ const deletePost = (id: number) =>
     }
   });
 
-export const postApi = { createPostsByFile, deletePost };
+const getPosts = <T>({ signal, page }: GetPostsData) =>
+  apiClient.get<T>({
+    url: baseUrl,
+    signal,
+    queryParams: { page: String(page) }
+  });
+
+export const postApi = { getPosts, createPostsByFile, deletePost };

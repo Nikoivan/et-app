@@ -17,8 +17,6 @@ export async function generateMetadata({
 
   const either = await postServices.getPostByRoute(route);
 
-  console.log(either);
-
   return await getMetadataByEither(either);
 }
 

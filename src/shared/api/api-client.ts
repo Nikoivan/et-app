@@ -1,4 +1,3 @@
-import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 
 type RequestParams = {
@@ -13,20 +12,18 @@ const request = async <T>({
   signal,
 
   queryParams
-}: RequestParams): Promise<Either<string, T>> => {
+}: RequestParams): Promise<T> => {
   const response = await fetch(`${urlUtils.getUrl(url, queryParams)}`, {
     method,
     body,
     signal
   });
 
-  const result = await response.json();
-
-  return response.status >= 300 ? left(result) : right(result);
+  return response.json();
 };
 
-const get = (params: RequestParams) =>
-  request({ ...params, method: 'GET', body: undefined });
+const get = <T>(params: RequestParams): Promise<T> =>
+  request<T>({ ...params, method: 'GET', body: undefined });
 
 const post = (params: RequestParams) => request({ ...params, method: 'POST' });
 

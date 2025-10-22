@@ -32,7 +32,6 @@ const getPostByRoute = async (
 
   if (!result) {
     return left('Ошибка получения данных поста из базы данных');
-    console.log(result);
   }
 
   const postEntity = PostDomain.postToPostEntity(result);

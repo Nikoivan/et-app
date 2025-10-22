@@ -11,7 +11,7 @@ const UserRefSchema = z.object({
 const PostBaseSchema = z.object({
   id: z.number(),
   title: z.string().min(1).max(256),
-  description: z.string().min(1),
+  description: z.string(),
   content: z.string().min(1),
   postAuthorId: z.number(),
   type: z.string().min(1).max(20),
@@ -26,8 +26,9 @@ const PostBaseSchema = z.object({
   metaDescription: z.string().max(512).optional().nullable(),
   link: z.string().max(512).url().optional().nullable(),
   pubDate: z.string().max(128).optional().nullable(),
-  price: z.number().int().nonnegative().optional(),
-  duration: z.number().int().nonnegative().optional(),
+  price: z.number().optional().nullable(),
+  duration: z.number().optional().nullable(),
+  rating: z.number().optional().nullable(),
   metaDuration: z.string().max(512).optional().nullable(),
   metaPrice: z.string().max(256).optional().nullable()
 });

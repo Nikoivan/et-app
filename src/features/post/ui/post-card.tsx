@@ -18,6 +18,7 @@ import { ConfirmDialog } from '@/entities/confirm-dialog';
 import { PostDomain } from '@/entities/post/server';
 import { postApi } from '@/features/post/api/post-api';
 import { useMutation } from '@tanstack/react-query';
+import mockImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
 
 export const PostCard: FC<PostDomain.PostEntity> = props => {
   const { id, title, image, content, rating, price } = props;
@@ -44,7 +45,12 @@ export const PostCard: FC<PostDomain.PostEntity> = props => {
         </div>
       </CardHeader>
       <CardContent className='space-y-6 text-sm'>
-        <Image src={image} alt={title} width={400} height={400} />
+        <Image
+          src={image?.length ? image : mockImage}
+          alt={title}
+          width={400}
+          height={400}
+        />
         <p>{content.slice(0, 250)} ...</p>
       </CardContent>
       <CardFooter className='flex justify-end items-center gap-1'>
