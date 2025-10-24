@@ -28,11 +28,13 @@ const get = <T>(params: RequestParams): Promise<T> =>
 const post = <T>(params: RequestParams) =>
   request<T>({ ...params, method: 'POST' });
 
-const put = (params: RequestParams) => request({ ...params, method: 'PUT' });
+const put = <T>(params: RequestParams) =>
+  request<T>({ ...params, method: 'PUT' });
 
-const patch = (params: RequestParams) =>
-  request({ ...params, method: 'PATCH' });
+const patch = <T>(params: RequestParams) =>
+  request<T>({ ...params, method: 'PATCH' });
 
-const del = (params: RequestParams) => request({ ...params, method: 'DELETE' });
+const del = <T>(params: RequestParams) =>
+  request<T>({ ...params, method: 'DELETE' });
 
 export const apiClient = { get, post, put, patch, del };

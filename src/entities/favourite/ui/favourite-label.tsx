@@ -41,7 +41,7 @@ export const FavouriteLabel: FC<FavouriteLabelProps & PropsWithClassNames> = ({
   useEffect(() => {
     const isFavourite = isTourFavourite(id);
 
-    setFavourite(isFavourite);
+    setTimeout(() => setFavourite(isFavourite), 0);
   }, []);
 
   return (

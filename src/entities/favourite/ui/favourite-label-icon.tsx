@@ -17,10 +17,14 @@ export const FavouriteLabelIcon: FC<FavouriteLabelIconProps> = ({
   const [id, setId] = useState<string | null>(null);
   const [secondId, setSecondId] = useState<string | null>(null);
 
+  const changeIds = () => {
+    setId(v4());
+    setSecondId(v4());
+  };
+
   useEffect(() => {
     if (!id && !secondId) {
-      setId(v4());
-      setSecondId(v4());
+      setTimeout(changeIds, 0);
     }
   }, []);
 

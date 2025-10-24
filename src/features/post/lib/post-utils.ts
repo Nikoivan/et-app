@@ -5,6 +5,8 @@ import {
 } from '@/features/post/lib/validation-schemas';
 import { PostDomain } from '@/entities/post/server';
 import { convertJsonToPostEntity } from '@/features/post/lib/legacy-utils';
+import { initialPostCreateFormData } from '@/features/post/model/create-posts-model';
+import { v4 } from 'uuid';
 
 const getFormDataPosts = async (formData: FormData): Promise<unknown> => {
   const file = formData.get('posts_file');
@@ -39,4 +41,6 @@ const getDataSourcePosts = async (
   return posts.filter(post => legacyPostSchema.safeParse(post).success);
 };
 
-export const postUtils = { getDataSourcePosts };
+const getInitialPostData = () => ({ ...initialPostCreateFormData, guid: v4() });
+
+export const postUtils = { getDataSourcePosts, getInitialPostData };

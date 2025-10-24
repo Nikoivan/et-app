@@ -2,7 +2,7 @@ import { Prisma, User } from '@prisma/client';
 import { objectUtils } from '@/shared/lib/object-utils';
 import { postUtils } from '@/entities/post/lib/post-utils';
 import { WithoutNull } from '@/shared/model/types';
-import { PostCreateSchema } from '@/entities/post/model/schemas';
+import { postCreateSchema } from '@/entities/post/model/schemas';
 
 type UserEntity = {
   id: number;
@@ -88,7 +88,7 @@ const userToUserEntity = ({
   }) as WithoutNull<UserEntity>;
 
 export const postToPostEntity = (post: unknown): PostEntity => {
-  const result = PostCreateSchema.safeParse(post);
+  const result = postCreateSchema.safeParse(post);
 
   if (!result.success) {
     throw new Error('Ошибка в типах данных');

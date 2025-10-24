@@ -2,8 +2,8 @@
 
 import { FC } from 'react';
 import { TourView } from '@/views/tour/server';
-import { ServerFCProps } from '@/shared/model/types';
+import { ServerTourProps } from '@/shared/model/types';
 
-const TourPage: FC<ServerFCProps> = async props => <TourView {...props} />;
+const TourPage: FC<ServerTourProps> = async props => <TourView {...props} />;
 
 export default TourPage;

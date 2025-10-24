@@ -19,6 +19,8 @@ import { PostDomain } from '@/entities/post/server';
 import { postApi } from '@/features/post/api/post-api';
 import { useMutation } from '@tanstack/react-query';
 import mockImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
+import { FeaturePost } from '@/features/post/ui/feature-post';
+import { FormDialogDomain } from '@/entities/form-dialog';
 
 export const PostCard: FC<PostDomain.PostEntity> = props => {
   const { id, title, image, content, rating, price } = props;
@@ -62,9 +64,11 @@ export const PostCard: FC<PostDomain.PostEntity> = props => {
           <BadgeRussianRuble className='size-4' />
           {price}
         </Button>
-        <Button variant='ghost' size='sm'>
-          <UserPen className='size-4' />
-        </Button>
+        <FeaturePost
+          type='edit'
+          initialData={props as unknown as FormDialogDomain.FormData}
+          triggerButton={<UserPen className='size-4' />}
+        />
         <ConfirmDialog
           title='Удаление тура'
           description='Вы уверенны, что хотите удалить этот тур?'

@@ -1,15 +1,13 @@
 'use client';
 
-import { PostDomain } from '@/entities/post/server';
 import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
 import { PostCard } from '@/features/post/ui/post-card';
 import { useQuery } from '@tanstack/react-query';
 import { postApi } from '@/features/post/api/post-api';
 import { Spinner } from '@/shared/ui/spinner';
-
-import { Button } from '@/shared/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { GetPostsResponse } from '@/features/post/domain';
+import { SimplePagination } from '@/shared/ui/simple-pagination';
 
 const cnPostFeatureList = cn('PostFeatureList');
 
@@ -18,11 +16,12 @@ export const PostFeatureList: FC = () => {
   const { isLoading, data, error } = useQuery({
     queryKey: ['posts', { page }],
     queryFn: ({ signal }) =>
-      postApi.getPosts<PostDomain.PostEntity[]>({ signal, page })
+      postApi.getPosts<GetPostsResponse>({ signal, page })
   });
 
-  const onNext = () => setPage(prev => prev + 1);
-  const onPrev = () => setPage(prev => Math.min(prev - 1, 1));
+  const onNext = () =>
+    setPage(prev => Math.min(prev + 1, data?.pagesCount || 1));
+  const onPrev = () => setPage(prev => Math.max(prev - 1, 1));
 
   return (
     <>
@@ -31,23 +30,21 @@ export const PostFeatureList: FC = () => {
           <Spinner />
         </div>
       )}
-      {!!data?.length && (
+      {!!data?.posts?.length && (
         <>
+          <SimplePagination
+            currentCount={page}
+            totalCount={data?.pagesCount}
+            onPrevClick={onPrev}
+            onNextClick={onNext}
+          />
           <ul className={cnPostFeatureList()}>
-            {data.map(post => (
+            {data.posts.map(post => (
               <li key={post.id}>
                 <PostCard {...post} />
               </li>
             ))}
           </ul>
-          <div className={cnPostFeatureList('Pagination', ['flex', 'gap-3'])}>
-            <Button variant='ghost' onClick={onPrev}>
-              <ChevronLeft />
-            </Button>
-            <Button variant='ghost' onClick={onNext}>
-              <ChevronRight />
-            </Button>
-          </div>
         </>
       )}
       {!!error && (

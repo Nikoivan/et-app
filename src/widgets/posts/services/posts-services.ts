@@ -1,6 +1,7 @@
+import { Prisma } from '@prisma/client';
+
 import { PostDomain, postRepositories } from '@/entities/post/server';
 import { postCardFields } from '../constants/request-constants';
-import { Prisma } from '@prisma/client';
 
 const getPostCards = (
   where?: Prisma.PostWhereInput

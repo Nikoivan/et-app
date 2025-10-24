@@ -1,13 +1,21 @@
 import { Post, Prisma } from '@prisma/client';
-import { qbQueryUtils } from '@/shared/lib/db-client-utils';
 
+import { GetPostsResponse } from '@/features/post/domain';
 import { PostDomain, postRepositories } from '@/entities/post/server';
+import { qbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Either, left, right } from '@/shared/lib/either';
+import { PostUpdate } from '@/entities/post';
 import PostGetPayload = Prisma.PostGetPayload;
+
+const getPagesCount = async () => {
+  const count = await postRepositories.getPostsCount();
+
+  return Math.ceil(count / 10);
+};
 
 const getPosts = async (
   params?: Prisma.PostFindManyArgs & { page?: number }
-): Promise<Either<string, PostDomain.PostEntity[]>> => {
+): Promise<Either<string, GetPostsResponse>> => {
   const dbQueryParams = qbQueryUtils.getDbQueryParamsByPage<Prisma.PostInclude>(
     params || { page: 1, include: { user: true } }
   ) as Prisma.PostFindManyArgs & {
@@ -15,13 +23,16 @@ const getPosts = async (
     include: { user: true };
   };
 
+  const pagesCount = await getPagesCount();
   const result = await postRepositories.getPosts(dbQueryParams);
 
-  if (!result) {
+  if (!pagesCount || !result) {
     return left('Ошибка получения постов из базы данных');
   }
 
-  return right(result.map(PostDomain.postToPostEntity));
+  const postEntities = result.map(PostDomain.postToPostEntity);
+
+  return right({ pagesCount, posts: postEntities });
 };
 
 const getPostByRoute = async (
@@ -51,6 +62,16 @@ const createPosts = async (
   return right(createResult);
 };
 
+const updatePost = async (post: PostUpdate): Promise<Either<string, Post>> => {
+  const result = await postRepositories.updatePost(post as Post);
+
+  if (!result) {
+    return left<string>('Не удалось обновить пост.');
+  }
+
+  return right<Post>(result);
+};
+
 const deletePost = async (id: number): Promise<Either<string, Post>> => {
   const result = await postRepositories.deletePost(id);
 
@@ -65,5 +86,6 @@ export const postServices = {
   getPosts,
   getPostByRoute,
   createPosts,
+  updatePost,
   deletePost
 };

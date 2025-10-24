@@ -1,4 +1,4 @@
-import z from 'zod';
+import z, { number } from 'zod';
 
 const UserRefSchema = z.object({
   id: z.number().int().positive(),
@@ -8,8 +8,8 @@ const UserRefSchema = z.object({
   lastName: z.string().optional().nullable()
 });
 
-const PostBaseSchema = z.object({
-  id: z.number(),
+export const postBaseSchema = z.object({
+  id: z.number().optional(),
   title: z.string().min(1).max(256),
   description: z.string(),
   content: z.string().min(1),
@@ -33,15 +33,22 @@ const PostBaseSchema = z.object({
   metaPrice: z.string().max(256).optional().nullable()
 });
 
-export const PostCreateSchema = PostBaseSchema.extend({
-  user: UserRefSchema
-}).strict();
+export const postEditSchema = postBaseSchema.extend({
+  id: number()
+});
 
-export const PostUpdateSchema = PostBaseSchema.partial()
+export const postCreateSchema = postBaseSchema
+  .extend({
+    user: UserRefSchema
+  })
+  .strict();
+
+export const postUpdateSchema = postBaseSchema
+  .partial()
   .extend({
     user: UserRefSchema.optional()
   })
   .strict();
 
-export type PostCreate = z.infer<typeof PostCreateSchema>;
-export type PostUpdate = z.infer<typeof PostUpdateSchema>;
+export type PostCreate = z.infer<typeof postCreateSchema>;
+export type PostUpdate = z.infer<typeof postEditSchema>;

@@ -4,16 +4,9 @@ import { PostEntity, WithUser } from '@/entities/post/domain';
 import PostGetPayload = Prisma.PostGetPayload;
 import PostWhereInput = Prisma.PostWhereInput;
 
-export type Params<T extends Prisma.PostInclude | undefined = undefined> = {
-  where?: Prisma.PostWhereInput;
-  include?: T;
-  select?: Prisma.PostSelect;
-  orderBy?: Prisma.PostOrderByWithRelationInput;
-  take?: number;
-  skip?: number;
-};
-
 type UniquePostParams = { id: number } | { route: string };
+
+const getPostsCount = () => dbClient.post.count();
 
 const getPost = (
   params: UniquePostParams
@@ -40,6 +33,8 @@ const getPosts = <
       user: true
     }
   } as WithUser<T>;
+
+  console.log('args', args);
 
   return dbClient.post.findMany(args) as Promise<
     Prisma.PostGetPayload<WithUser<T>>[]
@@ -72,6 +67,7 @@ const deletePost = (id: number): Promise<Post> =>
   });
 
 export const postRepositories = {
+  getPostsCount,
   getPost,
   getPosts,
   getPostsBySelect,

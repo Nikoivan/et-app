@@ -1,6 +1,10 @@
 export type PropsWithClassNames = { className?: string };
 
-export type ServerFCProps = {
+export type ServerPostProps = {
+  params: Promise<{ route: string }>;
+};
+
+export type ServerTourProps = {
   params: Promise<{ id: string }>;
 };
 

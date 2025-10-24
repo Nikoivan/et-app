@@ -1,6 +1,6 @@
 export type DbQueryParams = { take: number; skip?: number };
 
-const pageCount = 10;
+const take = 10;
 
 export type Params<T> = ({ page?: number } & Partial<T>) | undefined;
 
@@ -13,9 +13,7 @@ const getDbQueryParamsByPage = <T>(params: Params<T>) => {
     return { ...rest, take: 10 };
   }
 
-  const take = page * pageCount;
-
-  return { ...rest, take, skip: take - pageCount };
+  return { ...rest, take, skip: take * page };
 };
 
 export const qbQueryUtils = { getDbQueryParamsByPage };

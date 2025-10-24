@@ -3,7 +3,7 @@ import { FC, PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { tourServices } from '@/kernel/tour/server';
 import { getMetadataByEither } from '@/shared/lib/metadata-utils';
-import { ServerFCProps } from '@/shared/model/types';
+import { ServerTourProps } from '@/shared/model/types';
 import { TourViewLayout } from '@/views/tour/server';
 
 export async function generateMetadata({
@@ -18,7 +18,7 @@ export async function generateMetadata({
   return await getMetadataByEither(either);
 }
 
-const Layout: FC<PropsWithChildren<ServerFCProps>> = async ({
+const Layout: FC<PropsWithChildren<ServerTourProps>> = async ({
   children,
   ...props
 }) => <TourViewLayout {...props}>{children}</TourViewLayout>;
