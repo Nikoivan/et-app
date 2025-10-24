@@ -17,6 +17,8 @@ export const HomePosts: FC = async () => {
     }
   });
 
+  console.log('homePostCards', postCards);
+
   return (
     <Layout
       className={cnHomePosts(null, ['p-4'])}

@@ -27,7 +27,6 @@ export const FeaturePost: FC<Props> = ({
   const schema = type === 'edit' ? postBaseSchema : postEditSchema;
 
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    console.log('data', data);
     const fn = type === 'edit' ? postApi.editPost : postApi.createPost;
     const result = schema.safeParse(data);
 

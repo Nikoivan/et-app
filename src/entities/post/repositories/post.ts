@@ -34,8 +34,6 @@ const getPosts = <
     }
   } as WithUser<T>;
 
-  console.log('args', args);
-
   return dbClient.post.findMany(args) as Promise<
     Prisma.PostGetPayload<WithUser<T>>[]
   >;
