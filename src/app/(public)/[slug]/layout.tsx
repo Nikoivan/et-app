@@ -15,7 +15,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
 
-  const either = await postServices.getPostBySlug(slug);
+  const either = await postServices.getPostMetaDataBySlug(slug);
 
   return await getMetadataByEither(either);
 }

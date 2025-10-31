@@ -6,16 +6,26 @@ import PostWhereInput = Prisma.PostWhereInput;
 
 type UniquePostParams = { id: number } | { slug: string };
 
+type PostParams =
+  | { include: { user: true } }
+  | {
+      select: Prisma.PostSelect;
+    };
+
 const getPostsCount = (where?: Prisma.PostWhereInput) =>
   dbClient.post.count({ where });
 
-const getPost = (
-  params: UniquePostParams
-): Promise<PostGetPayload<{ include: { user: true } }> | null> =>
-  dbClient.post.findUnique({
-    where: params,
-    include: { user: true }
-  }) as Promise<PostGetPayload<{ include: { user: true } }> | null>;
+const getPost = <T extends PostParams = { include: { user: true } }>(
+  uniqueParams: UniquePostParams,
+  postParams?: PostParams
+): Promise<PostGetPayload<T> | null> => {
+  const params = postParams || { include: { user: true } };
+
+  return dbClient.post.findUnique({
+    where: uniqueParams,
+    ...postParams
+  }) as Promise<PostGetPayload<T> | null>;
+};
 
 const getPosts = <
   T extends Prisma.PostFindManyArgs & {

@@ -42,19 +42,37 @@ const getPostBySlug = async (
   return right(postEntity);
 };
 
-// const getPostMetaDataBySlug = async (
-//   slug: string
-// ): Promise<Either<string, PostDomain.PostMetaData>> => {
-//   const result: Prisma.PostGetPayload<{
-//     select: {
-//       title: true;
-//       description: true;
-//       metaTitle: true;
-//       metaDescription: true;
-//       metaKeywords: true;
-//     };
-//   }> | null = await postRepositories.getPost({ slug });
-// };
+const getPostMetaDataBySlug = async (
+  slug: string
+): Promise<Either<string, PostDomain.PostMetaData>> => {
+  const result: Prisma.PostGetPayload<{
+    select: {
+      title: true;
+      description: true;
+      metaTitle: true;
+      metaDescription: true;
+      metaKeywords: true;
+    };
+  }> | null = await postRepositories.getPost<{
+    select: {
+      title: true;
+      description: true;
+      metaTitle: true;
+      metaDescription: true;
+      metaKeywords: true;
+    };
+  }>({ slug });
+
+  if (!result) {
+    return left('Не удалось найти пост');
+  }
+
+  return right({
+    title: result.metaTitle || result.title,
+    description: result.metaDescription || result.description,
+    keywords: result.metaKeywords
+  });
+};
 
 const createPosts = async (
   posts: Omit<PostDomain.PostEntity, 'id' | 'user'>[]
@@ -91,6 +109,7 @@ const deletePost = async (id: number): Promise<Either<string, Post>> => {
 export const postServices = {
   getPosts,
   getPostBySlug,
+  getPostMetaDataBySlug,
   createPosts,
   updatePost,
   deletePost
