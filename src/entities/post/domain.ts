@@ -51,6 +51,12 @@ export type PostEntity = {
   duration?: number;
 };
 
+export type PostMetaData = {
+  title: string;
+  description: string;
+  keywords: string[];
+};
+
 type UserSelectValue = true | { select: Prisma.UserSelect };
 
 export type EnforceUserSelect<

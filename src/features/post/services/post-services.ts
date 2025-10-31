@@ -42,6 +42,20 @@ const getPostBySlug = async (
   return right(postEntity);
 };
 
+// const getPostMetaDataBySlug = async (
+//   slug: string
+// ): Promise<Either<string, PostDomain.PostMetaData>> => {
+//   const result: Prisma.PostGetPayload<{
+//     select: {
+//       title: true;
+//       description: true;
+//       metaTitle: true;
+//       metaDescription: true;
+//       metaKeywords: true;
+//     };
+//   }> | null = await postRepositories.getPost({ slug });
+// };
+
 const createPosts = async (
   posts: Omit<PostDomain.PostEntity, 'id' | 'user'>[]
 ): Promise<Either<string, Prisma.BatchPayload>> => {
