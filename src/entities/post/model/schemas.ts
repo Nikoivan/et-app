@@ -18,7 +18,7 @@ export const postBaseSchema = z.object({
   guid: z.string().min(1).max(80),
   images: z.array(z.string().max(512)).default([]),
   status: z.string().min(1).max(20),
-  route: z.string().min(1),
+  slug: z.string().min(1),
   metaKeywords: z.array(z.string()).default([]),
   categories: z.array(z.string()).default([]),
   image: z.string().max(512).optional().nullable(),

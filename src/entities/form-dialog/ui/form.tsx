@@ -22,6 +22,7 @@ export const Form = <
   initialData,
   formDataModel,
   onSubmit,
+  onCancel,
   schema,
   title,
   description
@@ -38,7 +39,11 @@ export const Form = <
     ([key, value]) => initialData[key as never] !== value
   );
 
-  const reset = () => setUserFormData({});
+  const handleReset = () => {
+    setUserFormData({});
+
+    if (onCancel) onCancel();
+  };
 
   const validate = () => {
     const result = schema.safeParse(formData);
@@ -86,8 +91,12 @@ export const Form = <
 
         return <FormRow {...props} key={idx} />;
       })}
-      <div className={cnForm('Actions')}>
-        <Button variant='outline' onClick={reset} disabled={!isChanged}>
+      <div className={cnForm('Actions', ['flex', 'justify-end', 'gap-5'])}>
+        <Button
+          variant='outline'
+          onClick={handleReset}
+          disabled={!isChanged && !onCancel}
+        >
           Отмена
         </Button>
         <Button type='submit' variant='outline' disabled={!isChanged}>

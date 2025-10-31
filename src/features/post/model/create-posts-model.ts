@@ -50,7 +50,7 @@ export const createPostModel: FormDialogDomain.FormDataModelItem[] = [
   {
     type: 'string',
     label: 'Уникальный адрес тура внутри системы',
-    name: 'route',
+    name: 'slug',
     required: true
   },
   {
@@ -111,7 +111,7 @@ export const initialPostCreateFormData = {
   image: undefined,
   images: undefined,
   status: 'fresh',
-  route: '',
+  slug: '',
   metaKeywords: [],
   categories: [],
   metaTitle: '',

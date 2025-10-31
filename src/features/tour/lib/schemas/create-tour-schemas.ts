@@ -7,6 +7,7 @@ const baseTourSchema = {
     .max(180, 'Название тура не может быть более 180 символов'),
   description: z.string(),
   content: z.string(),
+  slug: z.string().min(5),
   price: z.number().min(1000, 'Стоимость тура не может быть менее 1000 рублей'),
   duration: z
     .number()

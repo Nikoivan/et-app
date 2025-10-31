@@ -4,9 +4,10 @@ import { PostEntity, WithUser } from '@/entities/post/domain';
 import PostGetPayload = Prisma.PostGetPayload;
 import PostWhereInput = Prisma.PostWhereInput;
 
-type UniquePostParams = { id: number } | { route: string };
+type UniquePostParams = { id: number } | { slug: string };
 
-const getPostsCount = () => dbClient.post.count();
+const getPostsCount = (where?: Prisma.PostWhereInput) =>
+  dbClient.post.count({ where });
 
 const getPost = (
   params: UniquePostParams

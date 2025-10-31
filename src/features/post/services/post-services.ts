@@ -2,44 +2,36 @@ import { Post, Prisma } from '@prisma/client';
 
 import { GetPostsResponse } from '@/features/post/domain';
 import { PostDomain, postRepositories } from '@/entities/post/server';
-import { qbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Either, left, right } from '@/shared/lib/either';
 import { PostUpdate } from '@/entities/post';
-import PostGetPayload = Prisma.PostGetPayload;
 
-const getPagesCount = async () => {
-  const count = await postRepositories.getPostsCount();
+const getPagesCount = async (where?: Prisma.PostWhereInput) => {
+  const count = await postRepositories.getPostsCount(where);
 
   return Math.ceil(count / 10);
 };
 
 const getPosts = async (
-  params?: Prisma.PostFindManyArgs & { page?: number }
-): Promise<Either<string, GetPostsResponse>> => {
-  const dbQueryParams = qbQueryUtils.getDbQueryParamsByPage<Prisma.PostInclude>(
-    params || { page: 1, include: { user: true } }
-  ) as Prisma.PostFindManyArgs & {
+  dbQueryParams?: Prisma.PostFindManyArgs & {
     select?: never;
     include: { user: true };
-  };
-
-  const pagesCount = await getPagesCount();
+  }
+): Promise<Either<string, GetPostsResponse>> => {
+  const pagesCount = await getPagesCount(dbQueryParams?.where);
   const result = await postRepositories.getPosts(dbQueryParams);
 
   if (!pagesCount || !result) {
     return left('Ошибка получения постов из базы данных');
   }
 
-  const postEntities = result.map(PostDomain.postToPostEntity);
-
-  return right({ pagesCount, posts: postEntities });
+  return right({ pagesCount, posts: result.map(PostDomain.postToPostEntity) });
 };
 
-const getPostByRoute = async (
-  route: string
+const getPostBySlug = async (
+  slug: string
 ): Promise<Either<string, PostDomain.PostEntity>> => {
-  const result: PostGetPayload<{ include: { user: true } }> | null =
-    await postRepositories.getPost({ route });
+  const result: Prisma.PostGetPayload<{ include: { user: true } }> | null =
+    await postRepositories.getPost({ slug });
 
   if (!result) {
     return left('Ошибка получения данных поста из базы данных');
@@ -84,7 +76,7 @@ const deletePost = async (id: number): Promise<Either<string, Post>> => {
 
 export const postServices = {
   getPosts,
-  getPostByRoute,
+  getPostBySlug,
   createPosts,
   updatePost,
   deletePost

@@ -17,7 +17,7 @@ export const legacyPostSchema = z.object({
     z.literal('fresh'),
     z.literal('unknown')
   ]),
-  route: z.string().max(512, 'Не может быть более 512 символов'),
+  slug: z.string().max(512, 'Не может быть более 512 символов'),
   categories: z.array(z.string()),
   metaTitle: z.string().max(512, 'Не может быть более 512 символов').optional(),
   metaDescription: z

@@ -91,7 +91,7 @@ export const convertJsonToPostEntity = (
     post.images = data.images.map(({ image }) => image);
   }
 
-  post.route = data['wp:post_name'] || v4();
+  post.slug = data['wp:post_name'] || v4();
   post.link = data.link;
   post.pubDate = data.pubDate || Date.now().toString();
 

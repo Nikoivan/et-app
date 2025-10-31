@@ -10,7 +10,6 @@ const request = async <T>({
   body,
   method,
   signal,
-
   queryParams
 }: RequestParams): Promise<T> => {
   const response = await fetch(`${urlUtils.getUrl(url, queryParams)}`, {

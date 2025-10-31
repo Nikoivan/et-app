@@ -3,20 +3,19 @@ const getOrigin = (): string =>
 const getApiRoute = (): string => process.env.API_ROUTE || '/api';
 const getApiUrl = (): string => `${getOrigin()}${getApiRoute()}`;
 const getQueryParamsString = (queryParams?: Record<string, string>): string => {
-  let queryParamsString = '';
-
-  if (queryParams) {
-    queryParamsString += '?';
-
-    Object.entries(queryParams).forEach(
-      ([key, value], idx) =>
-        (queryParamsString += `${idx !== 0 ? '&' : ''}${key}=${value}`)
-    );
+  if (!queryParams) {
+    return '';
   }
 
-  return queryParamsString;
+  return Object.entries(queryParams)
+    .filter(([key, value]) => !!key && !!value)
+    .reduce(
+      (acc, [key, value]) =>
+        (acc += `${acc !== '?' ? '&' : ''}${key}=${value}`),
+      '?'
+    );
 };
-const getUrl = (route: string, queryParams?: Record<string, string>) =>
-  `${getApiUrl()}/${route}${getQueryParamsString(queryParams)}`;
+const getUrl = (slug: string, queryParams?: Record<string, string>) =>
+  `${getApiUrl()}/${slug}${getQueryParamsString(queryParams)}`;
 
 export const urlUtils = { getOrigin, getApiRoute, getApiUrl, getUrl };

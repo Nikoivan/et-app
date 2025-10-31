@@ -15,7 +15,7 @@ type UserEntity = {
 export type PostCardEntity = {
   id: number;
   title: string;
-  route: string;
+  slug: string;
   user: UserEntity;
   images: string[];
   price: number | null;
@@ -38,7 +38,7 @@ export type PostEntity = {
   image: string;
   images: string[];
   status: PostStatus;
-  route: string;
+  slug: string;
   categories: string[];
   metaTitle?: string;
   metaDescription?: string;
@@ -95,10 +95,11 @@ export const postToPostEntity = (post: unknown): PostEntity => {
   }
 
   const entity = objectUtils.makeWithoutNull(result.data);
+  const user = userToUserEntity(result.data.user as User);
 
   return {
     ...entity,
     status: postUtils.getValidStatus(entity.status),
-    user: userToUserEntity(result.data.user as User)
+    user
   } as WithoutNull<PostEntity>;
 };

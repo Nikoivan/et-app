@@ -47,7 +47,7 @@ model Post {
   image           String?  @db.VarChar(512)
   images          String[] @db.VarChar(512)
   status          String   @db.VarChar(20)
-  route           String   @unique
+  slug            String   @unique
   metaKeywords    String[] @map("meta_keywords")
   categories      String[]
   metaTitle       String?  @map("meta_title") @db.VarChar(512)
@@ -96,14 +96,15 @@ model Tour {
   price           Int
   duration        Int
   content         String     @map("content")
+  slug            String     @unique
   categories      String[]
   authorId        Int        @map("author_id")
   author          User       @relation(fields: [authorId], references: [id])
-  status          String?
   reviews         Review[]
   activities      Activity[]
   orders          Order[]
   photos          Photo[]
+  status          String?
   metaTitle       String?    @map("meta_title")
   metaDescription String?    @map("meta_description")
   metaKeywords    String?    @map("meta_keywords")

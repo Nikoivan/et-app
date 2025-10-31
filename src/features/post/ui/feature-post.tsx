@@ -1,51 +1,51 @@
 'use client';
 
-import { FC, ReactNode } from 'react';
+import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
-import { toast } from 'sonner';
-import { Post } from '@prisma/client';
-
-import { postApi } from '@/features/post/api/post-api';
 import { postUtils } from '@/features/post/lib/post-utils';
 import { createPostModel } from '@/features/post/model/create-posts-model';
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
-import { postBaseSchema, postEditSchema } from '@/entities/post';
+import { FeatureTypes } from '@/features/post/domain';
+import { FeatureTriggerIcon } from '@/features/post/ui/feature-trigger-icon';
+import { getTitleByType } from '@/features/post/lib/feature-utils';
+import { useEditPost } from '@/features/post/hooks/use-edit-post';
+import { useCreatePost } from '@/features/post/hooks/use-create-post';
+import { postEditSchema } from '@/entities/post';
+import { postCreateSchema } from '@/entities/post/model/schemas';
 
 type Props = {
-  type: 'create' | 'edit';
+  type: FeatureTypes;
   initialData?: FormDialogDomain.FormData;
-  triggerButton?: ReactNode;
 };
 
 const cnFeaturePost = cn('FeaturePost');
 
-export const FeaturePost: FC<Props> = ({
-  type,
-  initialData,
-  triggerButton
-}) => {
-  const schema = type === 'edit' ? postBaseSchema : postEditSchema;
+export const FeaturePost: FC<Props> = ({ type, initialData }) => {
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const onEdit = useEditPost();
+  const onCreate = useCreatePost();
+  const title = getTitleByType(type);
+  const schema = type === 'edit' ? postEditSchema : postCreateSchema;
+
+  const onOpenChange = (value: boolean) => setOpen(value);
+  const onClose = () => setOpen(false);
 
   const onSubmit = async (data: FormDialogDomain.FormData) => {
-    const fn = type === 'edit' ? postApi.editPost : postApi.createPost;
-    const result = schema.safeParse(data);
+    const fn = type === 'edit' ? onEdit : onCreate;
 
-    if (!result.success) {
-      toast.error('Исходные данные не верны, действие невозможно');
+    await fn(data);
 
-      return;
-    }
-
-    const response = await fn<string>(result.data as Post);
-
-    toast.message(response);
+    setOpen(false);
   };
 
   return (
     <div className={cnFeaturePost(null, ['text-center'])}>
       <FormDialog
-        title='Создать пост'
-        triggerButton={triggerButton || 'Создать пост'}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        onCancel={onClose}
+        title={title}
+        triggerButton={<FeatureTriggerIcon type={type} />}
         formDataModel={createPostModel}
         initialData={initialData || postUtils.getInitialPostData()}
         onSubmit={onSubmit}

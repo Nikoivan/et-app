@@ -1,7 +1,7 @@
 export type PropsWithClassNames = { className?: string };
 
 export type ServerPostProps = {
-  params: Promise<{ route: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export type ServerTourProps = {

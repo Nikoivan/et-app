@@ -20,17 +20,7 @@ export const DashboardPosts: FC = () => {
       )}
       <Layout
         className={cnDashboardPosts()}
-        title={
-          <div
-            className={cnDashboardPosts('Title', [
-              'text-center',
-              'text-lg',
-              'mb-2'
-            ])}
-          >
-            Список постов
-          </div>
-        }
+        title={null}
         list={<PostFeatureList />}
         actions={<CreatePosts />}
       />

@@ -8,7 +8,7 @@ import {
   DraftTourCardEntity,
   draftTourToTourCardEntity
 } from '@/widgets/tours/domain';
-import { qbQueryUtils } from '@/shared/lib/db-client-utils';
+import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 
 const tourCardsSelect = {
   id: true,
@@ -37,7 +37,7 @@ const getPopularTourCards = async (): Promise<TourCardEntity[]> => {
 const getTourCards = async (
   params?: Prisma.TourFindManyArgs & { page?: number }
 ): Promise<TourCardEntity[]> => {
-  const dbQueryParams = qbQueryUtils.getDbQueryParamsByPage<
+  const dbQueryParams = dbQueryUtils.getDbQueryParamsByPage<
     Prisma.TourInclude | undefined
   >(params);
 
@@ -54,7 +54,7 @@ const getTourCards = async (
 };
 
 const getTours = (params?: Prisma.TourFindManyArgs & { page?: number }) => {
-  const dbQueryParams = qbQueryUtils.getDbQueryParamsByPage<
+  const dbQueryParams = dbQueryUtils.getDbQueryParamsByPage<
     Prisma.TourInclude | undefined
   >(params);
 

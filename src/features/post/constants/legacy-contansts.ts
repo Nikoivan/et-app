@@ -13,7 +13,7 @@ export const initialLegacyPost: z.infer<typeof legacyPostSchema> = {
   image: '',
   images: [],
   status: 'legacy',
-  route: '',
+  slug: '',
   categories: ['legacy'],
   metaTitle: '',
   metaDescription: '',

@@ -12,29 +12,17 @@ import {
   CardHeader,
   CardTitle
 } from '@/shared/ui/card';
-import { BadgeRussianRuble, HeartIcon, UserPen, XCircle } from 'lucide-react';
+import { BadgeRussianRuble, HeartIcon } from 'lucide-react';
 import { cn } from '@/shared/lib/css';
-import { ConfirmDialog } from '@/entities/confirm-dialog';
 import { PostDomain } from '@/entities/post/server';
-import { postApi } from '@/features/post/api/post-api';
-import { useMutation } from '@tanstack/react-query';
+
 import mockImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
 import { FeaturePost } from '@/features/post/ui/feature-post';
 import { FormDialogDomain } from '@/entities/form-dialog';
+import { DeletePost } from '@/features/post/ui/delete-post';
 
 export const PostCard: FC<PostDomain.PostEntity> = props => {
   const { id, title, image, content, rating, price } = props;
-  const mutation = useMutation({
-    mutationFn: postApi.deletePost,
-    mutationKey: ['posts']
-  });
-
-  const onDelete = async () => {
-    console.log('onDelete');
-    mutation.mutate(id);
-  };
-
-  //TODO: доделать корректно, заставить queryClient сделать новый запрос
 
   return (
     <Card className='max-w-md'>
@@ -67,18 +55,8 @@ export const PostCard: FC<PostDomain.PostEntity> = props => {
         <FeaturePost
           type='edit'
           initialData={props as unknown as FormDialogDomain.FormData}
-          triggerButton={<UserPen className='size-4' />}
         />
-        <ConfirmDialog
-          title='Удаление тура'
-          description='Вы уверенны, что хотите удалить этот тур?'
-          triggger={
-            <Button variant='ghost' size='sm'>
-              <XCircle className='size-4' />
-            </Button>
-          }
-          onSubmit={onDelete}
-        />
+        <DeletePost id={id} />
       </CardFooter>
     </Card>
   );

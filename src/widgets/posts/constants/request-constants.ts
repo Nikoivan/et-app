@@ -4,7 +4,7 @@ export const postCardFields: Prisma.PostSelect = {
   title: true,
   id: true,
   user: true,
-  route: true,
+  slug: true,
   images: true,
   price: true,
   duration: true,

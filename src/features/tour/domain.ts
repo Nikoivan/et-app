@@ -13,6 +13,7 @@ export type DraftCreateTourData = {
   mainPhoto: File[];
   content: string;
   price: number;
+  slug: string;
   duration: number;
   categories: string[];
   status: string;

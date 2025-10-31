@@ -26,6 +26,12 @@ export const createTourFormModel: FormDialogDomain.FormDataModelItem[] = [
     required: true
   },
   {
+    type: 'string',
+    label: 'Уникальный адрес страницы',
+    name: 'slug',
+    required: true
+  },
+  {
     type: 'number',
     label: 'Цена тура',
     name: 'price',
@@ -40,7 +46,8 @@ export const createTourFormModel: FormDialogDomain.FormDataModelItem[] = [
   {
     type: 'stringArray',
     label: 'Категории тура',
-    name: 'categories'
+    name: 'categories',
+    options: ['popular', 'dzhip-tour', 'auto', 'mountain']
   },
   {
     type: 'files',
@@ -66,6 +73,7 @@ export const initialCreateTourFormData = {
   mainPhoto: undefined,
   content: '',
   price: '',
+  slug: '',
   duration: '',
   categories: [],
   photos: undefined,

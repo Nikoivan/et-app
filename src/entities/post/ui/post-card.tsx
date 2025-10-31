@@ -16,11 +16,11 @@ import { CardFooter } from '@/shared/ui/card-footer';
 
 import reserveImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
 
-const cnTourCard = cn('TourCard');
+const cnPostCard = cn('TourCard');
 
 export const PostCard: FC<PostCardEntity> = async ({
   id,
-  route,
+  slug,
   price,
   images,
   title,
@@ -28,7 +28,7 @@ export const PostCard: FC<PostCardEntity> = async ({
   metaPrice
 }) => (
   <CardLayout
-    className={cnTourCard({ type: 'server' }, ['min-h-[420px]', 'mt-10'])}
+    className={cnPostCard({ type: 'server' }, ['min-h-[420px]', 'mt-10'])}
     bgImage={
       images?.length && !!images[0]
         ? images[0]
@@ -37,13 +37,13 @@ export const PostCard: FC<PostCardEntity> = async ({
     title={title}
     cardHeader={
       <CardHeader
-        className={cnTourCard('CardHeader', ['justify-end'])}
+        className={cnPostCard('CardHeader', ['justify-between'])}
         leftNode={
           <>
             {(!!price || !!metaPrice) && (
               <div>
                 <BadgePrice
-                  className={cnTourCard('Price')}
+                  className={cnPostCard('Price')}
                   price={price || (metaPrice as number | string)}
                 />
               </div>
@@ -60,12 +60,12 @@ export const PostCard: FC<PostCardEntity> = async ({
     }
     cardFooter={
       <CardFooter
-        className='justify-end'
+        className='justify-between'
         leftNode={
           <>{!!duration && <ServerDurationLabel duration={duration} />}</>
         }
         rightNode={
-          <LinkButton href={`/${route}`}>
+          <LinkButton href={`/${slug}`}>
             <ArrowLinkIcon />
           </LinkButton>
         }

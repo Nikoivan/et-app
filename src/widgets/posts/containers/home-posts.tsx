@@ -17,11 +17,9 @@ export const HomePosts: FC = async () => {
     }
   });
 
-  console.log('homePostCards', postCards);
-
   return (
     <Layout
-      className={cnHomePosts(null, ['p-4'])}
+      className={cnHomePosts(null, ['p-4', 'relative', 'z-5'])}
       title={
         <Title type='h2' className={cnHomePosts('Title', ['relative', 'z-3'])}>
           Открой для себя мир путешествий уже сегодня!

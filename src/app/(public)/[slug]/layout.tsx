@@ -11,11 +11,11 @@ import { PostViewLayout } from '@/views/post/server';
 export async function generateMetadata({
   params
 }: {
-  params: Promise<{ route: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { route } = await params;
+  const { slug } = await params;
 
-  const either = await postServices.getPostByRoute(route);
+  const either = await postServices.getPostBySlug(slug);
 
   return await getMetadataByEither(either);
 }
