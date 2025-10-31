@@ -9,11 +9,11 @@ import { TourViewLayout } from '@/views/tour/server';
 export async function generateMetadata({
   params
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const { id } = await params;
+  const { slug } = await params;
 
-  const either = await tourServices.getTourById(Number(id));
+  const either = await tourServices.getTourMetaData(slug);
 
   return await getMetadataByEither(either);
 }

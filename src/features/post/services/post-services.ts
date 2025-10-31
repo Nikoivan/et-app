@@ -4,6 +4,7 @@ import { GetPostsResponse } from '@/features/post/domain';
 import { PostDomain, postRepositories } from '@/entities/post/server';
 import { Either, left, right } from '@/shared/lib/either';
 import { PostUpdate } from '@/entities/post';
+import { PageMetaData } from '@/shared/model/types';
 
 const getPagesCount = async (where?: Prisma.PostWhereInput) => {
   const count = await postRepositories.getPostsCount(where);
@@ -44,7 +45,7 @@ const getPostBySlug = async (
 
 const getPostMetaDataBySlug = async (
   slug: string
-): Promise<Either<string, PostDomain.PostMetaData>> => {
+): Promise<Either<string, PageMetaData>> => {
   const result: Prisma.PostGetPayload<{
     select: {
       title: true;

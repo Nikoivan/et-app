@@ -7,8 +7,8 @@ import { tourServices } from '@/kernel/tour/services/tour-services';
 import { ServerTourProps } from '@/shared/model/types';
 
 export const TourView: FC<ServerTourProps> = async ({ params }) => {
-  const { id } = await params;
-  const either = await tourServices.getTourById(Number(id));
+  const { slug } = await params;
+  const either = await tourServices.getTourBySlug(slug);
 
   return (
     <>

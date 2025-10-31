@@ -1,12 +1,11 @@
 'use server';
 
 import { Metadata } from 'next';
-
-import { PostDomain } from '@/entities/post/server';
 import { Either } from '@/shared/lib/either';
+import { PageMetaData } from '@/shared/model/types';
 
 export async function getMetadataByEither(
-  either: Either<string, PostDomain.PostMetaData>
+  either: Either<string, PageMetaData>
 ): Promise<Metadata> {
   if (either.type === 'left') {
     return {

@@ -107,7 +107,7 @@ model Tour {
   status          String?
   metaTitle       String?    @map("meta_title")
   metaDescription String?    @map("meta_description")
-  metaKeywords    String?    @map("meta_keywords")
+  metaKeywords    String[]   @map("meta_keywords")
   rating          Float?
   descriptionText String?    @map("description_text")
   startPlace      Json?      @map("start_place")
