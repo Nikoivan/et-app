@@ -2,20 +2,23 @@
 
 import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
+import { toast } from 'sonner';
 
 import { FormDialog } from '@/entities/form-dialog';
-import {
-  createTour as createTourModel,
-  initialCreateTourFormData
-} from '../model/create-tour';
+import { TourDomain } from '@/entities/tour/server';
+import { FormDialogDomain } from '@/entities/form-dialog/index';
+import { createTour as createTourModel } from '../model/create-tour';
 import { createTourSchemas } from '../lib/schemas/create-tour-schemas';
 
 import { useCreateTour } from '@/features/tour/hooks/use-create-tour';
-import { toast } from 'sonner';
+
+type Props = {
+  data: TourDomain.TourEntity;
+};
 
 const cnCreateTourForm = cn('CreateTourForm');
 
-export const CreateTourForm: FC = () => {
+export const EditTourModel: FC<Props> = ({ data }) => {
   const [isOpen, setOpen] = useState<boolean>();
 
   const onOpenChange = (value: boolean) => setOpen(value);
@@ -40,7 +43,7 @@ export const CreateTourForm: FC = () => {
         title='Создать тур'
         triggerButton='Создать тур'
         formDataModel={createTourModel}
-        initialData={initialCreateTourFormData}
+        initialData={data as unknown as FormDialogDomain.FormData}
         onSubmit={onSubmit}
         schema={createTourSchemas}
       />

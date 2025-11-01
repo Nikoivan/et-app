@@ -4,7 +4,8 @@ import { cn } from '@bem-react/classname';
 import { FC } from 'react';
 import { Layout } from '../ui/layout';
 import { Spinner } from '@/shared/ui/spinner';
-import { CreatePosts, PostFeatureList } from '@/features/post';
+import { PostFeatureList } from '@/features/post';
+import { FeaturePost } from '@/features/post/ui/feature-post';
 
 const cnDashboardPosts = cn('DashboardPosts');
 
@@ -22,7 +23,7 @@ export const DashboardPosts: FC = () => {
         className={cnDashboardPosts()}
         title={null}
         list={<PostFeatureList />}
-        actions={<CreatePosts />}
+        actions={<FeaturePost type='create' />}
       />
     </>
   );

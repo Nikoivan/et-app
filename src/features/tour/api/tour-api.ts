@@ -1,7 +1,5 @@
 import { Tour } from '@prisma/client';
 
-import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
-import { FormDialogDomain } from '@/entities/form-dialog';
 import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
@@ -9,16 +7,11 @@ import { isStringArray } from '@/shared/lib/typeguargs/string-array';
 const createErrorMessage = 'Ошибка создания тура';
 const deleteErrorMessage = 'Ошибка при удаление тура';
 
+const baseKey = 'tours';
+
 export const createTour = async (
-  data: FormDialogDomain.FormData
+  formData: FormData
 ): Promise<Either<string, string>> => {
-  const dataForCreate: [string, string | File][] =
-    prepareDataUtils.prepareDataToCreate(data);
-
-  const formData = new FormData();
-
-  dataForCreate.forEach(([key, value]) => formData.append(key, value));
-
   try {
     const response = await fetch(`${urlUtils.getApiUrl()}/tour`, {
       method: 'POST',
@@ -62,3 +55,5 @@ export const deleteTour = async (id: number): Promise<Either<string, Tour>> => {
     return left(deleteErrorMessage);
   }
 };
+
+export const tourApi = { baseKey, createTour, deleteTour };

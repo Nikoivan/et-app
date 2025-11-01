@@ -5,12 +5,13 @@ import { cn } from '@bem-react/classname';
 import { useQuery } from '@tanstack/react-query';
 
 import { ClientLayout } from '@/widgets/tours/ui/client-layout';
-import { CreateTourForm } from '@/widgets/tours/ui/create-tour-form';
+
 import { TourFeatureList } from '@/widgets/tours/ui/tour-feature-list';
 import { SessionDomain } from '@/entities/user/server';
 import { TourDomain } from '@/entities/tour/server';
 import { Spinner } from '@/shared/ui/spinner';
 import { getOwnTours } from '../api/own-tour';
+import { CreateTourForm } from '@/features/tour';
 
 const cnDashboardTours = cn('DashboardTours');
 
