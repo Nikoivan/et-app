@@ -73,3 +73,5 @@ export const createTourSchema = z.object({
       { message: 'Неподдерживаемый формат фото' }
     )
 });
+
+export const editTourSchema = createTourSchema.extend({ id: z.number() });
