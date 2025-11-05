@@ -75,3 +75,5 @@ export const createTourSchema = z.object({
 });
 
 export const editTourSchema = createTourSchema.extend({ id: z.number() });
+
+export type TourUpdate = z.infer<typeof editTourSchema>;

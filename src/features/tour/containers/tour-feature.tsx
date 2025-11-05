@@ -1,42 +1,52 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 import { TourDomain } from '@/entities/tour/server';
 import { toast } from 'sonner';
 import { useCreateTour } from '@/features/tour/hooks/use-create-tour';
 import { FormDialog, FormDialogDomain } from '@/entities/form-dialog';
-import { createTour as createTourModel } from '@/features/tour/model/create-tour';
+import {
+  createTour as createTourModel,
+  initialCreateTourFormData
+} from '@/features/tour/model/create-tour';
 import { cn } from '@bem-react/classname';
 import {
   createTourSchema,
   editTourSchema
 } from '@/features/tour/lib/schemas/create-tour-schemas';
+import { useEditTour } from '@/features/tour/hooks/use-edit-tour';
 
 type Props = {
   type: 'edit' | 'create';
   data?: TourDomain.TourEntity;
+  title?: ReactNode;
 };
 
 const cnTourFeature = cn('TourFeature');
 
-export const TourFeature: FC<Props> = ({ type }) => {
+export const TourFeature: FC<Props> = ({ type, data, title }) => {
   const [isOpen, setOpen] = useState<boolean>();
 
-  const schema = type === 'create' ? createTourSchema : editTourSchema;
+  const isCreateType = type === 'create';
+  const schema = isCreateType ? createTourSchema : editTourSchema;
+  const dialogTitle =
+    title || isCreateType ? 'Создать тур' : 'Редактировать тур';
 
   const onOpenChange = (value: boolean) => setOpen(value);
   const onClose = () => setOpen(false);
   const successHandler = () => {
     setOpen(false);
-    toast.success('Тур успещно создан');
+    toast.success(`Тур успешно ${isCreateType ? 'создан' : 'отредактирован'}`);
   };
   const errorHandler = (error: Error) => toast.error(error.message);
 
-  const onSubmit = useCreateTour({
+  const onCreate = useCreateTour({
     onSuccess: successHandler,
     onError: errorHandler
   });
+
+  const onEdit = useEditTour();
 
   return (
     <div className={cnTourFeature(null, ['text-center'])}>
@@ -44,11 +54,14 @@ export const TourFeature: FC<Props> = ({ type }) => {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         onCancel={onClose}
-        title='Создать тур'
+        title={dialogTitle}
         triggerButton='Создать тур'
         formDataModel={createTourModel}
-        initialData={data as unknown as FormDialogDomain.FormData}
-        onSubmit={onSubmit}
+        initialData={
+          (data as unknown as FormDialogDomain.FormData) ||
+          initialCreateTourFormData
+        }
+        onSubmit={isCreateType ? onCreate : onEdit}
         schema={schema}
       />
     </div>

@@ -9,10 +9,9 @@ const errorMessage = 'Исходные данные не верны, дейст�
 export const useEditPost = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation<string, Error, PostUpdate>({
-    mutationFn: data => postApi.editPost(data),
+    mutationFn: postApi.editPost,
     onSuccess: message => {
       queryClient.invalidateQueries({ queryKey: [postApi.baseKey] });
-      toast.message(message);
     },
 
     onError: error => toast.error(error.message)
