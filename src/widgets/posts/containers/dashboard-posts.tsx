@@ -6,6 +6,7 @@ import { Layout } from '../ui/layout';
 import { Spinner } from '@/shared/ui/spinner';
 import { PostFeatureList } from '@/features/post';
 import { FeaturePost } from '@/features/post/ui/feature-post';
+import { MigrationPosts } from '@/widgets/posts/ui/posts-migration';
 
 const cnDashboardPosts = cn('DashboardPosts');
 
@@ -23,7 +24,12 @@ export const DashboardPosts: FC = () => {
         className={cnDashboardPosts()}
         title={null}
         list={<PostFeatureList />}
-        actions={<FeaturePost type='create' />}
+        actions={
+          <div>
+            <FeaturePost type='create' />
+            <MigrationPosts />
+          </div>
+        }
       />
     </>
   );
