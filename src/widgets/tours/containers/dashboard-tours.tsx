@@ -11,7 +11,7 @@ import { SessionDomain } from '@/entities/user/server';
 import { TourDomain } from '@/entities/tour/server';
 import { Spinner } from '@/shared/ui/spinner';
 import { getOwnTours } from '../api/own-tour';
-import { CreateTourForm } from '@/features/tour';
+import TourFeature from '@/features/tour';
 
 const cnDashboardTours = cn('DashboardTours');
 
@@ -50,7 +50,7 @@ export const DashboardTours: FC<{
           }
           actions={
             <div className={cnDashboardTours('Actions', ['mt-8'])}>
-              <CreateTourForm />
+              <TourFeature type='create' />
             </div>
           }
         />

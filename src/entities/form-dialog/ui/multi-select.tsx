@@ -29,13 +29,8 @@ export const MultiSelect = <
   };
 
   return (
-    <MultiSelector
-      values={value}
-      onValuesChange={toggleSelection}
-      loop
-      className='max-w-xs'
-    >
-      <MultiSelectorTrigger>
+    <MultiSelector values={value} onValuesChange={toggleSelection} loop>
+      <MultiSelectorTrigger className='dark:bg-input/30'>
         <MultiSelectorInput placeholder={placeHolder} />
       </MultiSelectorTrigger>
       <MultiSelectorContent>

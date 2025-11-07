@@ -3,6 +3,7 @@ import { Input } from '@/shared/ui/input';
 import { ChangeEvent, useState } from 'react';
 import { Button } from '@/shared/ui/button';
 import { CircleX } from 'lucide-react';
+import { ImagesPreview } from '@/entities/form-dialog/ui/images-preview';
 
 export const InputTypeFile = <
   T extends Record<string, unknown> = Record<string, string>
@@ -45,16 +46,19 @@ export const InputTypeFile = <
         multiple={multiple}
       />
       {!!files.length && (
-        <ul>
-          {files.map((file, idx) => (
-            <li key={idx}>
-              <span>{file.name}</span>
-              <Button onClick={() => onDeleteFile(file.name)} variant='ghost'>
-                <CircleX />
-              </Button>
-            </li>
-          ))}
-        </ul>
+        <>
+          <ul>
+            {files.map((file, idx) => (
+              <li key={idx}>
+                <span>{file.name}</span>
+                <Button onClick={() => onDeleteFile(file.name)} variant='ghost'>
+                  <CircleX />
+                </Button>
+              </li>
+            ))}
+          </ul>
+          <ImagesPreview files={files} />
+        </>
       )}
     </>
   );

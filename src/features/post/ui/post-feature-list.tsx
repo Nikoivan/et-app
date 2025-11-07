@@ -23,7 +23,14 @@ export const PostFeatureList: FC = () => {
           {pagination}
           <ul className={cnPostFeatureList()}>
             {data.posts.map(post => (
-              <li key={post.id}>
+              <li
+                className={cnPostFeatureList('Item', [
+                  'flex',
+                  'justify-center',
+                  'mt-3'
+                ])}
+                key={post.id}
+              >
                 <PostCard {...post} />
               </li>
             ))}

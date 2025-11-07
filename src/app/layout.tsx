@@ -5,6 +5,7 @@ import { AppProvider } from '@/shared/lib/providers/app-provider';
 import { cn } from '@/shared/lib/css';
 
 import './globals.css';
+import { Toaster } from 'sonner';
 
 const oswald = Oswald({
   weight: ['400'],
@@ -49,6 +50,7 @@ export default function RootLayout({
         )}
       >
         <AppProvider>{children}</AppProvider>
+        <Toaster richColors position='top-right' />
       </body>
     </html>
   );

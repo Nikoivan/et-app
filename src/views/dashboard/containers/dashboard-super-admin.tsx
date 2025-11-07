@@ -18,7 +18,7 @@ export const DashboardSuperAdmin: FC<
       Панель управления cупер администратора
     </h1>
     <Tabs className={cn('my-3')} defaultValue='tours'>
-      <TabsList className={cn('bg-white', 'dark:bg-black')}>
+      <TabsList className={cn('mx-auto', 'bg-white', 'dark:bg-black')}>
         <TabsTrigger value='tours'>Туры компании</TabsTrigger>
         <TabsTrigger value='posts'>Посты/Легаси туры</TabsTrigger>
         <TabsTrigger value='guideTours'>Туры гидов</TabsTrigger>

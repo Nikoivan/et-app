@@ -7,7 +7,6 @@ import {
   FormRowProps,
   Value
 } from '@/entities/form-dialog/domain';
-import { Label } from '@/shared/ui/label';
 import { InputTypeString } from '@/entities/form-dialog/ui/input-type-string';
 import { InputTypeNumber } from '@/entities/form-dialog/ui/input-type-number';
 import { Checkbox } from '@/entities/form-dialog/ui/checkbox';
@@ -33,7 +32,7 @@ export const FormRow = <
 }: FormRowProps<FormCheckTypes<T>>) => (
   <div className={cnFormRow(null)}>
     <div className={hidden ? 'absolute top-[-1000px]' : undefined}>
-      <Label className='mb-3 px-3'>{label}</Label>
+      <span className='block mb-3 px-3'>{label}</span>
       {type === 'string' && (
         <InputTypeString
           name={name}

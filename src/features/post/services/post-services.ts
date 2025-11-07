@@ -19,6 +19,7 @@ const getPosts = async (
   }
 ): Promise<Either<string, GetPostsResponse>> => {
   const pagesCount = await getPagesCount(dbQueryParams?.where);
+
   const result = await postRepositories.getPosts(dbQueryParams);
 
   if (!pagesCount || !result) {

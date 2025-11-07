@@ -12,7 +12,7 @@ export const postBaseSchema = z.object({
   id: z.number().optional(),
   title: z.string().min(1).max(256),
   description: z.string(),
-  content: z.string().min(1),
+  content: z.string(),
   postAuthorId: z.number(),
   type: z.string().min(1).max(20),
   guid: z.string().min(1).max(80),

@@ -275,7 +275,7 @@ const MultiSelectorItem = forwardRef<
         setInputValue('');
       }}
       className={cn(
-        'rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between ',
+        'rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between bg-zinc-900',
         className,
         isIncluded && 'opacity-50 cursor-default',
         props.disabled && 'opacity-50 cursor-not-allowed'

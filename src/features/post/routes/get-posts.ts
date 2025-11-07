@@ -19,7 +19,11 @@ export async function getPosts(req: NextRequest): Promise<Response> {
     }
 
     return handleSuccess({ body: eitherResult.value });
-  } catch {
+  } catch (e) {
+    if (!!e && typeof e === 'object' && 'message' in e) {
+      console.error(e.message);
+    }
+
     return handleError({ body: 'Ошибка верификации' });
   }
 }

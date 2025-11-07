@@ -91,6 +91,8 @@ export const postToPostEntity = (post: unknown): PostEntity => {
   const result = postCreateSchema.safeParse(post);
 
   if (!result.success) {
+    console.error(result.error.format());
+
     throw new Error('Ошибка в типах данных');
   }
 

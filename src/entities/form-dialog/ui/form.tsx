@@ -77,7 +77,11 @@ export const Form = <
 
   return (
     <form className={cnForm(null)} onSubmit={handleSubmit}>
-      {!!title && <div className={cnForm('Title')}>{title}</div>}
+      {!!title && (
+        <div className={cnForm('Title', ['text-center text-xl my-4'])}>
+          {title}
+        </div>
+      )}
       {!!description && (
         <div className={cnForm('Description')}>{description}</div>
       )}
