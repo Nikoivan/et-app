@@ -1,3 +1,5 @@
+import { TourDomain } from '@/entities/tour/server';
+
 export type TourCardEntity = {
   id: number;
   title: string;
@@ -28,4 +30,9 @@ export type CreateTourData = Omit<
 > & {
   mainPhoto: File;
   photos?: File[];
+};
+
+export type GetToursResponse = {
+  pagesCount: number;
+  tours: TourDomain.TourEntity[];
 };

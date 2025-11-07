@@ -1,25 +1,26 @@
 import { ReactNode, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { postApi } from '@/features/post/api/post-api';
+
+import { GetToursResponse } from '@/features/tour/domain';
+import { tourApi } from '@/features/tour/api/tour-api';
+import { Spinner } from '@/shared/ui/spinner';
 import { SimplePagination } from '@/shared/ui/simple-pagination';
 import { cn } from '@/shared/lib/css';
-import { GetPostsResponse } from '@/features/post/domain';
-import { Spinner } from '@/shared/ui/spinner';
 import { SearchInput } from '@/shared/ui/search-input';
 
 type PostListData = {
-  data: NoInfer<GetPostsResponse> | undefined;
+  data: NoInfer<GetToursResponse> | undefined;
   isFetching: boolean;
   tools: ReactNode;
   pagination: ReactNode;
   cursor: ReactNode;
 };
 
-export const usePostList = (): PostListData => {
+export const useTourList = (): PostListData => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>('');
   const { isLoading, data, error, isFetching } = useQuery({
-    ...postApi.getPostListQueryOption({ page, search })
+    ...tourApi.getTourListQueryOption({ page, search })
   });
 
   const onNext = () =>

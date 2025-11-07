@@ -17,3 +17,9 @@ export type PageMetaData = {
   description: string;
   keywords: string[];
 };
+
+export type GetApiData = {
+  signal: AbortSignal;
+  page: number;
+  search: string;
+};

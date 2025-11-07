@@ -24,7 +24,7 @@ export const DashboardSuperAdmin: FC<
         <TabsTrigger value='guideTours'>Туры гидов</TabsTrigger>
       </TabsList>
       <TabsContent value='tours'>
-        <DashboardTours session={session} />
+        <DashboardTours />
         <DashboardActivities session={session} />
       </TabsContent>
       <TabsContent value='posts'>

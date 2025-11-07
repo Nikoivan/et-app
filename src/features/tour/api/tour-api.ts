@@ -5,6 +5,10 @@ import { urlUtils } from '@/shared/lib/url-utils';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
 import { TourUpdate } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { apiClient } from '@/shared/api/api-client';
+import { queryOptions } from '@tanstack/react-query';
+
+import { GetToursResponse } from '@/features/tour/domain';
+import { GetApiData } from '@/shared/model/types';
 
 const createErrorMessage = 'Ошибка создания тура';
 const updateErrorMessage = 'Ошибка редактирования тура';
@@ -12,6 +16,13 @@ const deleteErrorMessage = 'Ошибка при удаление тура';
 
 const baseKey = 'tours';
 const baseUrl = 'tour';
+
+const getTours = <T>({ signal, page, search }: GetApiData) =>
+  apiClient.get<T>({
+    url: baseUrl,
+    signal,
+    queryParams: { page: String(page), search }
+  });
 
 export const createTour = async (
   formData: FormData
@@ -73,4 +84,23 @@ export const deleteTour = async (id: number): Promise<Either<string, Tour>> => {
   }
 };
 
-export const tourApi = { baseKey, createTour, editTour, deleteTour };
+const getTourListQueryOption = ({
+  page,
+  search
+}: {
+  page: number;
+  search: string;
+}) =>
+  queryOptions({
+    queryKey: [baseKey, { page, search }],
+    queryFn: ({ signal }) =>
+      getTours<GetToursResponse>({ signal, page, search })
+  });
+
+export const tourApi = {
+  baseKey,
+  createTour,
+  editTour,
+  deleteTour,
+  getTourListQueryOption
+};

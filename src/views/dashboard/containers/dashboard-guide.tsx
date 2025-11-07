@@ -13,7 +13,7 @@ export const DashboardGuide: FC<
 > = async ({ session, children }) => (
   <DashboardLayout className={cn('p-4')} type='guide'>
     <h1 className={cn('text-center')}>Панель управления гида</h1>
-    <DashboardTours session={session} />
+    <DashboardTours />
     <DashboardActivities session={session} />
     {children}
   </DashboardLayout>
