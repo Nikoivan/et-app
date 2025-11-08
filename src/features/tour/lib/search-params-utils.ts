@@ -1,0 +1,45 @@
+import { dbQueryUtils, PageParams } from '@/shared/lib/db-client-utils';
+import { Prisma } from '@prisma/client';
+
+import { tourSearchUtils } from '@/entities/tour/server';
+
+type ParamsFns = {
+  page: (value: string | null) => PageParams;
+  search: (
+    value: string | null
+  ) => { where: Prisma.TourWhereInput } | undefined;
+};
+
+const paramsFns: ParamsFns = {
+  page: dbQueryUtils.getPageParams,
+  search: tourSearchUtils.getSearchParamsUtils
+};
+
+const isKeyOfParamsFns = (value: unknown): value is keyof ParamsFns =>
+  !!value && typeof value === 'string' && value in paramsFns;
+
+const getParamsByKey = (key: string, searchParams: URLSearchParams) => {
+  if (!isKeyOfParamsFns(key)) return;
+
+  const searchValue = searchParams.get(key);
+
+  return paramsFns[key](searchValue);
+};
+
+const getParamsBySearchParams = (
+  searchParams: URLSearchParams
+): Prisma.TourFindManyArgs & {
+  select?: never;
+  include: { user: true };
+} => {
+  const keys = [...searchParams.keys()];
+
+  const paramsArr = keys.reduce(
+    (acc, key) => ({ ...acc, ...getParamsByKey(key, searchParams) }),
+    {}
+  );
+
+  return { ...paramsArr, include: { user: true } };
+};
+
+export const searchParamsUtils = { getParamsBySearchParams };

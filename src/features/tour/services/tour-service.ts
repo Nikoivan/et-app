@@ -9,6 +9,7 @@ import {
   draftTourToTourCardEntity
 } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
+import { Role } from '@/entities/user/domain';
 
 const tourCardsSelect = {
   id: true,
@@ -63,17 +64,32 @@ const getTours = (params?: Prisma.TourFindManyArgs & { page?: number }) => {
     : tourRepositories.getTours();
 };
 
-const getUserTours = async (
-  authorId: number
-): Promise<Either<string, TourEntity[]>> => {
-  const where: Prisma.TourWhereInput = { authorId };
+const getUserTours = async ({
+  authorId,
+  role,
+  ...tourParams
+}: {
+  authorId: number;
+  role: string;
+} & Prisma.TourFindManyArgs & {
+    select?: never;
+    include: { user: true };
+  }): Promise<Either<string, TourEntity[]>> => {
+  const isSuperAdmin = role === Role.SUPER_ADMIN;
+  const where: Prisma.TourWhereInput | undefined = isSuperAdmin
+    ? undefined
+    : { authorId };
   const tourIncludes: Prisma.TourInclude = { photos: true };
 
   const tours: Prisma.TourGetPayload<{
     include: {
       photos: true;
     };
-  }>[] = await tourRepositories.getTours({ where, include: tourIncludes });
+  }>[] = await tourRepositories.getTours({
+    where,
+    include: tourIncludes,
+    ...tourParams
+  });
 
   if (!tours) {
     return left('Ошибка при получение туров');

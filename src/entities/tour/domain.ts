@@ -3,6 +3,8 @@ import { objectUtils } from '@/shared/lib/object-utils';
 import { WithoutNull } from '@/shared/model/types';
 import { placeEntitySchema } from '@/entities/tour/lib/validation-schemas';
 
+export type TourStatus = 'new' | 'default';
+
 type PhotoEntity = {
   id: number;
   title: string;

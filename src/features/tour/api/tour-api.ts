@@ -19,7 +19,7 @@ const baseUrl = 'tour';
 
 const getTours = <T>({ signal, page, search }: GetApiData) =>
   apiClient.get<T>({
-    url: baseUrl,
+    url: `${baseKey}/user`,
     signal,
     queryParams: { page: String(page), search }
   });
