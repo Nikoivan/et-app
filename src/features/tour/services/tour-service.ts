@@ -66,15 +66,11 @@ const getTours = (params?: Prisma.TourFindManyArgs & { page?: number }) => {
 
 const getUserTours = async ({
   authorId,
-  role,
-  ...tourParams
+  role
 }: {
   authorId: number;
   role: string;
-} & Prisma.TourFindManyArgs & {
-    select?: never;
-    include: { user: true };
-  }): Promise<Either<string, TourEntity[]>> => {
+}): Promise<Either<string, TourEntity[]>> => {
   const isSuperAdmin = role === Role.SUPER_ADMIN;
   const where: Prisma.TourWhereInput | undefined = isSuperAdmin
     ? undefined
@@ -87,8 +83,7 @@ const getUserTours = async ({
     };
   }>[] = await tourRepositories.getTours({
     where,
-    include: tourIncludes,
-    ...tourParams
+    include: tourIncludes
   });
 
   if (!tours) {

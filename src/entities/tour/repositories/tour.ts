@@ -1,7 +1,11 @@
-import { Prisma, Tour } from '@prisma/client';
+import { Prisma, PrismaPromise, Tour } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
+import { InternalArgs } from '@prisma/client/runtime/library';
+import { GetFindResult } from '@prisma/client/runtime/edge';
+import SelectSubset = Prisma.SelectSubset;
+import TourFindManyArgs = Prisma.TourFindManyArgs;
 
 export type Params<T extends Prisma.TourInclude | undefined = undefined> = {
   where?: Prisma.TourWhereInput;
@@ -12,12 +16,26 @@ export type Params<T extends Prisma.TourInclude | undefined = undefined> = {
   skip?: number;
 };
 
+export type DefaultArgs = InternalArgs<unknown, unknown, unknown, unknown>;
+
+type ExtArgs<T extends InternalArgs = DefaultArgs> = T;
+
 const getTour = (id: number): Promise<Tour | null> =>
   dbClient.tour.findUnique({
     where: {
       id
     }
   });
+
+const getStrictTours = <T extends Prisma.TourFindManyArgs>(
+  args?: SelectSubset<T, Prisma.TourFindManyArgs<ExtArgs>>
+): PrismaPromise<
+  GetFindResult<
+    Prisma.$TourPayload<DefaultArgs>,
+    TourFindManyArgs<DefaultArgs>,
+    Prisma.PrismaClientOptions
+  >[]
+> => dbClient.tour.findMany(args);
 
 const getTours = <TInclude extends Prisma.TourInclude | undefined = undefined>(
   params?: Params<TInclude>
