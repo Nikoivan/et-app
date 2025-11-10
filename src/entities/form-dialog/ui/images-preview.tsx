@@ -42,10 +42,6 @@ export const ImagesPreview: FC<Props> = ({ files }) => {
         }))
       : [];
 
-  if (!result.success) {
-    console.log('imagesErrors', result.error.format());
-  }
-
   return (
     <>
       {!!previews.length && (

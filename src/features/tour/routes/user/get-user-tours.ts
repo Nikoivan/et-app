@@ -1,6 +1,4 @@
 import { NextRequest } from 'next/server';
-
-import { searchParamsUtils } from '@/features/tour/lib/search-params-utils';
 import { tourService } from '@/features/tour/services/tour-service';
 import { sessionService } from '@/entities/user/server';
 import { TourDomain } from '@/entities/tour/server';
@@ -21,16 +19,12 @@ export async function getUserTours(req: NextRequest): Promise<Response> {
       return handleError({ body: 'Session not found' });
     }
 
-    const searchParams = req.nextUrl.searchParams;
-    const params = searchParamsUtils.getParamsBySearchParams(searchParams);
-
     const { id, role } = session;
 
     const eitherResult: Either<string, TourDomain.TourEntity[]> =
       await tourService.getUserTours({
         authorId: id,
-        role: role,
-        ...params
+        role: role
       });
 
     if (eitherResult.type === 'left') {

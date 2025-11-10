@@ -1,11 +1,8 @@
-import { Prisma, PrismaPromise, Tour } from '@prisma/client';
+import { Prisma, Tour } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
-import { InternalArgs } from '@prisma/client/runtime/library';
-import { GetFindResult } from '@prisma/client/runtime/edge';
 import SelectSubset = Prisma.SelectSubset;
-import TourFindManyArgs = Prisma.TourFindManyArgs;
 
 export type Params<T extends Prisma.TourInclude | undefined = undefined> = {
   where?: Prisma.TourWhereInput;
@@ -16,9 +13,12 @@ export type Params<T extends Prisma.TourInclude | undefined = undefined> = {
   skip?: number;
 };
 
-export type DefaultArgs = InternalArgs<unknown, unknown, unknown, unknown>;
+const postCard = {
+  id: true,
+  title: true
+} satisfies Prisma.TourSelect;
 
-type ExtArgs<T extends InternalArgs = DefaultArgs> = T;
+type Payload<T extends Prisma.TourFindManyArgs> = Prisma.TourGetPayload<T>;
 
 const getTour = (id: number): Promise<Tour | null> =>
   dbClient.tour.findUnique({
@@ -27,15 +27,11 @@ const getTour = (id: number): Promise<Tour | null> =>
     }
   });
 
+// extends Prisma.UserSelect | Prisma.UserInclude
+
 const getStrictTours = <T extends Prisma.TourFindManyArgs>(
-  args?: SelectSubset<T, Prisma.TourFindManyArgs<ExtArgs>>
-): PrismaPromise<
-  GetFindResult<
-    Prisma.$TourPayload<DefaultArgs>,
-    TourFindManyArgs<DefaultArgs>,
-    Prisma.PrismaClientOptions
-  >[]
-> => dbClient.tour.findMany(args);
+  args?: SelectSubset<T, Prisma.TourFindManyArgs>
+): Promise<Payload<T>[]> => dbClient.tour.findMany(args);
 
 const getTours = <TInclude extends Prisma.TourInclude | undefined = undefined>(
   params?: Params<TInclude>
@@ -91,4 +87,10 @@ const deleteTour = async (id: number): Promise<Tour | null> =>
     }
   });
 
-export const tourRepositories = { getTour, getTours, createTour, deleteTour };
+export const tourRepositories = {
+  getTour,
+  getStrictTours,
+  getTours,
+  createTour,
+  deleteTour
+};
