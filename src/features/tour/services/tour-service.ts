@@ -2,16 +2,22 @@ import { tourRepositories } from '@/entities/tour/repositories/tour';
 import { Prisma } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
 import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
-import { CreateTourData, TourCardEntity } from '@/features/tour/domain';
+import {
+  CreateTourData,
+  GetToursResponse,
+  TourCardEntity
+} from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
 import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
+import { DefaultArgs } from '@prisma/client/runtime/library';
 
 type UserToursData = {
   authorId: number;
   role: string;
-};
+  paginated?: boolean;
+} & Prisma.TourFindManyArgs<DefaultArgs>;
 
 const tourCardsSelect = {
   id: true,
@@ -23,8 +29,14 @@ const tourCardsSelect = {
   photos: true
 };
 
+const getPagesCount = async (where?: Prisma.TourWhereInput) => {
+  const count = await tourRepositories.getToursCount(where);
+
+  return Math.ceil(count / 10);
+};
+
 const getPopularTourCards = async (): Promise<TourCardEntity[]> => {
-  const draftPopularTours = await tourRepositories.getStrictTours({
+  const draftPopularTours = await tourRepositories.getTours({
     where: {
       categories: {
         has: 'popular'
@@ -45,11 +57,11 @@ const getTourCards = async (
   >(params);
 
   const draftTourCards = dbQueryParams
-    ? await tourRepositories.getStrictTours({
+    ? await tourRepositories.getTours({
         ...dbQueryParams,
         select: tourCardsSelect
       })
-    : await tourRepositories.getStrictTours({
+    : await tourRepositories.getTours({
         select: tourCardsSelect
       });
 
@@ -63,29 +75,35 @@ export const getTours = async (
     Prisma.TourInclude | undefined
   >(params);
 
-  return dbQueryParams
-    ? tourRepositories.getStrictTours(dbQueryParams)
-    : tourRepositories.getStrictTours();
+  return tourRepositories.getTours(dbQueryParams);
 };
 
 const getUserTours = async ({
   authorId,
-  role
-}: UserToursData): Promise<Either<string, TourEntity[]>> => {
+  role,
+  paginated,
+  ...params
+}: UserToursData): Promise<Either<string, GetToursResponse>> => {
   const isSuperAdmin = role === Role.SUPER_ADMIN;
   const where: Prisma.TourWhereInput | undefined = isSuperAdmin
     ? undefined
     : { authorId };
-  const tourIncludes: Prisma.TourInclude = { photos: true };
+  const tourIncludes: Prisma.TourInclude = {
+    photos: true,
+    author: isSuperAdmin
+  };
 
-  const tours: Prisma.TourGetPayload<{
+  const pagesCount = await getPagesCount(where);
+
+  const tours = (await tourRepositories.getTours({
+    where,
+    include: tourIncludes,
+    ...params
+  })) as Prisma.TourGetPayload<{
     include: {
       photos: true;
     };
-  }>[] = await tourRepositories.getStrictTours({
-    where,
-    include: tourIncludes
-  });
+  }>[];
 
   if (!tours) {
     return left('Ошибка при получение туров');
@@ -95,7 +113,7 @@ const getUserTours = async ({
     ? tours.map(tourToTourEntity)
     : [];
 
-  return right(tourEntities);
+  return right({ pagesCount, tours: tourEntities });
 };
 
 const createTour = async (

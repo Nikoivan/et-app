@@ -8,7 +8,6 @@ import { Row } from '@/widgets/contacts/ui/row';
 import { GeoPointIcon } from '@/shared/ui/GeoPointIcon';
 import { MailIcon } from '@/shared/ui/mailIcon';
 import { PhoneIcon } from '@/shared/ui/PhoneIcon';
-import { v4 } from 'uuid';
 
 import { formatNumber } from '@/shared/lib/string-utils';
 import { SocialItem } from '@/widgets/contacts/ui/social-item';
@@ -48,8 +47,8 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
         <MailIcon />
         <a href={`mailto:${email}`}>{email}</a>
       </Row>
-      {phones.map(phone => (
-        <a href={`tel:${phone}`} key={v4()}>
+      {phones.map((phone, idx) => (
+        <a href={`tel:${phone}`} key={idx}>
           <Row>
             <PhoneIcon />
             {formatNumber(phone)}

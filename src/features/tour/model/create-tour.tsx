@@ -75,6 +75,7 @@ export const initialCreateTourFormData = {
   price: '',
   slug: '',
   duration: '',
+  status: 'new',
   categories: [],
   photos: undefined,
   descriptionText: '',

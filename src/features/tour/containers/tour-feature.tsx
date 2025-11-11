@@ -12,7 +12,7 @@ import {
 } from '@/features/tour/model/create-tour';
 import { cn } from '@bem-react/classname';
 import {
-  createTourSchema,
+  createTourSchemas,
   editTourSchema
 } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { useEditTour } from '@/features/tour/hooks/use-edit-tour';
@@ -29,7 +29,7 @@ export const TourFeature: FC<Props> = ({ type, data, title }) => {
   const [isOpen, setOpen] = useState<boolean>();
 
   const isCreateType = type === 'create';
-  const schema = isCreateType ? createTourSchema : editTourSchema;
+  const schema = isCreateType ? createTourSchemas : editTourSchema;
   const dialogTitle =
     title || isCreateType ? 'Создать тур' : 'Редактировать тур';
 

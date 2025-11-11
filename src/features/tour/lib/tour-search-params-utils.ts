@@ -30,7 +30,7 @@ const getParamsBySearchParams = (
   searchParams: URLSearchParams
 ): Prisma.TourFindManyArgs & {
   select?: never;
-  include: { user: true };
+  include: { author: true };
 } => {
   const keys = [...searchParams.keys()];
 
@@ -39,7 +39,7 @@ const getParamsBySearchParams = (
     {}
   );
 
-  return { ...paramsArr, include: { user: true } };
+  return { ...paramsArr, include: { author: true } };
 };
 
-export const searchParamsUtils = { getParamsBySearchParams };
+export const tourSearchParamsUtils = { getParamsBySearchParams };

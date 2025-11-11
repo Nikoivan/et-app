@@ -30,7 +30,7 @@ export async function postTour(req: NextRequest): Promise<Response> {
     const data = prepareDataUtils.getTourData(formData);
 
     if (!data) {
-      return handleSuccess({
+      return handleError({
         body: 'Невозможно создать запись. Данные не валидны'
       });
     }
@@ -45,7 +45,7 @@ export async function postTour(req: NextRequest): Promise<Response> {
     });
 
     if (!mainPhotoEntity) {
-      return handleSuccess({
+      return handleError({
         body: 'Невозможно создать главное фото тура'
       });
     }
