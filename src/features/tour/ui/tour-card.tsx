@@ -2,8 +2,11 @@
 
 import { FC } from 'react';
 import Image from 'next/image';
+import { BadgeRussianRuble, HeartIcon, UserPen, XCircle } from 'lucide-react';
 
+import { useDeleteTour } from '@/features/tour/hooks/use-delete-tour';
 import { TourDomain } from '@/entities/tour/server';
+import { ConfirmDialog } from '@/entities/confirm-dialog';
 import { Button } from '@/shared/ui/button';
 import {
   Card,
@@ -13,15 +16,17 @@ import {
   CardHeader,
   CardTitle
 } from '@/shared/ui/card';
-import { BadgeRussianRuble, HeartIcon, UserPen, XCircle } from 'lucide-react';
 import { cn } from '@/shared/lib/css';
-import { deleteTour } from '@/features/tour/api/tour-api';
-import { ConfirmDialog } from '@/entities/confirm-dialog';
+import { toast } from 'sonner';
+import TourFeature from '@/features/tour';
 
 export const TourCard: FC<TourDomain.TourEntity> = props => {
   const { id, title, mainPhoto, content, rating, price } = props;
-
-  const onDelete = async () => await deleteTour(id);
+  const onDelete = useDeleteTour({
+    id,
+    onSuccess: () => toast.success('Тур успешно удален'),
+    onError: () => toast.error('Ошибка. Не удалось удалить тур')
+  });
 
   return (
     <Card className='max-w-md'>
@@ -51,9 +56,12 @@ export const TourCard: FC<TourDomain.TourEntity> = props => {
           <BadgeRussianRuble className='size-4' />
           {price}
         </Button>
-        <Button variant='ghost' size='sm'>
-          <UserPen className='size-4' />
-        </Button>
+        <TourFeature
+          triggerBtn={<UserPen className='size-4' />}
+          type={'edit'}
+          data={props}
+        />
+
         <ConfirmDialog
           title='Удаление тура'
           description='Вы уверенны, что хотите удалить этот тур?'

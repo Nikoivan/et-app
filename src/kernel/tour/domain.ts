@@ -11,6 +11,7 @@ export type TourKernel = {
   description: string;
   mainPhoto: string;
   price: number;
+  slug: string;
   duration: number;
   categories: string[];
   authorId: number;

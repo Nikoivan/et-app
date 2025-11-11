@@ -40,14 +40,15 @@ export const useTourList = (): PostListData => {
     </>
   );
 
-  const pagination = data ? (
-    <SimplePagination
-      currentCount={page}
-      totalCount={data?.pagesCount}
-      onPrevClick={onPrev}
-      onNextClick={onNext}
-    />
-  ) : null;
+  const pagination =
+    !!data?.pagesCount && data.pagesCount > 1 ? (
+      <SimplePagination
+        currentCount={page}
+        totalCount={data?.pagesCount}
+        onPrevClick={onPrev}
+        onNextClick={onNext}
+      />
+    ) : null;
 
   const cursor = !!error ? (
     <div className={cn('Error', 'text-red-600', 'h-6')}>{error.message}</div>

@@ -24,7 +24,8 @@ export const ServerTourCard: FC<TourCardEntity> = async ({
   mainPhoto,
   title,
   rating,
-  duration
+  duration,
+  slug
 }) => (
   <CardLayout
     className={cnTourCard({ type: 'server' }, ['min-h-[420px]'])}
@@ -51,7 +52,7 @@ export const ServerTourCard: FC<TourCardEntity> = async ({
           <>{!!duration && <ServerDurationLabel duration={duration} />}</>
         }
         rightNode={
-          <LinkButton href={`/tour/${id}`}>
+          <LinkButton href={`/tour/${slug}`}>
             <ArrowLinkIcon />
           </LinkButton>
         }

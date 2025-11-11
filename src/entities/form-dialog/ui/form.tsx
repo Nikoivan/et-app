@@ -75,8 +75,6 @@ export const Form = <
 
   const errors = showErrors ? validate() : undefined;
 
-  console.log(errors);
-
   return (
     <form className={cnForm(null)} onSubmit={handleSubmit}>
       {!!title && (

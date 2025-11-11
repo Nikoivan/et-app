@@ -1,5 +1,5 @@
 import { tourRepositories } from '@/entities/tour/repositories/tour';
-import { Prisma } from '@prisma/client';
+import { Prisma, Tour } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
 import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
 import {
@@ -12,6 +12,7 @@ import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
 import { DefaultArgs } from '@prisma/client/runtime/library';
+import TourSelect = Prisma.TourSelect;
 
 type UserToursData = {
   authorId: number;
@@ -23,10 +24,13 @@ const tourCardsSelect = {
   id: true,
   title: true,
   price: true,
+  slug: true,
   rating: true,
   duration: true,
   mainPhotoId: true,
-  photos: true
+  photos: true,
+  activities: true,
+  reviews: true
 };
 
 const getPagesCount = async (where?: Prisma.TourWhereInput) => {
@@ -34,6 +38,9 @@ const getPagesCount = async (where?: Prisma.TourWhereInput) => {
 
   return Math.ceil(count / 10);
 };
+
+const getTour = (id: number, select?: TourSelect) =>
+  tourRepositories.getTour(id, select);
 
 const getPopularTourCards = async (): Promise<TourCardEntity[]> => {
   const draftPopularTours = await tourRepositories.getTours({
@@ -128,10 +135,22 @@ const createTour = async (
   return tour ? tourToTourEntity(tour) : null;
 };
 
+const updatedTour = async (tour: Tour): Promise<Either<string, Tour>> => {
+  const updatedTour = await tourRepositories.updateTour(tour);
+
+  if (!updatedTour) {
+    return left('Не удалось обновить тур');
+  }
+
+  return right(updatedTour);
+};
+
 export const tourService = {
+  getTour,
   getUserTours,
-  createTour,
-  getPopularTourCards,
   getTourCards,
-  getTours
+  getPopularTourCards,
+  getTours,
+  createTour,
+  updateTour: updatedTour
 };

@@ -1,5 +1,12 @@
 import { z } from 'zod';
 
+const photoSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  source: z.string(),
+  authorId: z.number()
+});
+
 const baseTourSchema = {
   title: z
     .string()
@@ -74,6 +81,10 @@ export const createTourSchema = z.object({
     )
 });
 
-export const editTourSchema = createTourSchema.extend({ id: z.number() });
+export const editTourSchema = createTourSchema.extend({
+  id: z.number(),
+  mainPhoto: photoSchema,
+  photos: z.array(photoSchema)
+});
 
 export type TourUpdate = z.infer<typeof editTourSchema>;

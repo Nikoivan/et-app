@@ -19,7 +19,14 @@ async function getTourById(id: number): Promise<Either<string, TourKernel>> {
 async function getTourBySlug(
   slug: string
 ): Promise<Either<string, TourKernel>> {
-  const tour = await tourRepository.getTour({ where: { slug } });
+  const tour = await tourRepository.getTour({
+    where: { slug },
+    include: {
+      reviews: true,
+      photos: true,
+      activities: true
+    }
+  });
 
   if (!tour) {
     return left('Тур с указанным слоганом не найден');
@@ -52,4 +59,4 @@ async function getTourMetaData(
   });
 }
 
-export const tourServices = { getTourById, getTourBySlug, getTourMetaData };
+export const tourServices = { getTourBySlug, getTourMetaData };

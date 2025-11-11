@@ -9,6 +9,7 @@ export type DraftTourCardEntity = {
   id: number;
   title: string;
   price: number;
+  slug: string;
   rating: number | null;
   duration: number | null;
   mainPhotoId: number;

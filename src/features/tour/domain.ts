@@ -7,6 +7,7 @@ export type TourCardEntity = {
   rating: number | null;
   duration: number | null;
   mainPhoto: string;
+  slug: string;
 };
 
 export type DraftCreateTourData = {

@@ -66,7 +66,7 @@ const editTour = async (tour: TourUpdate): Promise<Either<string, Tour>> => {
   return right(result);
 };
 
-export const deleteTour = async (id: number): Promise<Either<string, Tour>> => {
+const deleteTour = async (id: number): Promise<Either<string, Tour>> => {
   try {
     const response = await fetch(`${urlUtils.getApiUrl()}/tour?id=${id}`, {
       method: 'DELETE'

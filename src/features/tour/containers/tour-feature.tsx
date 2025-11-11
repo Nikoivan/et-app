@@ -21,11 +21,12 @@ type Props = {
   type: 'edit' | 'create';
   data?: TourDomain.TourEntity;
   title?: ReactNode;
+  triggerBtn?: ReactNode;
 };
 
 const cnTourFeature = cn('TourFeature');
 
-export const TourFeature: FC<Props> = ({ type, data, title }) => {
+export const TourFeature: FC<Props> = ({ type, data, title, triggerBtn }) => {
   const [isOpen, setOpen] = useState<boolean>();
 
   const isCreateType = type === 'create';
@@ -55,7 +56,7 @@ export const TourFeature: FC<Props> = ({ type, data, title }) => {
         onOpenChange={onOpenChange}
         onCancel={onClose}
         title={dialogTitle}
-        triggerButton='Создать тур'
+        triggerButton={triggerBtn || dialogTitle}
         formDataModel={createTourModel}
         initialData={
           (data as unknown as FormDialogDomain.FormData) ||

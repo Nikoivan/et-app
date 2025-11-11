@@ -2,9 +2,6 @@ import { postServices } from '@/features/post/services/post-services';
 import { FC } from 'react';
 import { PostView } from '@/views/post/server';
 
-export const dynamic = 'force-static'; // жёстко SSG
-export const revalidate = false;
-
 const Page: FC<{
   params: Promise<{ slug: string }>;
 }> = async ({ params }) => {
