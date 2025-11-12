@@ -7,6 +7,16 @@ const photoSchema = z.object({
   authorId: z.number()
 });
 
+const fileImageSchema = z
+  .instanceof(File)
+  .refine(
+    file =>
+      ['application/photo', 'image/png', 'image/jpeg', 'image/webp'].includes(
+        file.type
+      ),
+    { message: 'Неподдерживаемый формат фото' }
+  );
+
 const baseTourSchema = {
   title: z
     .string()
@@ -26,22 +36,8 @@ const baseTourSchema = {
       .min(3, 'Наименование категории не может быть менее 3-х симвоолов')
       .max(30, 'Наименование категории не может превышать 30 символов')
   ),
-  photos: z
-    .array(
-      z
-        .instanceof(File)
-        .refine(
-          file =>
-            [
-              'application/photo',
-              'image/png',
-              'image/jpeg',
-              'image/webp'
-            ].includes(file.type),
-          { message: 'Неподдерживаемый формат фото' }
-        )
-    )
-    .optional(),
+  authorId: z.number(),
+  photos: z.array(fileImageSchema).optional(),
   descriptionText: z.string().optional(),
   startPlace: z.string().optional(),
   status: z.string().optional()
@@ -50,41 +46,20 @@ const baseTourSchema = {
 export const createTourSchemas = z.object({
   ...baseTourSchema,
   mainPhoto: z
-    .array(
-      z
-        .instanceof(File)
-        .refine(
-          file =>
-            [
-              'application/photo',
-              'image/png',
-              'image/jpeg',
-              'image/webp'
-            ].includes(file.type),
-          { message: 'Неподдерживаемый формат фото' }
-        )
-    )
+    .array(fileImageSchema)
     .max(1, 'Главным фото может быть только 1 фотография')
 });
 
 export const createTourSchema = z.object({
   ...baseTourSchema,
   status: z.string(),
-  mainPhoto: z
-    .instanceof(File)
-    .refine(
-      file =>
-        ['application/photo', 'image/png', 'image/jpeg', 'image/webp'].includes(
-          file.type
-        ),
-      { message: 'Неподдерживаемый формат фото' }
-    )
+  mainPhoto: fileImageSchema
 });
 
 export const editTourSchema = createTourSchema.extend({
   id: z.number(),
-  mainPhoto: photoSchema,
-  photos: z.array(photoSchema)
+  mainPhoto: z.union([photoSchema, fileImageSchema]),
+  photos: z.array(z.union([photoSchema, fileImageSchema]))
 });
 
 export type TourUpdate = z.infer<typeof editTourSchema>;

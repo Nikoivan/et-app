@@ -47,7 +47,10 @@ export const TourFeature: FC<Props> = ({ type, data, title, triggerBtn }) => {
     onError: errorHandler
   });
 
-  const onEdit = useEditTour();
+  const onEdit = useEditTour({
+    onSuccess: successHandler,
+    onError: errorHandler
+  });
 
   return (
     <div className={cnTourFeature(null, ['text-center'])}>

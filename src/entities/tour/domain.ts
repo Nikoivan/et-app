@@ -32,6 +32,7 @@ export type TourEntity = {
   rating?: number;
   descriptionText?: string;
   startPlace?: PlaceEntity;
+  authorId: number;
 };
 
 export function tourToTourEntity(

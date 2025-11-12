@@ -63,7 +63,11 @@ export const TourMain: FC<TourKernel> = async props => {
                 price={price}
                 variant='black-white'
               />
-              <ServerDurationLabel duration={duration} variant='black-white' />
+              <ServerDurationLabel
+                duration={duration}
+                variant='black-white'
+                color='black'
+              />
             </div>
           </section>
           <section className={cnPageTour('PhotoBlock', ['mt-1'])}>

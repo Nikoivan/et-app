@@ -4,12 +4,14 @@ import { DurationLabelProps } from '@/entities/duration/model/types';
 
 import styles from '@/entities/duration/assets/styles.module.scss';
 import { ClockIcon } from '@/shared/ui/clock-icon';
+import { BlackClockIcon } from '@/shared/ui/black-clock-icon';
 
 const cnDurationLabel = cnBem('DurationLabel');
 
 export const DurationLabelLayout: FC<DurationLabelProps> = ({
   duration,
-  variant
+  variant,
+  color
 }) => {
   const isDurationNumber = typeof duration === 'number';
 
@@ -36,7 +38,7 @@ export const DurationLabelLayout: FC<DurationLabelProps> = ({
           ])}
         >
           <div className={isDurationNumber ? 'flex gap-2' : 'text-xs'}>
-            <ClockIcon />
+            {!!color && color === 'black' ? <BlackClockIcon /> : <ClockIcon />}
             {isDurationNumber ? 'От ' : ''}
             {isDurationNumber ? (
               durationSting

@@ -8,6 +8,7 @@ import { MainNav } from '@/widgets/app-header/ui/main-nav';
 import { Profile } from '@/widgets/app-header/ui/profile';
 import { ToggleTheme } from '@/features/theme/toogle-theme';
 import { Contacts } from '@/widgets/app-header/ui/contacts';
+import { sessionService } from '@/entities/user/server';
 
 type AppHeaderProps = {
   variant: 'auth' | 'private' | 'public';
@@ -15,12 +16,13 @@ type AppHeaderProps = {
 
 export const AppHeader: FC<AppHeaderProps> = async ({ variant }) => {
   const isProfile = variant !== 'auth';
+  const session = sessionService.verifySession();
 
   return (
     <Layout
       nav={<MainNav />}
       logo={<Logo />}
-      profile={isProfile && <Profile />}
+      profile={isProfile && !!session && <Profile />}
       actions={<ToggleTheme />}
       rightNode={<Contacts />}
     />
