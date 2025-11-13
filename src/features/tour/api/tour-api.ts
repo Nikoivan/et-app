@@ -3,7 +3,6 @@ import { Tour } from '@prisma/client';
 import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
-import { TourUpdate } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { apiClient } from '@/shared/api/api-client';
 import { queryOptions } from '@tanstack/react-query';
 
@@ -53,10 +52,10 @@ export const createTour = async (
   }
 };
 
-const editTour = async (tour: TourUpdate): Promise<Either<string, Tour>> => {
+const editTour = async (formData: FormData): Promise<Either<string, Tour>> => {
   const result = await apiClient.patch<Tour>({
     url: baseUrl,
-    body: JSON.stringify(tour)
+    body: formData
   });
 
   if (!result) {

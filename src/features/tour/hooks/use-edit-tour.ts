@@ -1,12 +1,10 @@
 import { FormDialogDomain } from '@/entities/form-dialog';
 import { tourApi } from '@/features/tour/api/tour-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  editTourSchema,
-  TourUpdate
-} from '@/features/tour/lib/schemas/create-tour-schemas';
 import { Either } from '@/shared/lib/either';
 import { Tour } from '@prisma/client';
+import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
+import { DEFAULT_STATUS } from '@/features/tour/constants/default-create-data';
 
 type Props = {
   onSuccess?: (data?: unknown) => void;
@@ -15,7 +13,7 @@ type Props = {
 
 export const useEditTour = (props?: Props) => {
   const queryClient = useQueryClient();
-  const { mutate } = useMutation<Either<string, Tour>, Error, TourUpdate>({
+  const { mutate } = useMutation<Either<string, Tour>, Error, FormData>({
     mutationFn: tourApi.editTour,
     onSuccess: either => {
       if (either.type === 'left')
@@ -31,12 +29,13 @@ export const useEditTour = (props?: Props) => {
   });
 
   return async (data: FormDialogDomain.FormData) => {
-    const result = editTourSchema.safeParse(data);
+    const dataForCreate: [string, string | File][] =
+      prepareDataUtils.prepareDataToCreate({ ...data, status: DEFAULT_STATUS });
 
-    if (!result.success) {
-      return;
-    }
+    const formData = new FormData();
 
-    mutate(result.data);
+    dataForCreate.forEach(([key, value]) => formData.append(key, value));
+
+    mutate(formData);
   };
 };

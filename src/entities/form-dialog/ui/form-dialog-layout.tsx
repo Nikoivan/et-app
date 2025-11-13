@@ -21,7 +21,7 @@ type FormDialogProps = {
   dialogTitle?: ReactNode;
   dialogDescription?: ReactNode;
   className?: string;
-} & FormProps;
+} & Omit<FormProps, 'type'> & { type?: 'put' | 'patch' };
 
 const cnFormDialog = cn('FormDialog');
 
@@ -32,6 +32,7 @@ export const FormDialog = (props: FormDialogProps) => {
     triggerButton,
     dialogTitle,
     dialogDescription,
+    type = 'put',
     ...formProps
   } = props;
 
@@ -47,7 +48,7 @@ export const FormDialog = (props: FormDialogProps) => {
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        <Form {...formProps} />
+        <Form {...{ type: 'put', ...formProps }} />
       </DialogContent>
     </Dialog>
   );

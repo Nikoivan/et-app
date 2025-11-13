@@ -75,6 +75,7 @@ export type FormProps<
   formDataModel: FormDataModelItem<T>[];
   onSubmit: (data: FormData<T>) => void;
   schema: z.Schema;
+  type: 'put' | 'patch';
   onCancel?: () => void;
   title?: ReactNode;
   description?: ReactNode;

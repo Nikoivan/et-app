@@ -19,7 +19,7 @@ import { useEditTour } from '@/features/tour/hooks/use-edit-tour';
 
 type Props = {
   type: 'edit' | 'create';
-  data?: TourDomain.TourEntity;
+  data?: TourDomain.TourEntity | FormDialogDomain.FormData;
   title?: ReactNode;
   triggerBtn?: ReactNode;
 };
@@ -67,6 +67,7 @@ export const TourFeature: FC<Props> = ({ type, data, title, triggerBtn }) => {
         }
         onSubmit={isCreateType ? onCreate : onEdit}
         schema={schema}
+        type={type === 'edit' ? 'patch' : 'put'}
       />
     </div>
   );

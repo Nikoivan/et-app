@@ -1,6 +1,7 @@
 import { FormDialogDomain } from '@/entities/form-dialog';
 import { CreateTourData } from '@/features/tour/domain';
 import { createTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
+import { TourEntity } from '@/entities/tour/domain';
 
 const prepareDataToCreate = (
   data: FormDialogDomain.FormData
@@ -32,6 +33,14 @@ const prepareDataToCreate = (
   }
 
   return [...stringValues, ...preparedPhotos] as [string, string | File][];
+};
+
+const prepareDataToEdit = (
+  tourEntity: TourEntity
+): FormDialogDomain.FormData => {
+  const { mainPhoto, photos, ...restData } = tourEntity;
+
+  return;
 };
 
 const prepareNumberValues = (

@@ -23,6 +23,7 @@ export const Form = <
   formDataModel,
   onSubmit,
   onCancel,
+  type,
   schema,
   title,
   description
@@ -70,7 +71,7 @@ export const Form = <
       return;
     }
 
-    onSubmit(formData);
+    onSubmit(type === 'patch' ? userFormData : formData);
   };
 
   const errors = showErrors ? validate() : undefined;
