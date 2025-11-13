@@ -2,6 +2,7 @@ import { FormDialogDomain } from '@/entities/form-dialog';
 import { CreateTourData } from '@/features/tour/domain';
 import { createTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { TourEntity } from '@/entities/tour/domain';
+import { photoUtils } from '@/entities/photo';
 
 const prepareDataToCreate = (
   data: FormDialogDomain.FormData
@@ -35,12 +36,18 @@ const prepareDataToCreate = (
   return [...stringValues, ...preparedPhotos] as [string, string | File][];
 };
 
-const prepareDataToEdit = (
+const prepareDataToEdit = async (
   tourEntity: TourEntity
-): FormDialogDomain.FormData => {
-  const { mainPhoto, photos, ...restData } = tourEntity;
+): Promise<FormDialogDomain.FormData> => {
+  const { mainPhoto, photos, startPlace, ...restData } = tourEntity;
 
-  return;
+  const mainPhotoFile = await photoUtils.getFileByPhotoEntity(mainPhoto);
+  //TODO: сделать photos
+
+  return {
+    ...restData,
+    mainPhoto: mainPhotoFile ? [mainPhotoFile] : undefined
+  };
 };
 
 const prepareNumberValues = (
@@ -82,4 +89,8 @@ const getTourData = (formData: FormData): CreateTourData | null => {
   return result.success ? (result.data as unknown as CreateTourData) : null;
 };
 
-export const prepareDataUtils = { prepareDataToCreate, getTourData };
+export const prepareDataUtils = {
+  prepareDataToCreate,
+  prepareDataToEdit,
+  getTourData
+};
