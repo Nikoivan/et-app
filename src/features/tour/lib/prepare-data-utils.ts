@@ -2,7 +2,7 @@ import { FormDialogDomain } from '@/entities/form-dialog';
 import { CreateTourData } from '@/features/tour/domain';
 import { createTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { TourEntity } from '@/entities/tour/domain';
-import { photoUtils } from '@/entities/photo';
+import { clientPhotoUtils } from '@/entities/photo/lib/client-photo-utils';
 
 const prepareDataToCreate = (
   data: FormDialogDomain.FormData
@@ -41,12 +41,21 @@ const prepareDataToEdit = async (
 ): Promise<FormDialogDomain.FormData> => {
   const { mainPhoto, photos, startPlace, ...restData } = tourEntity;
 
-  const mainPhotoFile = await photoUtils.getFileByPhotoEntity(mainPhoto);
-  //TODO: сделать photos
+  const mainPhotoFile = await clientPhotoUtils.getFileByPhotoEntity(mainPhoto);
+  const photosFiles = photos?.length
+    ? (
+        await Promise.all(
+          photos.map(
+            async photo => await clientPhotoUtils.getFileByPhotoEntity(photo)
+          )
+        )
+      ).filter(file => !!file)
+    : [];
 
   return {
     ...restData,
-    mainPhoto: mainPhotoFile ? [mainPhotoFile] : undefined
+    mainPhoto: mainPhotoFile ? [mainPhotoFile] : undefined,
+    photos: photosFiles
   };
 };
 
@@ -81,10 +90,7 @@ const getTourData = (formData: FormData): CreateTourData | null => {
   );
 
   const preparedData = prepareNumberValues(data);
-
   const result = createTourSchema.safeParse(preparedData);
-
-  console.log({ errors: result?.error?.format() });
 
   return result.success ? (result.data as unknown as CreateTourData) : null;
 };

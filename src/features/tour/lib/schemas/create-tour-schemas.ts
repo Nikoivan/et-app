@@ -58,7 +58,7 @@ export const createTourSchema = z.object({
 
 export const editTourSchema = createTourSchema.extend({
   id: z.number(),
-  mainPhoto: z.union([photoSchema, fileImageSchema]),
+  mainPhoto: z.union([photoSchema, z.array(fileImageSchema)]),
   photos: z.array(z.union([photoSchema, fileImageSchema]))
 });
 

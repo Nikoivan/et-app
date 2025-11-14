@@ -1,7 +1,5 @@
 import { saveFileWithPath } from '@/shared/lib/server-files-utils';
 import { PhotoEntity } from '@/entities/photo/domain';
-import { getFileBySource } from '@/shared/lib/file-utils';
-import { photoTypeguards } from '@/entities/photo';
 
 const savePhoto = (photo: File): Promise<string | null> => {
   return saveFileWithPath(photo, 'images');
@@ -31,12 +29,4 @@ export const getPhotoEntity = async ({
   };
 };
 
-const getFileByPhotoEntity = (
-  photo?: unknown
-): Promise<File | undefined> | undefined => {
-  if (!photo || !photoTypeguards.isPhotoEntity(photo)) return undefined;
-
-  return getFileBySource(photo.source, photo.fileName);
-};
-
-export const photoUtils = { getPhotoEntity, getFileByPhotoEntity };
+export const serverPhotoUtils = { getPhotoEntity };

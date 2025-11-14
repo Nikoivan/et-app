@@ -3,10 +3,11 @@ import { NextRequest } from 'next/server';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { roleUtils } from '@/entities/user';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
-import { getPhotoEntity } from '@/entities/photo/lib/photo-utils';
+
 import { tourService } from '@/features/tour/services/tour-service';
 import { PhotoDomain } from '@/entities/photo';
 import { sessionUtils } from '@/entities/user/lib/session-utils';
+import { serverPhotoUtils } from '@/entities/photo/server';
 
 export async function postTour(req: NextRequest): Promise<Response> {
   try {
@@ -29,7 +30,7 @@ export async function postTour(req: NextRequest): Promise<Response> {
 
     const { title, mainPhoto, photos, ...rest } = data;
 
-    const mainPhotoEntity = await getPhotoEntity({
+    const mainPhotoEntity = await serverPhotoUtils.getPhotoEntity({
       title,
       keywords: [],
       authorId: session.id,
@@ -47,7 +48,7 @@ export async function postTour(req: NextRequest): Promise<Response> {
           photos
             ?.map(
               async file =>
-                await getPhotoEntity({
+                await serverPhotoUtils.getPhotoEntity({
                   file,
                   authorId: session.id,
                   keywords: []
