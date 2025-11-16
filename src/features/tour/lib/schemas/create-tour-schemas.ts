@@ -61,5 +61,3 @@ export const editTourSchema = createTourSchema.extend({
   mainPhoto: z.union([photoSchema, z.array(fileImageSchema)]),
   photos: z.array(z.union([photoSchema, fileImageSchema]))
 });
-
-export type TourUpdate = z.infer<typeof editTourSchema>;
