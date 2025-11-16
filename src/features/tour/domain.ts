@@ -33,6 +33,11 @@ export type CreateTourData = Omit<
   photos?: File[];
 };
 
+export type EditTourData = Partial<CreateTourData> & {
+  id: number;
+  authorId: number;
+};
+
 export type GetToursResponse = {
   pagesCount: number;
   tours: TourDomain.TourEntity[];

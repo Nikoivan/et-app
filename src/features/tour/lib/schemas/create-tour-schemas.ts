@@ -61,3 +61,13 @@ export const editTourSchema = createTourSchema.extend({
   mainPhoto: z.union([photoSchema, z.array(fileImageSchema)]),
   photos: z.array(z.union([photoSchema, fileImageSchema]))
 });
+
+export const patchTourSchema = editTourSchema
+  .extend({
+    mainPhoto: z.array(fileImageSchema),
+    photos: z.array(fileImageSchema)
+  })
+  .partial()
+  .required({ id: true, authorId: true });
+
+export type PatchTourData = z.infer<typeof patchTourSchema>;

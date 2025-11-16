@@ -1,6 +1,10 @@
 import { FormDialogDomain } from '@/entities/form-dialog';
 import { CreateTourData } from '@/features/tour/domain';
-import { createTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
+import {
+  createTourSchema,
+  PatchTourData,
+  patchTourSchema
+} from '@/features/tour/lib/schemas/create-tour-schemas';
 import { TourEntity } from '@/entities/tour/domain';
 import { clientPhotoUtils } from '@/entities/photo/lib/client-photo-utils';
 
@@ -84,6 +88,17 @@ const prepareNumberValues = (
   return value;
 };
 
+const getEditTourData = (formData: FormData): PatchTourData | null => {
+  const data: Record<string, string | File> = Object.fromEntries(
+    formData.entries()
+  );
+
+  const preparedData = prepareNumberValues(data);
+  const result = patchTourSchema.safeParse(preparedData);
+
+  return result.success ? result.data : null;
+};
+
 const getTourData = (formData: FormData): CreateTourData | null => {
   const data: Record<string, string | File> = Object.fromEntries(
     formData.entries()
@@ -92,11 +107,12 @@ const getTourData = (formData: FormData): CreateTourData | null => {
   const preparedData = prepareNumberValues(data);
   const result = createTourSchema.safeParse(preparedData);
 
-  return result.success ? (result.data as unknown as CreateTourData) : null;
+  return result.success ? result.data : null;
 };
 
 export const prepareDataUtils = {
   prepareDataToCreate,
   prepareDataToEdit,
-  getTourData
+  getTourData,
+  getEditTourData
 };

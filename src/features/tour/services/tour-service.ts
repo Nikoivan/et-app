@@ -12,6 +12,7 @@ import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
 import { DefaultArgs } from '@prisma/client/runtime/library';
+import { PatchTourData } from '@/features/tour/lib/schemas/create-tour-schemas';
 import TourSelect = Prisma.TourSelect;
 
 type UserToursData = {
@@ -135,7 +136,9 @@ const createTour = async (
   return tour ? tourToTourEntity(tour) : null;
 };
 
-const updatedTour = async (tour: Tour): Promise<Either<string, Tour>> => {
+const updateTour = async (
+  tour: PatchTourData
+): Promise<Either<string, Tour>> => {
   const updatedTour = await tourRepositories.updateTour(tour);
 
   if (!updatedTour) {
@@ -152,5 +155,5 @@ export const tourService = {
   getPopularTourCards,
   getTours,
   createTour,
-  updateTour: updatedTour
+  updateTour
 };
