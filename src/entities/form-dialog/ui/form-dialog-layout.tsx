@@ -32,9 +32,10 @@ export const FormDialog = (props: FormDialogProps) => {
     triggerButton,
     dialogTitle,
     dialogDescription,
-    type = 'put',
     ...formProps
   } = props;
+
+  const type = formProps.type ? formProps.type : 'put';
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange} modal>
@@ -48,7 +49,7 @@ export const FormDialog = (props: FormDialogProps) => {
           <DialogTitle>{dialogTitle}</DialogTitle>
           <DialogDescription>{dialogDescription}</DialogDescription>
         </DialogHeader>
-        <Form {...{ type: 'put', ...formProps }} />
+        <Form {...{ ...formProps, type }} />
       </DialogContent>
     </Dialog>
   );

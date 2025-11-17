@@ -1,4 +1,5 @@
 import { TourDomain } from '@/entities/tour/server';
+import { PhotoEntity } from '@/widgets/tours/domain';
 
 export type TourCardEntity = {
   id: number;
@@ -36,6 +37,8 @@ export type CreateTourData = Omit<
 export type EditTourData = Partial<CreateTourData> & {
   id: number;
   authorId: number;
+  mainPhoto?: Omit<PhotoEntity, 'id'>;
+  photos?: Omit<PhotoEntity, 'id'>[];
 };
 
 export type GetToursResponse = {

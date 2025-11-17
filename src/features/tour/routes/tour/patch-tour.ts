@@ -5,11 +5,12 @@ import { roleUtils } from '@/entities/user';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
 import { tourService } from '@/features/tour/services/tour-service';
-import { PhotoDomain } from '@/entities/photo';
 import { sessionUtils } from '@/entities/user/lib/session-utils';
 import { serverPhotoUtils } from '@/entities/photo/server';
 import { patchTourSchema } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { Role } from '@/entities/user/domain';
+import { CreateTourData } from '@/features/tour/domain';
+import { PhotoDomain } from '@/entities/photo';
 
 export async function patchTour(req: NextRequest): Promise<Response> {
   try {
@@ -18,12 +19,18 @@ export async function patchTour(req: NextRequest): Promise<Response> {
     );
 
     if (!roleUtils.userHasPermissionOn(session?.role, 'updateTour')) {
-      return handleError({ body: 'У вас нет полномочий на создание туров' });
+      return handleError({
+        body: 'У вас нет полномочий на редактирование туров'
+      });
     }
 
     const formData = await req.formData?.();
     const data = prepareDataUtils.getEditTourData(formData);
+
+    console.log({ formData, data });
     const dataEntity = patchTourSchema.safeParse(data);
+
+    console.log(dataEntity.error?.format());
 
     if (!data || !dataEntity.success) {
       return handleError({
@@ -31,27 +38,32 @@ export async function patchTour(req: NextRequest): Promise<Response> {
       });
     }
 
-    const { title, authorId, ...rest } = dataEntity.data;
+    const hasPermissionOnEdit =
+      session.role === Role.SUPER_ADMIN ||
+      session.id === dataEntity.data?.authorId;
 
-    if (session.role !== Role.SUPER_ADMIN) {
+    if (!hasPermissionOnEdit) {
+      return handleError({
+        body: 'У вас нет полномочий на редактирование этого тура'
+      });
     }
 
+    const { title, authorId, mainPhoto, photos, ...rest } = dataEntity.data;
+
     const mainPhotoEntity =
-      'mainPhoto' in dataEntity.data &&
-      dataEntity.data.mainPhoto &&
-      dataEntity.data.mainPhoto.length
+      'mainPhoto' in dataEntity.data && mainPhoto?.length
         ? await serverPhotoUtils.getPhotoEntity({
             title,
             keywords: [],
             authorId: session.id,
-            file: dataEntity.data.mainPhoto[0]
+            file: mainPhoto[0]
           })
         : undefined;
 
     const photosEntities =
-      'photos' in dataEntity.data && dataEntity.data.photos?.length
+      'photos' in dataEntity.data && photos?.length
         ? await Promise.all(
-            dataEntity.data.photos
+            photos
               ?.map(
                 async file =>
                   await serverPhotoUtils.getPhotoEntity({
@@ -64,68 +76,36 @@ export async function patchTour(req: NextRequest): Promise<Response> {
           )
         : undefined;
 
-    const tourEditData = { authorId, ...rest };
+    const tourEditData: Partial<
+      Omit<CreateTourData, 'mainPhoto' | 'photos'>
+    > & {
+      id: number;
+      authorId: number;
+      mainPhoto?: Omit<PhotoDomain.PhotoEntity, 'id'>;
+      photos?: Omit<PhotoDomain.PhotoEntity, 'id'>[];
+    } = {
+      authorId,
+      ...rest
+    };
 
     if (!!mainPhotoEntity) {
       tourEditData.mainPhoto = mainPhotoEntity;
     }
 
-    const tour = await tourService.updateTour({
-      authorId,
-      ...rest,
-      mainPhoto: mainPhotoEntity,
-      photos: photosEntities as Omit<PhotoDomain.PhotoEntity, 'id'>[]
-    });
+    if (!!photosEntities) {
+      tourEditData.photos = photosEntities.filter(photo => !!photo);
+    }
 
-    if (!tour) {
+    const tour = await tourService.updateTour(tourEditData);
+
+    if (!tour || tour.type === 'left') {
       return handleError({ body: 'Ошибка. Не удалось создать тур' });
     }
 
-    return handleSuccess({ body: tour });
+    return handleSuccess({ body: tour.value });
   } catch (e) {
     console.error(e);
 
     return handleError({ body: 'Catch' });
   }
 }
-
-// export async function patchTour(req: NextRequest): Promise<Response> {
-//   try {
-//     const session = await sessionUtils.getSession(
-//       req.cookies.get('session')?.value
-//     );
-//
-//     const data = await req.json();
-//
-//     const tourEntity = editTourSchema.safeParse(data);
-//
-//     if (!tourEntity.success) {
-//       return handleError({ body: 'Ошибка формата полученных данных' });
-//     }
-//
-//     if (
-//       session.role !== UserDomain.Role.SUPER_ADMIN &&
-//       tourEntity.data.authorId !== session.id
-//     ) {
-//       return handleError({
-//         body: 'У вас нет прав на редактирование этого тура'
-//       });
-//     }
-//
-//     const { mainPhoto, photos, ...tour } = tourEntity.data;
-//
-//     const patchedTour = await tourService.updateTour(tour as Tour);
-//
-//     if (!patchedTour) {
-//       return handleError({ body: 'Ошибка изменения данных тура' });
-//     }
-//
-//     return handleSuccess({ body: patchedTour });
-//   } catch (error) {
-//     console.error(error);
-//
-//     return handleError({
-//       body: error instanceof Error ? error.message : 'Ошибка при удаление тура'
-//     });
-//   }
-// }

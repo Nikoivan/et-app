@@ -2,7 +2,6 @@ import { Prisma, Tour } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
-import { PatchTourData } from '@/features/tour/lib/schemas/create-tour-schemas';
 import TourSelect = Prisma.TourSelect;
 
 type Payload<T extends Prisma.TourFindManyArgs> = Prisma.TourGetPayload<T>;
@@ -62,7 +61,14 @@ const createTour = async (
     });
   });
 
-const updateTour = (tour: PatchTourData): Promise<Tour> =>
+const updateTour = (
+  tour: Partial<Omit<CreateTourData, 'mainPhoto' | 'photos'>> & {
+    id: number;
+    authorId: number;
+    mainPhoto?: Omit<PhotoDomain.PhotoEntity, 'id'>;
+    photos?: Omit<PhotoDomain.PhotoEntity, 'id'>[];
+  }
+): Promise<Tour> =>
   dbClient.tour.update({
     where: {
       id: tour.id

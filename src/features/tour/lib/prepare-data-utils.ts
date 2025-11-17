@@ -18,13 +18,11 @@ const prepareDataToCreate = (
     typeof value === 'string' ? value : JSON.stringify(value)
   ]);
 
-  if (!mainPhoto || !Array.isArray(mainPhoto)) {
-    throw new Error('No main photos found');
-  }
+  const preparedPhotos: [string, string | File][] = [];
 
-  const preparedPhotos: [string, string | File][] = [
-    ['mainPhoto', mainPhoto?.[0]]
-  ];
+  if (mainPhoto && Array.isArray(mainPhoto)) {
+    preparedPhotos.push(['mainPhoto', mainPhoto?.[0]]);
+  }
 
   if (!!photos && Array.isArray(photos) && photos.length) {
     stringValues.push(['filesLength', String(photos?.length)]);

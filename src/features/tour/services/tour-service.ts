@@ -12,7 +12,6 @@ import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
 import { DefaultArgs } from '@prisma/client/runtime/library';
-import { PatchTourData } from '@/features/tour/lib/schemas/create-tour-schemas';
 import TourSelect = Prisma.TourSelect;
 
 type UserToursData = {
@@ -137,7 +136,12 @@ const createTour = async (
 };
 
 const updateTour = async (
-  tour: PatchTourData
+  tour: Partial<Omit<CreateTourData, 'mainPhoto' | 'photos'>> & {
+    id: number;
+    authorId: number;
+    mainPhoto?: Omit<PhotoDomain.PhotoEntity, 'id'>;
+    photos?: Omit<PhotoDomain.PhotoEntity, 'id'>[];
+  }
 ): Promise<Either<string, Tour>> => {
   const updatedTour = await tourRepositories.updateTour(tour);
 

@@ -7,6 +7,8 @@ const photoSchema = z.object({
   authorId: z.number()
 });
 
+const photoSchemaWithoutId = photoSchema.extend({ id: z.never() });
+
 const fileImageSchema = z
   .instanceof(File)
   .refine(
@@ -64,10 +66,15 @@ export const editTourSchema = createTourSchema.extend({
 
 export const patchTourSchema = editTourSchema
   .extend({
-    mainPhoto: z.array(fileImageSchema),
-    photos: z.array(fileImageSchema)
+    mainPhoto: z.array(fileImageSchema).optional(),
+    photos: z.array(fileImageSchema).optional()
   })
   .partial()
   .required({ id: true, authorId: true });
 
-export type PatchTourData = z.infer<typeof patchTourSchema>;
+export const preparedPatchTourSchema = editTourSchema.extend({
+  mainPhoto: photoSchemaWithoutId.optional(),
+  photos: z.array(photoSchemaWithoutId).optional()
+});
+
+export type PatchTourData = z.infer<typeof preparedPatchTourSchema>;

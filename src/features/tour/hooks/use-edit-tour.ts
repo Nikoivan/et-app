@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Either } from '@/shared/lib/either';
 import { Tour } from '@prisma/client';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
-import { DEFAULT_STATUS } from '@/features/tour/constants/default-create-data';
 
 type Props = {
   onSuccess?: (data?: unknown) => void;
@@ -29,8 +28,10 @@ export const useEditTour = (props?: Props) => {
   });
 
   return async (data: FormDialogDomain.FormData) => {
+    console.log({ data });
+
     const dataForCreate: [string, string | File][] =
-      prepareDataUtils.prepareDataToCreate({ ...data, status: DEFAULT_STATUS });
+      prepareDataUtils.prepareDataToCreate({ ...data });
 
     const formData = new FormData();
 

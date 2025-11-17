@@ -6,7 +6,6 @@ import { placeEntitySchema } from '@/entities/tour/lib/validation-schemas';
 export type TourStatus = 'new' | 'default';
 
 type PhotoEntity = {
-  id: number;
   title: string;
   source: string;
   authorId: number;
