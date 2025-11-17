@@ -26,11 +26,7 @@ export async function patchTour(req: NextRequest): Promise<Response> {
 
     const formData = await req.formData?.();
     const data = prepareDataUtils.getEditTourData(formData);
-
-    console.log({ formData, data });
     const dataEntity = patchTourSchema.safeParse(data);
-
-    console.log(dataEntity.error?.format());
 
     if (!data || !dataEntity.success) {
       return handleError({

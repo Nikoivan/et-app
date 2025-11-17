@@ -3,7 +3,7 @@ import { CreateTourData } from '@/features/tour/domain';
 import {
   createTourSchema,
   PatchTourData,
-  patchTourSchema
+  preparedPatchTourSchema
 } from '@/features/tour/lib/schemas/create-tour-schemas';
 import { TourEntity } from '@/entities/tour/domain';
 import { clientPhotoUtils } from '@/entities/photo/lib/client-photo-utils';
@@ -68,6 +68,12 @@ const prepareNumberValues = (
     return value;
   }
 
+  if ('id' in value && typeof value.id === 'string') {
+    value.id = Number(value.id);
+  }
+  if ('authorId' in value && typeof value.authorId === 'string') {
+    value.authorId = Number(value.authorId);
+  }
   if ('price' in value && typeof value.price === 'string') {
     value.price = Number(value.price);
   }
@@ -92,7 +98,7 @@ const getEditTourData = (formData: FormData): PatchTourData | null => {
   );
 
   const preparedData = prepareNumberValues(data);
-  const result = patchTourSchema.safeParse(preparedData);
+  const result = preparedPatchTourSchema.safeParse(preparedData);
 
   return result.success ? result.data : null;
 };

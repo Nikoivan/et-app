@@ -72,9 +72,11 @@ export const patchTourSchema = editTourSchema
   .partial()
   .required({ id: true, authorId: true });
 
-export const preparedPatchTourSchema = editTourSchema.extend({
-  mainPhoto: photoSchemaWithoutId.optional(),
-  photos: z.array(photoSchemaWithoutId).optional()
-});
+export const preparedPatchTourSchema = patchTourSchema
+  .extend({
+    mainPhoto: photoSchemaWithoutId.optional(),
+    photos: z.array(photoSchemaWithoutId).optional()
+  })
+  .partial();
 
 export type PatchTourData = z.infer<typeof preparedPatchTourSchema>;

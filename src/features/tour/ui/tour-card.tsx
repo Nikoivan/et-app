@@ -58,8 +58,10 @@ export const TourCard: FC<TourDomain.TourEntity> = props => {
         </Button>
         <TourFeature
           triggerBtn={<UserPen className='size-4' />}
-          type={'edit'}
+          type='edit'
           data={props}
+          id={props.id}
+          authorId={props.authorId}
         />
 
         <ConfirmDialog

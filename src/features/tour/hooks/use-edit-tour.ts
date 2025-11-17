@@ -6,11 +6,13 @@ import { Tour } from '@prisma/client';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
 type Props = {
+  id?: number;
+  authorId?: number;
   onSuccess?: (data?: unknown) => void;
   onError?: (error: Error) => void;
 };
 
-export const useEditTour = (props?: Props) => {
+export const useEditTour = (props: Props) => {
   const queryClient = useQueryClient();
   const { mutate } = useMutation<Either<string, Tour>, Error, FormData>({
     mutationFn: tourApi.editTour,
@@ -31,7 +33,11 @@ export const useEditTour = (props?: Props) => {
     console.log({ data });
 
     const dataForCreate: [string, string | File][] =
-      prepareDataUtils.prepareDataToCreate({ ...data });
+      prepareDataUtils.prepareDataToCreate({
+        ...data,
+        id: props.id,
+        authorId: props.authorId
+      });
 
     const formData = new FormData();
 

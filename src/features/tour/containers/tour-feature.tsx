@@ -18,20 +18,41 @@ import {
 import { useEditTour } from '@/features/tour/hooks/use-edit-tour';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
-type Props = {
-  type: 'edit' | 'create';
-  data?: TourDomain.TourEntity;
-  title?: ReactNode;
-  triggerBtn?: ReactNode;
-};
+type Props =
+  | {
+      type: 'create';
+      data?: TourDomain.TourEntity;
+      title?: ReactNode;
+      triggerBtn?: ReactNode;
+    }
+  | {
+      type: 'edit';
+      data: TourDomain.TourEntity;
+      id: number;
+      authorId: number;
+      title?: ReactNode;
+      triggerBtn?: ReactNode;
+    };
 
 const cnTourFeature = cn('TourFeature');
 
-export const TourFeature: FC<Props> = ({ type, data, title, triggerBtn }) => {
+export const TourFeature: FC<Props> = ({
+  type,
+  data,
+  title,
+  triggerBtn,
+  ...props
+}) => {
   const [isOpen, setOpen] = useState<boolean>();
   const [initialData, setInitialData] = useState<FormDialogDomain.FormData>(
     initialCreateTourFormData
   );
+
+  if (type === 'edit' && !('id' in props || 'authorId' in props)) {
+    throw new Error(
+      'Ошибка. Обязательные данные для обновления тура не найдены'
+    );
+  }
 
   const isCreateType = type === 'create';
   const schema = isCreateType ? createTourSchemas : editTourSchema;
@@ -53,7 +74,9 @@ export const TourFeature: FC<Props> = ({ type, data, title, triggerBtn }) => {
 
   const onEdit = useEditTour({
     onSuccess: successHandler,
-    onError: errorHandler
+    onError: errorHandler,
+    id: 'id' in props ? props.id : undefined,
+    authorId: 'authorId' in props ? props.authorId : undefined
   });
 
   useEffect(() => {
