@@ -17,7 +17,7 @@ export const ClientLayout: FC<LayoutProps> = ({
 }) => (
   <section className={className}>
     {title}
-    {list}
     {actions}
+    {list}
   </section>
 );

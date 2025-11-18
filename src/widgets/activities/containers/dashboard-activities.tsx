@@ -32,7 +32,7 @@ export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
       ) : (
         <ClientLayout
           className={cnDashboardActivities(null, ['mt-10'])}
-          title={<div className='text-center'>Мои мероприятия</div>}
+          title={<div className='text-center'>Мероприятия</div>}
           list={
             <>
               {hasList ? (

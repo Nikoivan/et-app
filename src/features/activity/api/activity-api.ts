@@ -8,6 +8,8 @@ import { isStringArray } from '@/shared/lib/typeguargs/string-array';
 const createErrorMessage = 'Ошибка создания мероприятия';
 const deleteErrorMessage = 'Ошибка удаления мероприятия';
 
+const baseKey = 'activities';
+
 export const createActivity = async (
   data: ActivityDomain.CreateActivityData
 ): Promise<Either<string, ActivityDomain.ActivityEntity>> => {
@@ -56,3 +58,5 @@ export const deleteActivity = async (
     return left(deleteErrorMessage);
   }
 };
+
+export const activityApi = { baseKey, createActivity, deleteActivity };

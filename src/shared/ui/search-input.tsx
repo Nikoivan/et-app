@@ -32,7 +32,7 @@ export const SearchInput: FC<Props> = ({ onSearch, searchValue }) => {
 
   return (
     <div
-      className={cnSearchInput('Search', ['text-center', 'text-lg', 'mb-2'])}
+      className={cnSearchInput('Search', ['text-center', 'text-lg', 'my-3'])}
     >
       <Input onChange={onChangeValue} value={value} placeholder='Поиск...' />
     </div>

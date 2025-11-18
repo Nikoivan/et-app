@@ -89,7 +89,7 @@ export const TourFeature: FC<Props> = ({
   }, []);
 
   return (
-    <div className={cnTourFeature(null, ['text-center'])}>
+    <div className={cnTourFeature(null, ['text-end'])}>
       <FormDialog
         isOpen={isOpen}
         onOpenChange={onOpenChange}

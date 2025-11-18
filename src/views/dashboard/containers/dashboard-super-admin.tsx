@@ -4,11 +4,11 @@ import { FC, PropsWithChildren } from 'react';
 
 import { DashboardLayout } from '@/views/dashboard/ui/dashboard-layout';
 import { DashboardTours } from '@/widgets/tours';
-import { DashboardActivities } from '@/widgets/activities';
 import { DashboardPosts } from '@/widgets/posts';
 import { SessionDomain } from '@/entities/user/server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/css';
+import { DashboardActivities } from '@/widgets/activities';
 
 export const DashboardSuperAdmin: FC<
   PropsWithChildren<{ session: SessionDomain.SessionEntity }>
@@ -22,13 +22,16 @@ export const DashboardSuperAdmin: FC<
         <TabsTrigger value='tours'>Туры компании</TabsTrigger>
         <TabsTrigger value='posts'>Посты/Легаси туры</TabsTrigger>
         <TabsTrigger value='guideTours'>Туры гидов</TabsTrigger>
+        <TabsTrigger value='activities'>Мероприятия</TabsTrigger>
       </TabsList>
       <TabsContent value='tours'>
         <DashboardTours />
-        <DashboardActivities session={session} />
       </TabsContent>
       <TabsContent value='posts'>
         <DashboardPosts />
+      </TabsContent>
+      <TabsContent value='activities'>
+        <DashboardActivities session={session} />
       </TabsContent>
       <TabsContent value='guideTours'>DashboardGuideTours</TabsContent>
     </Tabs>

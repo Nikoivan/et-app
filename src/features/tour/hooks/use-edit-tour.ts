@@ -30,8 +30,6 @@ export const useEditTour = (props: Props) => {
   });
 
   return async (data: FormDialogDomain.FormData) => {
-    console.log({ data });
-
     const dataForCreate: [string, string | File][] =
       prepareDataUtils.prepareDataToCreate({
         ...data,
