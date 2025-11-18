@@ -1,9 +1,9 @@
 import { NextRequest } from 'next/server';
 import { tourService } from '@/features/tour/services/tour-service';
 import { sessionService } from '@/entities/user/server';
-import { TourDomain } from '@/entities/tour/server';
 import { Either } from '@/shared/lib/either';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
+import { GetToursResponse } from '@/features/tour/domain';
 
 export async function getUserTours(req: NextRequest): Promise<Response> {
   try {
@@ -21,7 +21,7 @@ export async function getUserTours(req: NextRequest): Promise<Response> {
 
     const { id, role } = session;
 
-    const eitherResult: Either<string, TourDomain.TourEntity[]> =
+    const eitherResult: Either<string, GetToursResponse> =
       await tourService.getUserTours({
         authorId: id,
         role: role
