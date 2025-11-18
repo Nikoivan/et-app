@@ -27,15 +27,13 @@ export const DatePicker = <
   );
 
   const onSelectDate = (date: Date | undefined) => {
-    if (type !== 'date') return;
+    if (type !== 'date' || !date) return;
 
     date?.setHours(Number(time.slice(0, 2)));
     date?.setMinutes(Number(time.slice(3, 5)));
 
     setDate(date);
     setOpen(false);
-
-    if (!date) return;
 
     onChange({
       [name]: date.toISOString()

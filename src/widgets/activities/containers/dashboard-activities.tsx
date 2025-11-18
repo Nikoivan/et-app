@@ -6,10 +6,11 @@ import { Spinner } from '@/shared/ui/spinner';
 import { ClientLayout } from '@/widgets/activities/ui/client-layout';
 import { ActivitiesList } from '@/widgets/activities/ui/activities-list';
 import { SessionEntity } from '@/entities/user/domain';
-import { CreateActivityForm } from '@/widgets/activities/ui/create-activity-form';
+
 import { useQuery } from '@tanstack/react-query';
 import { getOwnUserActivities } from '@/widgets/activities/api/own-activities';
 import { ActivityDomain } from '@/entities/activity/server';
+import { CreateActivity } from '@/features/activity';
 
 const cnDashboardActivities = cn('DashboardActivities');
 
@@ -17,7 +18,7 @@ export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
   const { data, isLoading, error } = useQuery<{
     list: ActivityDomain.ActivityEntity[];
   }>({
-    queryKey: ['activities', 'user', 'own'],
+    queryKey: ['activities'],
     queryFn: getOwnUserActivities
   });
 
@@ -53,7 +54,7 @@ export const DashboardActivities: FC<{ session: SessionEntity }> = () => {
                 'text-center'
               ])}
             >
-              <CreateActivityForm />
+              <CreateActivity />
             </div>
           }
         />
