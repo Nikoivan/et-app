@@ -2,16 +2,15 @@ import { Activity, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateActivityData } from '@/entities/activity/domain';
 
-type Params<T extends Prisma.ActivityInclude | undefined = undefined> = {
-  where: Prisma.ActivityWhereInput | undefined;
-  include?: T;
-  select?: Prisma.ActivitySelect;
-  orderBy?: Prisma.ActivityOrderByWithRelationInput;
-};
+type Payload<T extends Prisma.ActivityFindManyArgs> =
+  Prisma.ActivityGetPayload<T>;
 
-const createActivity = (data: CreateActivityData & { authorId: number }) => {
-  return dbClient.activity.create({ data });
-};
+const getCount = (where?: Prisma.ActivityWhereInput) =>
+  dbClient.activity.count({ where });
+
+const getActivities = <T extends Prisma.ActivityFindManyArgs>(
+  args?: Prisma.SelectSubset<T, Prisma.ActivityFindManyArgs>
+): Promise<Payload<T>[]> => dbClient.activity.findMany(args);
 
 const getActivity = (id: number): Promise<Activity | null> =>
   dbClient.activity.findUnique({
@@ -20,14 +19,9 @@ const getActivity = (id: number): Promise<Activity | null> =>
     }
   });
 
-const getActivities = <
-  TInclude extends Prisma.ActivityInclude | undefined = undefined
->(
-  params: Params<TInclude>
-): Promise<Prisma.ActivityGetPayload<{ include: TInclude }>[]> =>
-  dbClient.activity.findMany(params) as Promise<
-    Prisma.ActivityGetPayload<{ include: TInclude }>[]
-  >;
+const createActivity = (data: CreateActivityData & { authorId: number }) => {
+  return dbClient.activity.create({ data });
+};
 
 const deleteActivity = async (id: number): Promise<Activity | null> =>
   dbClient.activity.delete({
@@ -37,8 +31,9 @@ const deleteActivity = async (id: number): Promise<Activity | null> =>
   });
 
 export const activityRepositories = {
-  createActivity,
-  getActivity,
+  getCount,
   getActivities,
+  getActivity,
+  createActivity,
   deleteActivity
 };

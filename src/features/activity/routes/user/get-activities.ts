@@ -22,10 +22,12 @@ export async function getUserActivities(req: NextRequest): Promise<Response> {
 
     const searchParams = req.nextUrl.searchParams;
     const params = activitySearchParams.getParamsBySearchParams(searchParams);
-    //TODO:
 
     const eitherResult: Either<string, ActivityDomain.ActivityEntity[]> =
-      await activityServices.getUserActivities(session.id);
+      await activityServices.getUserActivities({
+        authorId: session.id,
+        ...params
+      });
 
     if (eitherResult.type === 'left') {
       return handleError({ body: eitherResult.error });

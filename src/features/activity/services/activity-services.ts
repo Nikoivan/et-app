@@ -5,7 +5,7 @@ import {
   ActivityEntity,
   activityRepositories
 } from '@/entities/activity/server';
-import { activityToActivityEntity } from '@/entities/activity/domain';
+
 import { Either, left, right } from '@/shared/lib/either';
 
 const createActivity = async (
@@ -13,30 +13,30 @@ const createActivity = async (
 ): Promise<ActivityEntity | null> => {
   const activity = await activityRepositories.createActivity(data);
 
-  return activity ? activityToActivityEntity(activity) : null;
+  return activity ? ActivityDomain.activityToActivityEntity(activity) : null;
 };
 
-const getUserActivities = async (
-  authorId: number
-): Promise<Either<string, ActivityDomain.ActivityEntity[]>> => {
+const getUserActivities = async ({
+  authorId,
+  ...params
+}: Prisma.ActivityFindManyArgs & { authorId?: number }): Promise<
+  Either<string, ActivityDomain.ActivityEntity[]>
+> => {
   const where: Prisma.ActivityWhereInput = { authorId };
   const tourIncludes: Prisma.ActivityInclude = { photos: true };
 
-  const tours: Prisma.ActivityGetPayload<{
-    include: {
-      tour: true;
-    };
-  }>[] = await activityRepositories.getActivities({
+  const tours = await activityRepositories.getActivities({
     where,
-    include: tourIncludes
+    include: tourIncludes,
+    ...params
   });
 
   if (!tours) {
-    return left('Ошибка при получение туров');
+    return left('Ошибка при получение мероприятий');
   }
 
   const activityEntities: ActivityDomain.ActivityEntity[] = tours.length
-    ? tours.map(activityToActivityEntity)
+    ? tours.map(ActivityDomain.activityToActivityEntity)
     : [];
 
   return right(activityEntities);
