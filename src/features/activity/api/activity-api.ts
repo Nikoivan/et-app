@@ -1,39 +1,39 @@
 import { Activity } from '@prisma/client';
 
 import { ActivityDomain } from '@/entities/activity/server';
-import { urlUtils } from '@/shared/lib/url-utils';
 import { Either, left, right } from '@/shared/lib/either';
-import { isStringArray } from '@/shared/lib/typeguargs/string-array';
+import { apiClient } from '@/shared/api/api-client';
+import { queryOptions } from '@tanstack/react-query';
+import { GetApiData } from '@/shared/model/types';
+import { GetActivityResponse } from '../domain';
 
 const createErrorMessage = 'Ошибка создания мероприятия';
 const deleteErrorMessage = 'Ошибка удаления мероприятия';
 
 const baseKey = 'activities';
+const baseUrl = 'activity';
+
+const getOwnActivities = <T>({ signal, page, search }: GetApiData) =>
+  apiClient.get<T>({
+    url: `${baseUrl}/user`,
+    signal,
+    queryParams: { page: String(page), search }
+  });
 
 export const createActivity = async (
   data: ActivityDomain.CreateActivityData
 ): Promise<Either<string, ActivityDomain.ActivityEntity>> => {
   try {
-    const response = await fetch(`${urlUtils.getApiUrl()}/activity`, {
-      method: 'POST',
+    const response = await apiClient.post<ActivityDomain.ActivityEntity>({
+      url: baseUrl,
       body: JSON.stringify(data)
     });
 
-    if (response.status >= 300) {
-      const errors = await response.json();
-
-      const error =
-        !!errors &&
-        (typeof errors === 'string'
-          ? errors
-          : isStringArray(errors)
-            ? errors.join(', ')
-            : createErrorMessage);
-
-      return left(error || createErrorMessage);
+    if (!response) {
+      return left(createErrorMessage);
     }
 
-    return right((await response.json()) as ActivityDomain.ActivityEntity);
+    return right(response);
   } catch {
     return left(createErrorMessage);
   }
@@ -43,15 +43,12 @@ export const deleteActivity = async (
   id: number
 ): Promise<Either<string, Activity>> => {
   try {
-    const response = await fetch(`${urlUtils.getApiUrl()}/activity?id=${id}`, {
-      method: 'DELETE'
+    const response = await apiClient.del<Activity>({
+      url: baseUrl,
+      queryParams: { id }
     });
 
-    if (response.status >= 300) {
-      return left(deleteErrorMessage);
-    }
-
-    return right(await response.json());
+    return right(response);
   } catch (e) {
     console.warn(e);
 
@@ -59,4 +56,22 @@ export const deleteActivity = async (
   }
 };
 
-export const activityApi = { baseKey, createActivity, deleteActivity };
+const getActivityListQueryOptions = ({
+  page,
+  search
+}: {
+  page: number;
+  search: string;
+}) =>
+  queryOptions({
+    queryKey: [baseKey, { page, search }],
+    queryFn: ({ signal }) =>
+      getOwnActivities<GetActivityResponse>({ signal, page, search })
+  });
+
+export const activityApi = {
+  baseKey,
+  createActivity,
+  deleteActivity,
+  getActivityListQueryOptions
+};

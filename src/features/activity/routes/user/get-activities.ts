@@ -1,24 +1,28 @@
 import { NextRequest } from 'next/server';
 
 import { activityServices } from '@/features/activity/services/activity-services';
-import { sessionService } from '@/entities/user/server';
 import { ActivityDomain } from '@/entities/activity/server';
 import { Either } from '@/shared/lib/either';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
+import { sessionUtils } from '@/entities/user/lib/session-utils';
+import { roleUtils } from '@/entities/user';
+import { activitySearchParams } from '@/features/activity/lib/activity-search-params-utils';
 
 export async function getUserActivities(req: NextRequest): Promise<Response> {
   try {
-    const cookies = req.cookies.get('session')?.value;
+    const session = await sessionUtils.getSession(
+      req.cookies.get('session')?.value
+    );
 
-    if (!cookies) {
-      return handleError({ body: 'Cookie not found' });
+    if (!roleUtils.userHasPermissionOn(session?.role, 'getActivity')) {
+      return handleError({
+        body: 'У вас нет полномочий на получение активностей'
+      });
     }
 
-    const { session } = await sessionService.verifySession(cookies);
-
-    if (!session) {
-      return handleError({ body: 'Session not found' });
-    }
+    const searchParams = req.nextUrl.searchParams;
+    const params = activitySearchParams.getParamsBySearchParams(searchParams);
+    //TODO:
 
     const eitherResult: Either<string, ActivityDomain.ActivityEntity[]> =
       await activityServices.getUserActivities(session.id);
@@ -27,7 +31,12 @@ export async function getUserActivities(req: NextRequest): Promise<Response> {
       return handleError({ body: eitherResult.error });
     }
 
-    return handleSuccess({ body: eitherResult.value });
+    return handleSuccess({
+      body: {
+        pagesCount: eitherResult.value.length / 10,
+        activities: eitherResult.value
+      }
+    });
   } catch {
     return handleError({ body: 'Ошибка верификации' });
   }

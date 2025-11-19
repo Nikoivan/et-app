@@ -2,7 +2,9 @@ const getOrigin = (): string =>
   globalThis.location?.origin || 'https://ay-petry.ru';
 const getApiRoute = (): string => process.env.API_ROUTE || '/api';
 const getApiUrl = (): string => `${getOrigin()}${getApiRoute()}`;
-const getQueryParamsString = (queryParams?: Record<string, string>): string => {
+const getQueryParamsString = (
+  queryParams?: Record<string, string | number>
+): string => {
   if (!queryParams) {
     return '';
   }
@@ -15,7 +17,7 @@ const getQueryParamsString = (queryParams?: Record<string, string>): string => {
       '?'
     );
 };
-const getUrl = (slug: string, queryParams?: Record<string, string>) =>
+const getUrl = (slug: string, queryParams?: Record<string, string | number>) =>
   `${getApiUrl()}/${slug}${getQueryParamsString(queryParams)}`;
 
 export const urlUtils = { getOrigin, getApiRoute, getApiUrl, getUrl };

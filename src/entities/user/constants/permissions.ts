@@ -10,5 +10,6 @@ export const permissions: Record<string, Set<string>> = {
   createActivity: guides,
   createPosts: admins,
   editPosts: admins,
-  deletePost: admins
+  deletePost: admins,
+  getActivity: guides
 };

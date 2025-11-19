@@ -2,7 +2,7 @@ import { urlUtils } from '@/shared/lib/url-utils';
 
 type RequestParams = {
   url: string;
-  queryParams?: Record<string, string>;
+  queryParams?: Record<string, string | number>;
 } & RequestInit;
 
 const request = async <T>({

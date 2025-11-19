@@ -1,3 +1,5 @@
+export { isActivityStatus } from '@/entities/activity/model/typeguards';
+
 export { activityRepositories } from '@/entities/activity/repositories/activity';
 
 export { CardDates as ActivityCardDates } from '@/entities/activity/ui/card-dates';
