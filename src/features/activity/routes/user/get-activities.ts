@@ -1,12 +1,13 @@
 import { NextRequest } from 'next/server';
 
-import { activityServices } from '@/features/activity/services/activity-services';
 import { ActivityDomain } from '@/entities/activity/server';
 import { Either } from '@/shared/lib/either';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { sessionUtils } from '@/entities/user/lib/session-utils';
 import { roleUtils } from '@/entities/user';
-import { activitySearchParams } from '@/features/activity/lib/activity-search-params-utils';
+
+import { activityServices } from '../../services/activity-services';
+import { activitySearchParams } from '../../lib/activity-search-params-utils';
 
 export async function getUserActivities(req: NextRequest): Promise<Response> {
   try {
