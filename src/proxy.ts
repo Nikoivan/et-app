@@ -1,13 +1,52 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-const ALLOWED_ORIGINS = ['https://ay-petry.ru', 'http://localhost:3000'];
+import {
+  checkRateLimitInMemory,
+  startRateLimitCleanup
+} from '@/shared/lib/security/rate-limit-memory';
 
+const ALLOWED_ORIGINS = ['https://ay-petry.ru', 'http://localhost:3000'];
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX = 60;
 const PROTECTED_API_PREFIX = process.env.API_ROUTE || '/api/';
 
+startRateLimitCleanup({
+  intervalMs: 5 * 60_000,
+  maxAgeMs: 10 * 60_000
+});
+
 export function proxy(req: NextRequest) {
-  const url = req.nextUrl;
-  const { pathname } = url;
+  const { pathname } = req.nextUrl;
+
+  const ip =
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+
+  const key = `ip:${ip}:${pathname}`;
+
+  const { isLimited, remaining, resetAt } = checkRateLimitInMemory({
+    key,
+    windowMs: RATE_LIMIT_WINDOW_MS,
+    maxRequests: RATE_LIMIT_MAX
+  });
+
+  if (isLimited) {
+    return new NextResponse(
+      JSON.stringify({
+        error: 'Too many requests',
+        rateLimit: {
+          remaining,
+          resetAt
+        }
+      }),
+      {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+  }
 
   if (!pathname.startsWith(PROTECTED_API_PREFIX)) {
     return NextResponse.next();
@@ -15,15 +54,16 @@ export function proxy(req: NextRequest) {
 
   const origin = req.headers.get('origin');
   const referer = req.headers.get('referer');
+  const xApiKey = req.headers.get('X-API-KEY');
 
   const isSameOrigin =
     origin === null &&
     referer !== null &&
     ALLOWED_ORIGINS.some(allowed => referer.startsWith(allowed));
-
   const isAllowedOrigin = origin !== null && ALLOWED_ORIGINS.includes(origin);
+  const xApiKeyValid = xApiKey === process.env.X_API_KEY;
 
-  if (!isAllowedOrigin && !isSameOrigin) {
+  if (!xApiKeyValid || (!isAllowedOrigin && !isSameOrigin)) {
     return new NextResponse(JSON.stringify({ error: 'Origin not allowed' }), {
       status: 403,
       headers: {
@@ -47,6 +87,9 @@ export function proxy(req: NextRequest) {
     'Content-Type, Authorization, X-API-KEY'
   );
   res.headers.set('Access-Control-Allow-Credentials', 'true');
+  res.headers.set('X-RateLimit-Limit', String(RATE_LIMIT_MAX));
+  res.headers.set('X-RateLimit-Remaining', String(remaining));
+  res.headers.set('X-RateLimit-Reset', resetAt.toISOString());
 
   if (req.method === 'OPTIONS') {
     return new NextResponse(null, {

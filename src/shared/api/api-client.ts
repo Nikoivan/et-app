@@ -10,12 +10,17 @@ const request = async <T>({
   body,
   method,
   signal,
+  headers,
   queryParams
 }: RequestParams): Promise<T> => {
   const response = await fetch(`${urlUtils.getUrl(url, queryParams)}`, {
     method,
     body,
-    signal
+    signal,
+    headers: {
+      'X-API-KEY': process.env.NEXT_PUBLIC_X_API_KEY || '',
+      ...headers
+    }
   });
 
   return response.json();
