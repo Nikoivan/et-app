@@ -61,8 +61,6 @@ const handleError = (error: unknown): NextResponse => {
     );
   }
 
-  console.log({ error });
-
   return new NextResponse(
     JSON.stringify({ error: 'Unknown error on server' }),
     {
