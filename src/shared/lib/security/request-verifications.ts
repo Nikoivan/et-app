@@ -31,7 +31,7 @@ export const verifyLimit = (
   return { remaining, resetAt };
 };
 
-export const verifyOrigin = (req: NextRequest): void => {
+export const verifyOrigin = (req: NextRequest): string | null => {
   const origin = req.headers.get('origin');
   const referer = req.headers.get('referer');
   const xApiKey = req.headers.get('X-API-KEY');
@@ -46,4 +46,6 @@ export const verifyOrigin = (req: NextRequest): void => {
   if (!xApiKeyValid || (!isAllowedOrigin && !isSameOrigin)) {
     throw new SecurityOriginException('Origin not allowed');
   }
+
+  return origin;
 };

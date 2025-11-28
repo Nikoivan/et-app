@@ -8,7 +8,15 @@ import {
   SecurityOriginException
 } from '@/shared/lib/security/security-exception';
 
-const getSecuredResponse = (remaining: number, resetAt: Date): NextResponse => {
+const getSecuredResponse = ({
+  origin,
+  remaining,
+  resetAt
+}: {
+  origin: string | null;
+  remaining: number;
+  resetAt: Date;
+}): NextResponse => {
   const res = NextResponse.next();
 
   const corsOrigin =
@@ -52,6 +60,9 @@ const handleError = (error: unknown): NextResponse => {
       }
     );
   }
+
+  console.log({ error });
+
   return new NextResponse(
     JSON.stringify({ error: 'Unknown error on server' }),
     {

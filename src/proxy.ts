@@ -26,9 +26,14 @@ export function proxy(req: NextRequest) {
       return NextResponse.next();
     }
 
-    verifyOrigin(req);
+    const origin = verifyOrigin(req);
 
-    const res = securityUtils.getSecuredResponse(remaining, resetAt);
+    console.log({ afterCheckOrigin: true });
+    const res = securityUtils.getSecuredResponse({
+      origin,
+      remaining,
+      resetAt
+    });
 
     if (req.method === 'OPTIONS') {
       return new NextResponse(null, {
