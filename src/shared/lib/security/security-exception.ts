@@ -7,7 +7,7 @@ export class SecurityOriginException extends Error {
 
 export class SecurityLimitException extends Error {
   constructor(message: string) {
-    super();
+    super(message);
     this.name = 'SecurityLimitException';
   }
 }

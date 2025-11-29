@@ -1,30 +1,17 @@
 import { Post, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { PostEntity, WithUser } from '@/entities/post/domain';
-import PostGetPayload = Prisma.PostGetPayload;
 import PostWhereInput = Prisma.PostWhereInput;
-
-type UniquePostParams = { id: number } | { slug: string };
-
-type PostParams =
-  | { include: { user: true } }
-  | {
-      select: Prisma.PostSelect;
-    };
 
 const getPostsCount = (where?: Prisma.PostWhereInput) =>
   dbClient.post.count({ where });
 
-const getPost = <T extends PostParams = { include: { user: true } }>(
-  uniqueParams: UniquePostParams,
-  postParams?: PostParams
-): Promise<PostGetPayload<T> | null> => {
-  const params = postParams || { include: { user: true } };
+const getPost = <T extends Prisma.PostFindUniqueArgs>(
+  uniqueParam: Prisma.SelectSubset<T, Prisma.PostFindUniqueArgs>
+) => {
+  const params = uniqueParam || { include: { user: true } };
 
-  return dbClient.post.findUnique({
-    where: uniqueParams,
-    ...postParams
-  }) as Promise<PostGetPayload<T> | null>;
+  return dbClient.post.findUnique(params);
 };
 
 const getPosts = <

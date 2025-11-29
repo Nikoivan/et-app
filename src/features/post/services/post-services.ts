@@ -33,7 +33,10 @@ const getPostBySlug = async (
   slug: string
 ): Promise<Either<string, PostDomain.PostEntity>> => {
   const result: Prisma.PostGetPayload<{ include: { user: true } }> | null =
-    await postRepositories.getPost({ slug });
+    await postRepositories.getPost({
+      where: { slug },
+      include: { user: true }
+    });
 
   if (!result) {
     return left('Ошибка получения данных поста из базы данных');
@@ -55,15 +58,16 @@ const getPostMetaDataBySlug = async (
       metaDescription: true;
       metaKeywords: true;
     };
-  }> | null = await postRepositories.getPost<{
+  }> | null = await postRepositories.getPost({
+    where: { slug },
     select: {
-      title: true;
-      description: true;
-      metaTitle: true;
-      metaDescription: true;
-      metaKeywords: true;
-    };
-  }>({ slug });
+      title: true,
+      description: true,
+      metaTitle: true,
+      metaDescription: true,
+      metaKeywords: true
+    }
+  });
 
   if (!result) {
     return left('Не удалось найти пост');
