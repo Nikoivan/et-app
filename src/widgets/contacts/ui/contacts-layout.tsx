@@ -40,7 +40,7 @@ export const ContactsLayout: FC<ContactsLayoutProps> = ({
     </div>
     <div className='flex flex-col justify-center items-center mt-6'>
       <Row>
-        <GeoPointIcon />
+        <GeoPointIcon fill='#000' />
         <span>{address}</span>
       </Row>
       <Row>
