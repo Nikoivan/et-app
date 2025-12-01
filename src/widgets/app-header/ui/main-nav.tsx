@@ -54,6 +54,15 @@ export const MainNav: FC = async () => {
           Профиль
         </Link>
       )}
+      <Link
+        className={cnMainNav('Link', [
+          'px-4',
+          'transition-colors hover:text-foreground/80 text-foreground/60'
+        ])}
+        href='/kontakty'
+      >
+        Контакты
+      </Link>
       {!session?.id && (
         <Link
           className={cnMainNav('Link', [
