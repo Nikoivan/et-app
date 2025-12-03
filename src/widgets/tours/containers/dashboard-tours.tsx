@@ -2,14 +2,17 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
+import { PlusCircle } from 'lucide-react';
 
 import { ClientLayout } from '@/widgets/tours/ui/client-layout';
 import TourFeature, { TourFeatureList } from '@/features/tour';
-import { PlusCircle } from 'lucide-react';
+import { SessionDomain } from '@/entities/user/server';
 
 const cnDashboardTours = cn('DashboardTours');
 
-export const DashboardTours: FC = () => {
+export const DashboardTours: FC<{
+  session: SessionDomain.SessionEntity;
+}> = () => {
   return (
     <ClientLayout
       className={cnDashboardTours(null, ['p-4'])}

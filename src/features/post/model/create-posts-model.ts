@@ -23,7 +23,7 @@ export const createPostModel: FormDialogDomain.FormDataModelItem[] = [
     required: true
   },
   {
-    type: 'files',
+    type: 'string',
     label: 'Заглавное фото',
     name: 'image',
     required: true
@@ -42,8 +42,8 @@ export const createPostModel: FormDialogDomain.FormDataModelItem[] = [
     options: ['post', 'news', 'tour']
   },
   {
-    type: 'files',
-    label: 'Заглавное фото',
+    type: 'stringArray',
+    label: 'Фотографии',
     name: 'images',
     required: true
   },
@@ -108,8 +108,8 @@ export const initialPostCreateFormData = {
   content: '',
   type: '',
   guid: '',
-  image: undefined,
-  images: undefined,
+  image: '',
+  images: [],
   status: 'fresh',
   slug: '',
   metaKeywords: [],

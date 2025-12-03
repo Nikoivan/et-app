@@ -7,10 +7,13 @@ import { Spinner } from '@/shared/ui/spinner';
 import { PostFeatureList } from '@/features/post';
 import { FeaturePost } from '@/features/post/ui/feature-post';
 import { MigrationPosts } from '@/widgets/posts/ui/posts-migration';
+import { SessionDomain } from '@/entities/user/server';
 
 const cnDashboardPosts = cn('DashboardPosts');
 
-export const DashboardPosts: FC = () => {
+export const DashboardPosts: FC<{ session: SessionDomain.SessionEntity }> = ({
+  session
+}) => {
   const isLoading = false;
 
   return (
@@ -23,10 +26,10 @@ export const DashboardPosts: FC = () => {
       <Layout
         className={cnDashboardPosts()}
         title={null}
-        list={<PostFeatureList />}
+        list={<PostFeatureList session={session} />}
         actions={
           <div>
-            <FeaturePost type='create' />
+            <FeaturePost session={session} type='create' />
             <MigrationPosts />
           </div>
         }

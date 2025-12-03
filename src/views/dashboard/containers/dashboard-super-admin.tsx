@@ -25,10 +25,10 @@ export const DashboardSuperAdmin: FC<
         <TabsTrigger value='activities'>Мероприятия</TabsTrigger>
       </TabsList>
       <TabsContent value='tours'>
-        <DashboardTours />
+        <DashboardTours session={session} />
       </TabsContent>
       <TabsContent value='posts'>
-        <DashboardPosts />
+        <DashboardPosts session={session} />
       </TabsContent>
       <TabsContent value='activities'>
         <DashboardActivities session={session} />

@@ -20,9 +20,12 @@ import mockImage from '@/shared/assets/images/backgrounds/bg-1.jpg';
 import { FeaturePost } from '@/features/post/ui/feature-post';
 import { FormDialogDomain } from '@/entities/form-dialog';
 import { DeletePost } from '@/features/post/ui/delete-post';
+import { SessionDomain } from '@/entities/user/server';
 
-export const PostCard: FC<PostDomain.PostEntity> = props => {
-  const { id, title, image, content, rating, price } = props;
+export const PostCard: FC<
+  PostDomain.PostEntity & { session: SessionDomain.SessionEntity }
+> = props => {
+  const { id, title, image, content, rating, price, session } = props;
 
   return (
     <Card className='max-w-md'>
@@ -53,6 +56,7 @@ export const PostCard: FC<PostDomain.PostEntity> = props => {
           {price}
         </Button>
         <FeaturePost
+          session={session}
           type='edit'
           initialData={props as unknown as FormDialogDomain.FormData}
         />

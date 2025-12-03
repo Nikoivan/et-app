@@ -76,6 +76,8 @@ export const Form = <
 
   const errors = showErrors ? validate() : undefined;
 
+  console.log({ errors });
+
   return (
     <form className={cnForm(null)} onSubmit={handleSubmit}>
       {!!title && (
@@ -104,7 +106,11 @@ export const Form = <
         >
           Отмена
         </Button>
-        <Button type='submit' variant='outline' disabled={!isChanged}>
+        <Button
+          type='submit'
+          variant='outline'
+          disabled={!isChanged || !!errors}
+        >
           Сохранить
         </Button>
       </div>

@@ -5,10 +5,13 @@ import { cn } from '@bem-react/classname';
 
 import { PostCard } from '@/features/post/ui/post-card';
 import { usePostList } from '@/features/post/hooks/use-post-list';
+import { SessionDomain } from '@/entities/user/server';
 
 const cnPostFeatureList = cn('PostFeatureList');
 
-export const PostFeatureList: FC = () => {
+export const PostFeatureList: FC<{
+  session: SessionDomain.SessionEntity;
+}> = ({ session }) => {
   const { data, isFetching, tools, pagination, cursor } = usePostList();
 
   return (
@@ -31,7 +34,7 @@ export const PostFeatureList: FC = () => {
                 ])}
                 key={post.id}
               >
-                <PostCard {...post} />
+                <PostCard {...post} session={session} />
               </li>
             ))}
           </ul>
