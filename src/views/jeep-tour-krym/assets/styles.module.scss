@@ -1,0 +1,13 @@
+.JeepTourKrym {
+  &__MainImage {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  &__Title {
+    font-size: 35px;
+    color: #fff;
+    -webkit-text-stroke: 2px #ffffff;
+    line-height: 1.15;
+  }
+}

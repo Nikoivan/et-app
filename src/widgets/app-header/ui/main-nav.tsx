@@ -6,9 +6,25 @@ import { cn } from '@bem-react/classname';
 import { sessionService } from '@/entities/user/services/session';
 
 const cnMainNav = cn('MainNav');
+const links = [
+  { href: '/tours', title: 'Экскурсии' },
+  { href: '/dzhip-tur-krym', title: 'Джип туры' },
+  { href: '/uslugi', title: 'Услуги' },
+  { href: '/posts', title: 'Интересное' },
+  { href: '/kontakty', title: 'Контакты' }
+];
 
 export const MainNav: FC = async () => {
   const { session } = await sessionService.verifySession();
+  const linksToRender = !!session?.id
+    ? [...links, { href: `/account/${session.id}`, title: 'Профиль' }]
+    : [
+        ...links,
+        {
+          href: '/sign-in',
+          title: 'Войти'
+        }
+      ];
 
   return (
     <nav
@@ -16,64 +32,18 @@ export const MainNav: FC = async () => {
         'flex items-start md:items-center gap-6 text-sm font-medium flex-col md:flex-row'
       ])}
     >
-      <Link
-        className={cnMainNav('Link', [
-          'px-4',
-          'transition-colors hover:text-foreground/80 text-foreground/60'
-        ])}
-        href='/tours'
-      >
-        Туры
-      </Link>
-      <Link
-        className={cnMainNav('Link', [
-          'px-4',
-          'transition-colors hover:text-foreground/80 text-foreground/60'
-        ])}
-        href='/uslugi'
-      >
-        Услуги
-      </Link>
-      <Link
-        className={cnMainNav('Link', [
-          'px-4',
-          'transition-colors hover:text-foreground/80 text-foreground/60'
-        ])}
-        href='/posts'
-      >
-        Интересное
-      </Link>
-      {!!session?.id && (
+      {linksToRender.map(({ href, title }) => (
         <Link
           className={cnMainNav('Link', [
             'px-4',
             'transition-colors hover:text-foreground/80 text-foreground/60'
           ])}
-          href={`/account/${session.id}`}
+          href={href}
+          key={href}
         >
-          Профиль
+          {title}
         </Link>
-      )}
-      <Link
-        className={cnMainNav('Link', [
-          'px-4',
-          'transition-colors hover:text-foreground/80 text-foreground/60'
-        ])}
-        href='/kontakty'
-      >
-        Контакты
-      </Link>
-      {!session?.id && (
-        <Link
-          className={cnMainNav('Link', [
-            'px-4',
-            'transition-colors hover:text-foreground/80 text-foreground/60'
-          ])}
-          href={`/sign-in`}
-        >
-          Войти
-        </Link>
-      )}
+      ))}
     </nav>
   );
 };
