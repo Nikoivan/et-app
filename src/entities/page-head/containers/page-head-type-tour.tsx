@@ -65,7 +65,6 @@ export const PageHeadTour: FC<Props> = async ({ title, mainPhoto }) => (
             'z-2',
             'relative',
             'px-4',
-            'mt-22',
             'text-left',
             styles.PageTour__Title
           ])}
