@@ -1,10 +1,9 @@
 'use server';
 
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import Image from 'next/image';
-
-import { SliderControls } from '@/views/jeep-tour-krym/ui/slider-controls';
 import Link from 'next/link';
+import { ServerSlider } from '@/shared/ui/server-slider';
 
 export type Tour = {
   title: string;
@@ -67,47 +66,40 @@ const tours: Tour[] = [
   }
 ];
 
-export const Slider: FC = async () => (
-  <section className='flex flex-col items-center gap-6 py-8'>
-    <h2 className='text-2xl font-bold text-center bg-orange-500 text-white px-6 py-2 rounded-[40px]'>
-      МНОГОЧАСОВЫЕ ДЛИТЕЛЬНЫЕ ТУРЫ. ВРЕМЯ ТУРА ОТ 6 ЧАСОВ
-    </h2>
-    <SliderControls>
-      {tours.map(tour => (
-        <div
-          key={tour.title}
-          className='flex-[0_0_100%] flex-[0_0_33.33%] px-2'
-        >
-          <div className='bg-white shadow-md rounded-md grow h-full min-h-[70vh]'>
-            <div className='relative h-3\5 w-full'>
-              <Image
-                width={500}
-                height={500}
-                src={tour.img}
-                alt={tour.title}
-                className='object-cover min-h-[58vh] w-full'
-              />
-              <div className='absolute bottom-0 left-0 w-full bg-black/30 text-white px-2 py-2 text-lg text-center'>
-                {tour.title}
-              </div>
-            </div>
-            <div className='p-3 text-center bg-orange-400 text-white mt-[-1px] h-2\5'>
-              <p className='text-lg'>
-                Продолжительность: <b>{tour.duration}</b>
-              </p>
-              <p className='text-md'>
-                Стоимость: <b>{tour.price}</b>
-              </p>
-              <Link
-                className='mt-4 border border-white px-4 py-1 text-lg font-bold rounded block w-3/4 mx-auto'
-                href={tour.href}
-              >
-                ПОДРОБНЕЕ
-              </Link>
-            </div>
-          </div>
+type Props = { tours: Tour[]; title: ReactNode };
+
+export const Slider: FC<Props> = async ({ tours, title }) => {
+  const slides = tours.map((tour, idx) => (
+    <Link
+      className='bg-white shadow-md rounded-md grow h-full min-h-[70vh]'
+      key={idx}
+      href={tour.href}
+    >
+      <div className='relative h-3\5 w-full'>
+        <Image
+          width={500}
+          height={500}
+          src={tour.img}
+          alt={tour.title}
+          className='object-cover h-[50vh] w-full grow'
+        />
+        <div className='absolute bottom-0 left-0 w-full bg-black/30 text-white px-2 py-2 text-lg text-center'>
+          {tour.title}
         </div>
-      ))}
-    </SliderControls>
-  </section>
-);
+      </div>
+      <div className='p-3 text-center bg-orange-400 text-white mt-[-1px] h-2\5'>
+        <p className='text-lg'>
+          Продолжительность: <b>{tour.duration}</b>
+        </p>
+        <p className='text-md'>
+          Стоимость: <b>{tour.price}</b>
+        </p>
+        <span className='mt-4 border border-white px-4 py-1 text-lg font-bold rounded block w-3/4 mx-auto'>
+          ПОДРОБНЕЕ
+        </span>
+      </div>
+    </Link>
+  ));
+
+  return <ServerSlider title={title} slides={slides} />;
+};

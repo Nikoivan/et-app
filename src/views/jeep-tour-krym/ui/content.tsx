@@ -8,6 +8,10 @@ import { TextContent } from '@/shared/ui/text-content';
 import { cn } from '@/shared/lib/css';
 import { Video } from '@/views/jeep-tour-krym/ui/video';
 import { Slider } from '@/views/jeep-tour-krym/ui/slider';
+import {
+  longTours,
+  shortTours
+} from '@/views/jeep-tour-krym/constants/content';
 
 const cnJeepTourKrym = cnBem('JeepTourKrym');
 
@@ -77,7 +81,14 @@ export const Content: FC = async () => (
   >
     <section className={cnJeepTourKrym('DescriptionBlock')}>
       <Video />
-      <Slider />
+      <Slider
+        tours={longTours}
+        title='Многочасовые длительные туры. Время тура от 2 часов'
+      />
+      <Slider
+        tours={shortTours}
+        title='Сокращенные туры. Время тура от 4 часов'
+      />
       <div className='flex justify-center pr-5'>
         <span
           className={cn(

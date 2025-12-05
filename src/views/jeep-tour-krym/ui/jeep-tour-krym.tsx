@@ -10,7 +10,7 @@ import { Content } from './content';
 
 export const JeepTourKrym: FC = async () => (
   <AppMain
-    mainHead={<Header title={'Джип туры в Крыму'} mainPhoto={mainPhoto} />}
+    mainHead={<Header title='Джип туры в Крыму' mainPhoto={mainPhoto} />}
     mainContent={<Content />}
     mainBottom={null}
   />
