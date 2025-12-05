@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { ServiceView } from '@/views/legacy/server';
 
 const service = {
-  id: 1,
+  id: 3,
   title: 'Классические экскурсии по Крыму',
   content: 'Классические экскурсии в Крыму',
   mainImage: '/images/ekskursii.jpg',

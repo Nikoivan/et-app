@@ -6,6 +6,8 @@ import { AppMain } from '@/widgets/app-main/server';
 import { PageHeadLayout } from '@/entities/page-head/server';
 import { PageTitle } from '@/entities/page-title/server';
 import { AppHeader } from '@/widgets/app-header/containers/app-header';
+import { services } from '@/views/legacy/constants/services';
+import { LegacyTourCard } from '@/shared/ui/legacy-tour-card';
 
 export const ServicesView: FC = async () => (
   <>
@@ -21,7 +23,11 @@ export const ServicesView: FC = async () => (
       }
       mainContent={
         <>
-          <div className='mt-[-15vh]'></div>
+          <div className='p-4 flex justify-center items-center flex-wrap gap-4'>
+            {services.map(({ id, content, ...rest }, idx) => (
+              <LegacyTourCard tour={rest} key={idx} />
+            ))}
+          </div>
         </>
       }
       mainBottom={null}

@@ -1,3 +1,4 @@
+export { ServicesView } from '@/views/legacy/ui/services-view';
 export { VseTurySecond } from '@/views/legacy/containers/vse-tury-second';
 export { VseTuryFirst } from '@/views/legacy/containers/vse-tury-first';
 export { ServiceView } from '@/views/legacy/ui/service-view';

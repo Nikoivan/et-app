@@ -31,3 +31,8 @@ export type LegacyTourCardData = {
   price: string;
   href: string;
 };
+
+export type LegacyServiceData = LegacyTourCardData & {
+  id: number;
+  content: string;
+};

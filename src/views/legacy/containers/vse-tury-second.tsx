@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { VseTury } from '@/views/legacy/ui/vse-tury';
-import { secondPage } from '@/views/legacy/constants/content';
+import { secondPage } from '@/views/legacy/constants/tours';
 import Link from 'next/link';
 
 export const VseTurySecond: FC = () => (

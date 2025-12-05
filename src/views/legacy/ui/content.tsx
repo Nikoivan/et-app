@@ -8,7 +8,7 @@ import { TextContent } from '@/shared/ui/text-content';
 import { cn } from '@/shared/lib/css';
 import { Video } from '@/views/legacy/ui/video';
 import { Slider } from '@/views/legacy/ui/slider';
-import { longTours, shortTours } from '@/views/legacy/constants/content';
+import { longTours, shortTours } from '@/views/legacy/constants/tours';
 import Link from 'next/link';
 
 const cnJeepTourKrym = cnBem('JeepTourKrym');

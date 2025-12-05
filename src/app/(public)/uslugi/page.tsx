@@ -1,7 +1,7 @@
 'use server';
 
 import { FC } from 'react';
-import { ServicesView } from '@/views/services/server';
+import { ServicesView } from '@/views/legacy/server';
 
 const ServicesPage: FC = () => <ServicesView />;
 

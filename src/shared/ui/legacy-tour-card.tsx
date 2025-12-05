@@ -10,7 +10,7 @@ export const LegacyTourCard: FC<{ tour: LegacyTourCardData }> = async ({
   tour
 }) => (
   <Link
-    className='bg-white shadow-md rounded-md grow h-full min-h-[70vh]'
+    className='bg-white shadow-md rounded-md grow h-full min-h-[70vh] h-full'
     href={tour.href}
   >
     <div className='relative h-3\5 w-full'>

@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { ServiceView } from '@/views/legacy/server';
 
 const service = {
-  id: 1,
+  id: 4,
   title: 'Прокат квадроциклов в Крыму',
   content:
     'У нас вы можете воспользоваться услугой <strong>прокат квадроциклов</strong>или заказать <strong><a href="https://energy-tur.ru/tury-na-kvadrotsiklah-v-krymu/">туры на квадроциклах</a></strong> по заданному маршруту.\n' +
