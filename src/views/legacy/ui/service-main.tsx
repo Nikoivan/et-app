@@ -10,7 +10,7 @@ import { cn } from '@/shared/lib/css';
 
 import styles from '@/shared/assets/styles.module.scss';
 import { PageHeadPost } from '@/views/post/ui/page-head-post';
-import { ServiceViewProps } from '@/views/service/domain';
+import { ServiceViewProps } from '../domain';
 
 const cnPageService = cnBem('PageService');
 

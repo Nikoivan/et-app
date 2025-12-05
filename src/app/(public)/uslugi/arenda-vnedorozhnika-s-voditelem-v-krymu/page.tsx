@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import { ServiceView } from '@/views/service/server';
+import { ServiceView } from '@/views/legacy/server';
 
 const service = {
   id: 1,
@@ -62,6 +62,6 @@ Mitsubishi L200 – 4 места
   images: []
 };
 
-const ServicePage: FC = async () => <ServiceView {...service} />;
+const LegacyPage: FC = async () => <ServiceView {...service} />;
 
-export default ServicePage;
+export default LegacyPage;

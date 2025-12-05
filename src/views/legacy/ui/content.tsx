@@ -6,12 +6,10 @@ import { cn as cnBem } from '@bem-react/classname';
 import styles from '@/shared/assets/styles.module.scss';
 import { TextContent } from '@/shared/ui/text-content';
 import { cn } from '@/shared/lib/css';
-import { Video } from '@/views/jeep-tour-krym/ui/video';
-import { Slider } from '@/views/jeep-tour-krym/ui/slider';
-import {
-  longTours,
-  shortTours
-} from '@/views/jeep-tour-krym/constants/content';
+import { Video } from '@/views/legacy/ui/video';
+import { Slider } from '@/views/legacy/ui/slider';
+import { longTours, shortTours } from '@/views/legacy/constants/content';
+import Link from 'next/link';
 
 const cnJeepTourKrym = cnBem('JeepTourKrym');
 
@@ -89,6 +87,14 @@ export const Content: FC = async () => (
         tours={shortTours}
         title='Сокращенные туры. Время тура от 4 часов'
       />
+      <div className='text-center mt-4 mb-8'>
+        <Link
+          className='text-2xl uppercase bg-zinc-500 px-4 py-2 rounded-xl'
+          href='/category/vse_tury'
+        >
+          Посмотреть все туры
+        </Link>
+      </div>
       <div className='flex justify-center pr-5'>
         <span
           className={cn(

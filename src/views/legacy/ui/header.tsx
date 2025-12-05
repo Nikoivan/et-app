@@ -8,7 +8,7 @@ import { Title } from '@/shared/ui/title';
 import src from '@/shared/assets/images/backgrounds/bg-1.jpg';
 
 import styles from '../assets/styles.module.scss';
-import { PriceBanner } from '@/views/jeep-tour-krym/ui/price-banner';
+import { PriceBanner } from '@/views/legacy/ui/price-banner';
 
 type Props = {
   title: string;

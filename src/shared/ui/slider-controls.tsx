@@ -6,7 +6,10 @@ import useEmblaCarousel from 'embla-carousel-react';
 
 import { Button } from '@/shared/ui/button';
 
-export const SliderControls: FC<PropsWithChildren> = ({ children }) => {
+export const SliderControls: FC<PropsWithChildren & { rounded?: boolean }> = ({
+  children,
+  rounded
+}) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
 
   useEffect(() => {
@@ -16,7 +19,9 @@ export const SliderControls: FC<PropsWithChildren> = ({ children }) => {
   }, [emblaRef]);
 
   return (
-    <div className='relative max-w-6xl w-full overflow-hidden'>
+    <div
+      className={`relative max-w-full w-full overflow-hidden${rounded ? ' rounded-xl' : ''}`}
+    >
       <div className='overflow-hidden' ref={emblaRef}>
         <div className='flex'>{children}</div>
       </div>
@@ -26,14 +31,14 @@ export const SliderControls: FC<PropsWithChildren> = ({ children }) => {
           console.log('clicked');
           emblaApi?.scrollPrev();
         }}
-        className='absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/60 backdrop-blur text-orange-500'
+        className='absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/60 backdrop-blur accent-zinc-200'
       >
         <ChevronLeft />
       </Button>
 
       <Button
         onClick={() => emblaApi?.scrollNext()}
-        className='absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/60 backdrop-blur text-orange-500'
+        className='absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/60 backdrop-blur accent-zinc-200'
       >
         <ChevronRight />
       </Button>

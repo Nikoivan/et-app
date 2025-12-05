@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 
-import { ServiceView } from '@/views/service/server';
+import { ServiceView } from '@/views/legacy/server';
 
 const service = {
   id: 9,
@@ -54,6 +54,6 @@ const service = {
   images: []
 };
 
-const ServicePage: FC = async () => <ServiceView {...service} />;
+const LegacyPage: FC = async () => <ServiceView {...service} />;
 
-export default ServicePage;
+export default LegacyPage;

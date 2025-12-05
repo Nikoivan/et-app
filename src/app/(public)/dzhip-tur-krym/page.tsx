@@ -1,9 +1,8 @@
 'use server';
 
 import { FC } from 'react';
+import { JeepTourKrym } from '@/views/legacy/server';
 
-import { JeepTourKrym } from '@/views/jeep-tour-krym/server';
+const LegacyPage: FC = async () => <JeepTourKrym />;
 
-const ServicePage: FC = async () => <JeepTourKrym />;
-
-export default ServicePage;
+export default LegacyPage;

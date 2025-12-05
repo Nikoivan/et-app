@@ -1,6 +1,6 @@
-import { Tour } from '@/views/jeep-tour-krym/ui/slider';
+import { LegacyTourCardData } from '@/shared/model/types';
 
-export const longTours: Tour[] = [
+export const longTours: LegacyTourCardData[] = [
   {
     title: 'Джип-тур экскурсия "Сердцем Крыма"',
     img: 'https://energy-tur.ru/wp-content/uploads/2022/05/ozero_tankovoe.jpg',
@@ -55,12 +55,12 @@ export const longTours: Tour[] = [
     title: 'Экскурсия и тур по горам Крыма. Это выше Ай-Петри и Демерджи',
     img: 'https://energy-tur.ru/wp-content/uploads/2018/06/card3.png',
     duration: '5 часов',
-    price: 'от 10 500 руб/машина',
+    price: 'от 12 500 руб/машина',
     href: '/dzhip-tur-po-vershinam-kryma'
   }
 ];
 
-export const shortTours: Tour[] = [
+export const shortTours: LegacyTourCardData[] = [
   {
     title: 'Экскурсия в пещерный город Чуфут Кале',
     img: 'https://energy-tur.ru/wp-content/uploads/2018/06/Chufut-Kale-ava.jpg',
@@ -109,5 +109,46 @@ export const shortTours: Tour[] = [
     duration: '3 часа',
     price: 'от 7000 руб/машина',
     href: '/tepe-kermen-2'
+  }
+];
+
+export const firstPage: LegacyTourCardData[] = [
+  longTours[0],
+  longTours[3],
+  shortTours[1],
+  shortTours[2],
+  longTours[2],
+  shortTours[3],
+  shortTours[4],
+  {
+    title: `По местам "Силы" сокращенный`,
+    img: 'https://energy-tur.ru/wp-content/uploads/2018/06/ava.jpg',
+    duration: '4 часа',
+    price: 'от 9000 руб/машина',
+    href: '/po-mestam-sily-sokrashhennyj'
+  },
+  shortTours[5],
+  shortTours[6],
+  shortTours[0],
+  longTours[4]
+];
+
+export const secondPage: LegacyTourCardData[] = [
+  { ...longTours[0], title: 'Три крепости' },
+  { ...longTours[5], title: 'Путешествие по Качинской долине' },
+  {
+    ...longTours[6],
+    title: `Обзорная экскурсия на джипе. "Бахчисарай - Город трех религий"`
+  },
+  {
+    ...longTours[6],
+    title: `Джип тур - "По вершинам Крыма"`
+  },
+  {
+    title: 'Поездки на гору Ай-Петри из Севастополя Симферополя на машине',
+    img: 'https://energy-tur.ru/wp-content/uploads/2016/10/P1010094-1-1.jpg',
+    duration: '6 часов',
+    price: 'от 2500 руб/человека',
+    href: '/aj-petri-poezdki-na-goru-dobiraemsya-v-kompanii-i-individualno'
   }
 ];

@@ -23,3 +23,11 @@ export type GetApiData = {
   page: number;
   search: string;
 };
+
+export type LegacyTourCardData = {
+  title: string;
+  img: string;
+  duration: string;
+  price: string;
+  href: string;
+};
