@@ -10,8 +10,10 @@ import { SignUnFormState, signUpAction } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
+import { useState } from 'react';
 
 export function SignUpForm() {
+  const [hasOtp, setOtp] = useState<boolean>(false);
   const [formState, action, isPending] = useActionState(
     signUpAction,
     {} as SignUnFormState
@@ -22,7 +24,7 @@ export function SignUpForm() {
       title='Регистрация'
       description='Создайте свой аккаунт для доступа ко всему приложению'
       action={action}
-      fields={<AuthFields {...formState} />}
+      fields={<AuthFields {...formState} isSignUp />}
       actions={
         <SubmitButton isPending={isPending}>Зарегистрироваться</SubmitButton>
       }

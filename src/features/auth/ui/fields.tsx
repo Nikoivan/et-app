@@ -4,16 +4,21 @@ import React, { useId } from 'react';
 
 export function AuthFields({
   errors,
-  formData
+  formData,
+  isSignUp
 }: {
   formData?: FormData;
   errors?: {
     login?: string;
     password?: string;
   };
+  isSignUp?: boolean;
 }) {
   const loginId = useId();
+  const telId = useId();
   const passwordId = useId();
+  const optId = useId();
+
   return (
     <>
       <div className='space-y-2'>
@@ -26,6 +31,19 @@ export function AuthFields({
           required
           defaultValue={formData?.get('login')?.toString()}
         />
+        {isSignUp && (
+          <>
+            <Label htmlFor={telId}>Ваш телефон</Label>
+            <Input
+              id={telId}
+              type='tel'
+              name='tel'
+              placeholder='Введите ваш телефон'
+              required
+              defaultValue={formData?.get('otp')?.toString()}
+            />
+          </>
+        )}
         {errors?.login && <div>{errors.login}</div>}
       </div>
       <div className='space-y-2'>
@@ -38,6 +56,19 @@ export function AuthFields({
           required
           defaultValue={formData?.get('password')?.toString()}
         />
+        {isSignUp && (
+          <>
+            <Label htmlFor={optId}>Код подтверждения</Label>
+            <Input
+              id={optId}
+              type='number'
+              name='otp'
+              placeholder='Код подтверждение'
+              required
+              defaultValue={formData?.get('otp')?.toString()}
+            />
+          </>
+        )}
         {errors?.password && <div>{errors.password}</div>}
       </div>
     </>
