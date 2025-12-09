@@ -21,12 +21,14 @@ export const Otp: FC<Props> = ({ defaultValue, setHasOtp }) => {
     e.preventDefault();
 
     //TODO: условие, что код отправлен успешно
-    setHasOtp(isValidPhone);
+    const success = true;
+    setHasOtp(success && isValidPhone);
   };
 
   return (
     <>
       <TelField setIsValidPhone={onChangePhone} defaultValue={defaultValue} />
+
       <Button onClick={onClick} disabled={!isValidPhone} className='w-full'>
         Получить код
       </Button>
