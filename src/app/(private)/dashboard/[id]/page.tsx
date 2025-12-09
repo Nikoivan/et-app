@@ -1,8 +1,8 @@
 'use server';
 
 import { FC } from 'react';
-import { DashboardGuide, DashboardSuperAdmin } from '@/views/dashboard/server';
 import { sessionService } from '@/entities/user/server';
+import { DashboardGuide, DashboardSuperAdmin } from '@/views/dashboard/server';
 
 const Page: FC = async () => {
   const { session } = await sessionService.verifySession();

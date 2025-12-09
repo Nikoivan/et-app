@@ -2,8 +2,6 @@
 
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-
-import { ActivitiesList, CreateActivity } from '@/features/activity';
 import { UserDomain } from '@/entities/user';
 
 import { ClientLayout } from '../ui/client-layout';
@@ -16,12 +14,15 @@ export const DashboardActivities: FC<{
   <ClientLayout
     className={cnDashboardActivities(null, ['mt-10'])}
     title={<div className='text-center'>Мероприятия</div>}
-    list={<ActivitiesList />}
+    // list={<ActivitiesList />}
+    //TODO: поправить
+    list={null}
     actions={
       <div
         className={cnDashboardActivities('Actions', ['mt-8', 'text-center'])}
       >
-        <CreateActivity />
+        TODO: поправить
+        {/*<CreateActivity />*/}
       </div>
     }
   />

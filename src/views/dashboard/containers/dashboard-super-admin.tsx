@@ -3,11 +3,11 @@
 import { FC, PropsWithChildren } from 'react';
 
 import { DashboardLayout } from '@/views/dashboard/ui/dashboard-layout';
-import { DashboardTours } from '@/widgets/tours';
-import { DashboardPosts } from '@/widgets/posts';
 import { SessionDomain } from '@/entities/user/server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/css';
+import { DashboardTours } from '@/widgets/tours';
+import { DashboardPosts } from '@/widgets/posts';
 import { DashboardActivities } from '@/widgets/activities';
 
 export const DashboardSuperAdmin: FC<

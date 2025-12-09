@@ -12,25 +12,23 @@ const cnDashboardTours = cn('DashboardTours');
 
 export const DashboardTours: FC<{
   session: SessionDomain.SessionEntity;
-}> = () => {
-  return (
-    <ClientLayout
-      className={cnDashboardTours(null, ['p-4'])}
-      title={null}
-      list={<TourFeatureList />}
-      actions={
-        <TourFeature
-          triggerBtn={
-            <div className='flex justify-end items-center gap-2'>
-              <div className='ml-auto text-lg'>Создать тур</div>
-              <div>
-                <PlusCircle size={10} />
-              </div>
+}> = () => (
+  <ClientLayout
+    className={cnDashboardTours(null, ['p-4'])}
+    title={null}
+    list={<TourFeatureList />}
+    actions={
+      <TourFeature
+        triggerBtn={
+          <div className='flex justify-end items-center gap-2'>
+            <div className='ml-auto text-lg'>Создать тур</div>
+            <div>
+              <PlusCircle size={10} />
             </div>
-          }
-          type='create'
-        />
-      }
-    />
-  );
-};
+          </div>
+        }
+        type='create'
+      />
+    }
+  />
+);
