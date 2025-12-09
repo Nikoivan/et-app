@@ -11,22 +11,32 @@ import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
 import { useState } from 'react';
+import { Otp } from '@/entities/otp';
 
 export function SignUpForm() {
-  const [hasOtp, setOtp] = useState<boolean>(false);
+  const [otpFlag, setOtpFlag] = useState<boolean>(false);
   const [formState, action, isPending] = useActionState(
     signUpAction,
     {} as SignUnFormState
   );
+
+  const onChangeOtpFlag = (value: boolean) => setOtpFlag(value);
 
   return (
     <AuthFormLayout
       title='Регистрация'
       description='Создайте свой аккаунт для доступа ко всему приложению'
       action={action}
-      fields={<AuthFields {...formState} isSignUp />}
+      fields={
+        <AuthFields
+          {...formState}
+          actions={<Otp setHasOtp={onChangeOtpFlag} />}
+        />
+      }
       actions={
-        <SubmitButton isPending={isPending}>Зарегистрироваться</SubmitButton>
+        <SubmitButton isPending={isPending || !otpFlag}>
+          Зарегистрироваться
+        </SubmitButton>
       }
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={
