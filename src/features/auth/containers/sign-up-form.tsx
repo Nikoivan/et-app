@@ -30,7 +30,7 @@ export function SignUpForm() {
       fields={
         <AuthFields
           {...formState}
-          actions={<Otp setHasOtp={onChangeOtpFlag} />}
+          actions={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
         />
       }
       actions={

@@ -27,7 +27,7 @@ export function AuthFormLayout({
   action: (formData: FormData) => void;
 }) {
   return (
-    <Card className='w-full max-w-md max-h-[400px]'>
+    <Card className='w-full max-w-md mb-30'>
       <CardHeader>
         <CardTitle className='text-2xl font-bold text-center'>
           {title}

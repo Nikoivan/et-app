@@ -10,13 +10,22 @@ export type SignUnFormState = {
   errors?: {
     login?: string;
     password?: string;
+    tel?: string;
+    code?: string;
     _errors?: string;
   };
 };
 
 const formDataSchema = z.object({
   login: z.string().min(3),
-  password: z.string().min(3)
+  password: z.string().min(3),
+  tel: z
+    .string()
+    .regex(
+      /^(?:\+7|7|8)[ -]?\(?(?:9\d{2})\)?(?:[ -]?\d){7}$/,
+      'Неверный формат телефона'
+    ),
+  code: z.string().min(4)
 });
 
 export const signUpAction = async (
@@ -24,6 +33,8 @@ export const signUpAction = async (
   formData: FormData
 ): Promise<SignUnFormState> => {
   const data = Object.fromEntries(formData.entries());
+
+  console.log({ data });
   const result = formDataSchema.safeParse(data);
 
   if (!result.success) {
@@ -33,6 +44,8 @@ export const signUpAction = async (
       errors: {
         login: formatedErrors.login?._errors.join(', '),
         password: formatedErrors.password?._errors.join(', '),
+        tel: formatedErrors.tel?._errors.join(', '),
+        code: formatedErrors.code?._errors.join(', '),
         _errors: formatedErrors._errors.join(', ')
       }
     };

@@ -15,9 +15,7 @@ export function AuthFields({
   actions?: ReactNode;
 }) {
   const loginId = useId();
-  const telId = useId();
   const passwordId = useId();
-  const optId = useId();
 
   return (
     <>

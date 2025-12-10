@@ -1,16 +1,24 @@
 'use client';
 
-import React, { FC, useState } from 'react';
+import React, { FC, useId, useState } from 'react';
 import { TelField } from '@/entities/otp/ui/tel-field';
 import { Button } from '@/shared/ui/button';
+import { Input } from '@/shared/ui/input';
 
 type Props = {
   setHasOtp(value: boolean): void;
-  defaultValue?: string;
+  formData?: FormData;
 };
 
-export const Otp: FC<Props> = ({ defaultValue, setHasOtp }) => {
+export const Otp: FC<Props> = ({ formData, setHasOtp }) => {
   const [isValidPhone, setPhoneIsValid] = useState<boolean>(false);
+  const [hasTimeout, setHasTimeout] = useState<boolean>(false);
+
+  const debounceTimeout = () => {
+    setHasTimeout(true);
+
+    setTimeout(() => setHasTimeout(false), 60000);
+  };
 
   const onChangePhone = (value: boolean) => {
     setPhoneIsValid(value);
@@ -20,16 +28,33 @@ export const Otp: FC<Props> = ({ defaultValue, setHasOtp }) => {
   const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    //TODO: условие, что код отправлен успешно
     const success = true;
-    setHasOtp(success && isValidPhone);
+    setHasOtp(!hasTimeout && success && isValidPhone);
+
+    debounceTimeout();
   };
+
+  const codeId = useId();
 
   return (
     <>
-      <TelField setIsValidPhone={onChangePhone} defaultValue={defaultValue} />
-
-      <Button onClick={onClick} disabled={!isValidPhone} className='w-full'>
+      <TelField
+        setIsValidPhone={onChangePhone}
+        defaultValue={formData?.get('tel')?.toString()}
+      />
+      <Input
+        id={codeId}
+        type='number'
+        name='code'
+        required
+        placeholder='Код подтверждения'
+        defaultValue={formData?.get('code')?.toString()}
+      />
+      <Button
+        onClick={onClick}
+        disabled={!isValidPhone || hasTimeout}
+        className='w-full'
+      >
         Получить код
       </Button>
     </>
