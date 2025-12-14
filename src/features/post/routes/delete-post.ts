@@ -4,8 +4,9 @@ import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { Either } from '@/shared/lib/either';
 import { postServices } from '@/features/post/services/post-services';
 import { roleUtils } from '@/entities/user';
-import { Post } from '@prisma/client';
+
 import { sessionService } from '@/entities/user/server';
+import { Post } from '../../../../generated/prisma/client';
 
 export async function deletePost(req: NextRequest): Promise<Response> {
   try {

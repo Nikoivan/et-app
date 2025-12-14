@@ -1,8 +1,9 @@
 import { UserEntity, UserEntityUpdate } from '@/entities/user/domain';
 import { dbClient } from '@/shared/lib/db';
-import { Prisma } from '@prisma/client';
+
 import { objectUtils } from '@/shared/lib/object-utils';
 import { WithoutNull } from '@/shared/model/types';
+import { Prisma } from '../../../../generated/prisma/client';
 
 export const saveUser = async (
   user: UserEntity

@@ -1,5 +1,5 @@
-import { Review } from '@prisma/client';
 import { isEstimation } from '@/entities/review/lib/typeguards';
+import { Review } from '../../../generated/prisma/client';
 
 export type Estimation = {
   guideWork: number;

@@ -9,14 +9,14 @@ const CLODFLARE_KEY = process.env.CF_SITE_KEY || '';
 export function AuthFields({
   errors,
   formData,
-  actions
+  additionalFields
 }: {
   formData?: FormData;
   errors?: {
     login?: string;
     password?: string;
   };
-  actions?: ReactNode;
+  additionalFields?: ReactNode;
 }) {
   const loginId = useId();
   const passwordId = useId();
@@ -47,7 +47,7 @@ export function AuthFields({
         />
         {errors?.password && <div>{errors.password}</div>}
         <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
-        {actions}
+        {additionalFields}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { PostStatus } from '@/entities/post/domain';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../../../../generated/prisma/client';
 import PostWhereInput = Prisma.PostWhereInput;
 
 const getValidStatus = (value: string): PostStatus =>

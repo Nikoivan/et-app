@@ -2,7 +2,7 @@ import { FormDialogDomain } from '@/entities/form-dialog';
 import { tourApi } from '@/features/tour/api/tour-api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Either } from '@/shared/lib/either';
-import { Tour } from '@prisma/client';
+import { Tour } from 'generated/prisma/client';
 import { prepareDataUtils } from '@/features/tour/lib/prepare-data-utils';
 
 type Props = {

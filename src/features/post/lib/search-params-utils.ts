@@ -1,6 +1,7 @@
 import { dbQueryUtils, PageParams } from '@/shared/lib/db-client-utils';
-import { Prisma } from '@prisma/client';
+
 import { postUtils } from '@/entities/post/lib/post-utils';
+import { Prisma } from '../../../../generated/prisma/client';
 
 type ParamsFns = {
   page: (value: string | null) => PageParams;

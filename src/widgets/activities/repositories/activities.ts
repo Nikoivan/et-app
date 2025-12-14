@@ -1,6 +1,7 @@
 import { dbClient } from '@/shared/lib/db';
-import { Activity } from '@prisma/client';
+
 import { ActivityStatuses } from '@/entities/activity/server';
+import { Activity } from '../../../../generated/prisma/client';
 
 const getLastActivities = async (): Promise<Activity[]> => {
   return dbClient.activity.findMany({

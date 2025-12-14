@@ -1,6 +1,5 @@
-import { Prisma } from '@prisma/client';
-
 import { ActivityDomain, isActivityStatus } from '@/entities/activity/server';
+import { Prisma } from '../../../../generated/prisma/client';
 
 const getValidStatus = (value: string | null): ActivityDomain.ActivityStatus =>
   isActivityStatus(value) ? value : ActivityDomain.ActivityStatuses.REMOVED;

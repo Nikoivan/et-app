@@ -1,5 +1,3 @@
-import { Tour } from '@prisma/client';
-
 import { Either, left, right } from '@/shared/lib/either';
 import { urlUtils } from '@/shared/lib/url-utils';
 import { isStringArray } from '@/shared/lib/typeguargs/string-array';
@@ -8,6 +6,7 @@ import { queryOptions } from '@tanstack/react-query';
 
 import { GetToursResponse } from '@/features/tour/domain';
 import { GetApiData } from '@/shared/model/types';
+import { Tour } from '../../../../generated/prisma/client';
 
 const createErrorMessage = 'Ошибка создания тура';
 const updateErrorMessage = 'Ошибка редактирования тура';

@@ -1,6 +1,7 @@
 import { dbQueryUtils, PageParams } from '@/shared/lib/db-client-utils';
-import { Prisma } from '@prisma/client';
+
 import { activitySearchUtils } from '@/features/activity/lib/activity-search-utils';
+import { Prisma } from '../../../../generated/prisma/client';
 
 type ParamsFns = {
   page: (value: string | null) => PageParams;

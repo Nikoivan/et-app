@@ -1,5 +1,5 @@
 import { tourRepositories } from '@/entities/tour/repositories/tour';
-import { Prisma, Tour } from '@prisma/client';
+
 import { Either, left, right } from '@/shared/lib/either';
 import { TourEntity, tourToTourEntity } from '@/entities/tour/domain';
 import {
@@ -12,6 +12,7 @@ import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
 import { DefaultArgs } from '@prisma/client/runtime/client';
+import { Prisma, Tour } from '../../../../generated/prisma/client';
 import TourSelect = Prisma.TourSelect;
 
 type UserToursData = {

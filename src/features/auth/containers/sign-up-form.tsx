@@ -29,12 +29,12 @@ export function SignUpForm() {
       fields={
         <AuthFields
           {...formState}
-          actions={
+          additionalFields={
             <TelField
               defaultValue={formState.formData?.get('tel')?.toString()}
             />
           }
-          // actions={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
+          // additionalFields={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
         />
       }
       actions={

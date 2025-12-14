@@ -1,6 +1,6 @@
-import { Activity, Prisma } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateActivityData } from '@/entities/activity/domain';
+import { Activity, Prisma } from 'generated/prisma/client';
 
 type Payload<T extends Prisma.ActivityFindManyArgs> =
   Prisma.ActivityGetPayload<T>;

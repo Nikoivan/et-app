@@ -1,7 +1,7 @@
-import { Prisma, Tour } from '@prisma/client';
 import { dbClient } from '@/shared/lib/db';
 import { CreateTourData } from '@/features/tour/domain';
 import { PhotoDomain } from '@/entities/photo';
+import { Prisma, Tour } from 'generated/prisma/client';
 import TourSelect = Prisma.TourSelect;
 
 type Payload<T extends Prisma.TourFindManyArgs> = Prisma.TourGetPayload<T>;

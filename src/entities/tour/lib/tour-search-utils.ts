@@ -1,5 +1,5 @@
-import { Prisma } from '@prisma/client';
 import { TourStatus } from '@/entities/tour/domain';
+import { Prisma } from '../../../../generated/prisma/client';
 import TourWhereInput = Prisma.TourWhereInput;
 
 const getValidStatus = (value: string | null): TourStatus =>

@@ -1,7 +1,7 @@
 import { dbQueryUtils, PageParams } from '@/shared/lib/db-client-utils';
-import { Prisma } from '@prisma/client';
 
 import { tourSearchUtils } from '@/entities/tour/server';
+import { Prisma } from '../../../../generated/prisma/client';
 
 type ParamsFns = {
   page: (value: string | null) => PageParams;
