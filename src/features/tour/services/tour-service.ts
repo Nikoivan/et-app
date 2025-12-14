@@ -11,7 +11,7 @@ import { PhotoDomain } from '@/entities/photo';
 import { draftTourToTourCardEntity } from '@/widgets/tours/domain';
 import { dbQueryUtils } from '@/shared/lib/db-client-utils';
 import { Role } from '@/entities/user/domain';
-import { DefaultArgs } from '@prisma/client/runtime/library';
+import { DefaultArgs } from '@prisma/client/runtime/client';
 import TourSelect = Prisma.TourSelect;
 
 type UserToursData = {

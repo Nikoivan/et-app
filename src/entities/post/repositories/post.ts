@@ -45,7 +45,7 @@ const getPostsBySelect = <T extends Prisma.PostSelect>(params?: {
 };
 
 const createPost = (post: Omit<Post, 'id'>): Promise<Post> =>
-  dbClient.post.create({ data: post });
+  dbClient.post.create({ data: post as Post });
 
 const createManyPosts = (
   posts: Omit<PostEntity, 'id' | 'user'>[]

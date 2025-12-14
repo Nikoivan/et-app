@@ -2,6 +2,7 @@ import { Prisma } from '@prisma/client';
 import { objectUtils } from '@/shared/lib/object-utils';
 import { WithoutNull } from '@/shared/model/types';
 import { placeEntitySchema } from '@/entities/tour/lib/validation-schemas';
+import { tourTypeguards } from '@/entities/tour/model/typeguards';
 
 export type TourStatus = 'new' | 'default';
 
@@ -42,6 +43,13 @@ export function tourToTourEntity(
   }>
 ): WithoutNull<TourEntity> {
   const { mainPhotoId, photos, startPlace, ...rest } = tour;
+
+  if (
+    !Array.isArray(photos) ||
+    !photos.some(photo => !tourTypeguards.isPhotoEntity(photo))
+  ) {
+    throw new Error('Сущность photos - имеет неверный тип данных');
+  }
 
   const mainPhoto = photos.find(photo => photo.id === mainPhotoId);
 

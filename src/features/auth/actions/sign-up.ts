@@ -1,7 +1,9 @@
 'use server';
 
-import { createUser, sessionService } from '@/entities/user/server';
 import { redirect } from 'next/navigation';
+import { validateTurnstileToken } from 'next-turnstile';
+
+import { createUser, sessionService } from '@/entities/user/server';
 
 import { z } from 'zod';
 
@@ -15,6 +17,8 @@ export type SignUnFormState = {
     _errors?: string;
   };
 };
+
+const CLOUDFRLARE_KEY = process.env.CF_SECRET_KEY || '';
 
 const formDataSchema = z.object({
   login: z.string().min(3),
@@ -32,9 +36,23 @@ export const signUpAction = async (
   state: SignUnFormState,
   formData: FormData
 ): Promise<SignUnFormState> => {
+  const token = (formData.get('$ACTION_KEY') as string | null) || '';
   const data = Object.fromEntries(formData.entries());
 
-  console.log({ data });
+  const tokenValidationResult = await validateTurnstileToken({
+    token,
+    secretKey: CLOUDFRLARE_KEY
+  });
+
+  if (!tokenValidationResult.success) {
+    return {
+      formData,
+      errors: {
+        login: 'Вы БОТ!!!'
+      }
+    };
+  }
+
   const result = formDataSchema.safeParse(data);
 
   if (!result.success) {

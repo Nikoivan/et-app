@@ -4,6 +4,7 @@ import { ActivityDomain } from '@/entities/activity/server';
 import { GeoPointDomain } from '@/entities/geo-point';
 import { isGeoPointEntity } from '@/entities/geo-point/lib/typeguadrs';
 import { Photo } from '@prisma/client';
+import { tourTypeguards } from '@/kernel/tour/model/typeguards';
 
 export type TourKernel = {
   id: number;
@@ -27,6 +28,14 @@ export type TourKernel = {
 export function tourToKernelTour(tour: TourWR): TourKernel {
   const { mainPhotoId, photos, rating, descriptionText, startPlace, ...rest } =
     tour;
+
+  if (
+    !Array.isArray(photos) ||
+    !photos.some(photo => !tourTypeguards.isPhotoEntity(photo))
+  ) {
+    throw new Error('Сущность photos - имеет неверный тип данных');
+  }
+
   const reviews = tour.reviews.length
     ? tour.reviews.map(ReviewDomain.reviewToReviewEntity)
     : [];

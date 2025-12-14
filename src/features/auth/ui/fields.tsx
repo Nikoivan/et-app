@@ -1,6 +1,12 @@
+import React, { ReactNode, useId } from 'react';
+
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
-import React, { ReactNode, useId } from 'react';
+import { Turnstile } from 'next-turnstile';
+
+const CLODFLARE_KEY = process.env.CF_SITE_KEY || '';
+
+console.log({ CLODFLARE_KEY });
 
 export function AuthFields({
   errors,
@@ -43,6 +49,7 @@ export function AuthFields({
           defaultValue={formData?.get('password')?.toString()}
         />
         {errors?.password && <div>{errors.password}</div>}
+        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
         {actions}
       </div>
     </>
