@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+
 import { AuthFormLayout } from '../ui/auth-form-layout';
 import { AuthFields } from '../ui/fields';
 import { SubmitButton } from '../ui/submit-button';
@@ -9,6 +11,7 @@ import { SignUnFormState, signUpAction } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
+import { TelField } from '@/entities/otp';
 
 export function SignUpForm() {
   const [formState, action, isPending] = useActionState(
@@ -26,6 +29,11 @@ export function SignUpForm() {
       fields={
         <AuthFields
           {...formState}
+          actions={
+            <TelField
+              defaultValue={formState.formData?.get('tel')?.toString()}
+            />
+          }
           // actions={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
         />
       }

@@ -8,7 +8,7 @@ import { otpUtils } from '@/entities/otp/lib/otp-utils';
 import { telSchema } from '@/entities/otp/model/schemas';
 
 type Props = {
-  setIsValidPhone(value: boolean): void;
+  setIsValidPhone?: (value: boolean) => void;
   defaultValue?: string;
 };
 
@@ -19,7 +19,7 @@ export const TelField: FC<Props> = ({ setIsValidPhone, defaultValue }) => {
     const normalizedValue = otpUtils.normalizePhone(e.currentTarget.value);
     const result = telSchema.safeParse(normalizedValue);
 
-    setIsValidPhone(result.success);
+    setIsValidPhone?.(result.success);
   };
 
   return (

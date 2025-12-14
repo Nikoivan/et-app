@@ -28,7 +28,6 @@ export const SliderControls: FC<PropsWithChildren & { rounded?: boolean }> = ({
 
       <Button
         onClick={() => {
-          console.log('clicked');
           emblaApi?.scrollPrev();
         }}
         className='absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/60 backdrop-blur accent-zinc-200'

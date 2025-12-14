@@ -6,8 +6,6 @@ import { Turnstile } from 'next-turnstile';
 
 const CLODFLARE_KEY = process.env.CF_SITE_KEY || '';
 
-console.log({ CLODFLARE_KEY });
-
 export function AuthFields({
   errors,
   formData,
@@ -35,7 +33,6 @@ export function AuthFields({
           required
           defaultValue={formData?.get('login')?.toString()}
         />
-
         {errors?.login && <div>{errors.login}</div>}
       </div>
       <div className='space-y-2'>
