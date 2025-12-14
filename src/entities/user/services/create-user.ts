@@ -2,7 +2,7 @@ import { left, right } from '@/shared/lib/either';
 import { userRepository } from '../repositories/user';
 import { passwordService } from './password';
 import { Role } from '@/entities/user/domain';
-import { Prisma } from '.prisma/client';
+import { Prisma } from '../../../../generated/prisma/client';
 import UserWhereUniqueInput = Prisma.UserWhereUniqueInput;
 
 export const createUser = async ({
