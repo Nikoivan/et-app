@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AuthFormLayout } from '../ui/auth-form-layout';
 import { AuthFields } from '../ui/fields';
@@ -11,15 +11,16 @@ import { SignUnFormState, signUpAction } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
-import { TelField } from '@/entities/otp';
+import { Otp } from '@/entities/otp';
 
 export function SignUpForm() {
+  const [hasOtpFlag, setOtpFlag] = useState<boolean>(false);
   const [formState, action, isPending] = useActionState(
     signUpAction,
     {} as SignUnFormState
   );
 
-  // const onChangeOtpFlag = (value: boolean) => setOtpFlag(value);
+  const onChangeOtpFlag = (value: boolean) => setOtpFlag(value);
 
   return (
     <AuthFormLayout
@@ -29,16 +30,18 @@ export function SignUpForm() {
       fields={
         <AuthFields
           {...formState}
-          additionalFields={
-            <TelField
-              defaultValue={formState.formData?.get('tel')?.toString()}
-            />
-          }
-          // additionalFields={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
+          // additionalFields={
+          //   <TelField
+          //     defaultValue={formState.formData?.get('tel')?.toString()}
+          //   />
+          // }
+          additionalFields={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
         />
       }
       actions={
-        <SubmitButton isPending={isPending}>Зарегистрироваться</SubmitButton>
+        <SubmitButton isPending={isPending || !hasOtpFlag}>
+          Зарегистрироваться
+        </SubmitButton>
       }
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={

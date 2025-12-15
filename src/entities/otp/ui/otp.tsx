@@ -4,6 +4,7 @@ import React, { FC, useId, useState } from 'react';
 import { TelField } from '@/entities/otp/ui/tel-field';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
+import { otpApi } from '@/entities/otp/api/otp-api';
 
 type Props = {
   setHasOtp(value: boolean): void;
@@ -25,11 +26,14 @@ export const Otp: FC<Props> = ({ formData, setHasOtp }) => {
     setHasOtp(false);
   };
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
 
-    const success = true;
-    setHasOtp(!hasTimeout && success && isValidPhone);
+    const response = await otpApi.sendCode({ email: 'nixonivan@rambler.ru' });
+
+    console.log({ response });
 
     debounceTimeout();
   };

@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
 import { applicationFormSchema } from '@/features/application-form/model/schema';
-import { resend } from '@/shared/lib/resend';
 import { CallbackEmail } from '@/shared/ui/callback-email';
+import { emailNotifications } from '@/shared/services/email-notifications';
 
 export async function postCallbackRequest(req: NextRequest): Promise<Response> {
   try {
@@ -15,16 +15,15 @@ export async function postCallbackRequest(req: NextRequest): Promise<Response> {
 
     const { name, phone, description } = callbackDataResult.data;
 
-    const createEmailResponse = await resend.emails.send({
-      from: process.env.CALLBACK_FROM || '',
+    const createEmailResponse = await emailNotifications.sendToEmail({
       to: process.env.CALLBACK_TO || '',
-      subject: 'Новая заявка на обратный звонок',
-      react: CallbackEmail({ name, phone, message: description }),
-      text: ''
+      subject: 'Заявка на обратный звонок',
+      reactNode: CallbackEmail({ name, phone, message: description })
     });
 
-    // обработка ответа
-    console.log('createEmailResponse', createEmailResponse);
+    if (!createEmailResponse.data?.id) {
+      throw new Error();
+    }
 
     return handleSuccess({
       body: 'Заявка успешно отправлена. Ожидайте обратного звонка'
