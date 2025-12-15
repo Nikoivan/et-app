@@ -4,7 +4,7 @@ import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
 import { Turnstile } from 'next-turnstile';
 
-const CLODFLARE_KEY = process.env.CF_SITE_KEY || '';
+const CLODFLARE_KEY = process.env.NEXT_PUBLIC_CF_SITE_KEY || '';
 
 export function AuthFields({
   errors,
