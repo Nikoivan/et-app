@@ -46,8 +46,8 @@ export function AuthFields({
           defaultValue={formData?.get('password')?.toString()}
         />
         {errors?.password && <div>{errors.password}</div>}
-        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
         {additionalFields}
+        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
       </div>
     </>
   );
