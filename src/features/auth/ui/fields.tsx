@@ -1,35 +1,55 @@
-import React, { ReactNode, useId } from 'react';
+import React, { ChangeEvent, FC, useId, useState } from 'react';
 
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
-import { Turnstile } from 'next-turnstile';
+import { Otp } from '@/entities/otp';
+import { emailSchema } from '@/features/auth/model/schemas';
 
 const CLODFLARE_KEY = process.env.NEXT_PUBLIC_CF_SITE_KEY || '';
 
-export function AuthFields({
-  errors,
-  formData,
-  additionalFields
-}: {
+type Props = {
+  onEnable(value: boolean): void;
+  type: 'signup' | 'signin';
   formData?: FormData;
   errors?: {
     login?: string;
     password?: string;
   };
-  additionalFields?: ReactNode;
-}) {
+};
+
+export const AuthFields: FC<Props> = ({ onEnable, type, errors, formData }) => {
+  const [email, setEmail] = useState(formData?.get('login')?.toString() || '');
   const loginId = useId();
   const passwordId = useId();
+
+  const isSignup = type === 'signup';
+  const placeholder = isSignup
+    ? 'Адрес электронной почты'
+    : 'Введите ваше имя пользователя';
+  const emailIsValid = emailSchema.safeParse(email).success;
+
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
+    setEmail(e.target.value);
+
+  const handleEnable = (value: boolean) => {
+    console.log({ emailIsValid, value });
+
+    onEnable(emailIsValid && value);
+  };
 
   return (
     <>
       <div className='space-y-2'>
-        <Label htmlFor={loginId}>Имя пользователя</Label>
+        <Label htmlFor={loginId}>
+          {isSignup ? placeholder : 'Имя пользователя'}
+        </Label>
         <Input
           id={loginId}
           type='login'
           name='login'
-          placeholder='Введите ваше имя пользователя'
+          value={email}
+          onChange={onChangeEmail}
+          placeholder={placeholder}
           required
           defaultValue={formData?.get('login')?.toString()}
         />
@@ -46,9 +66,15 @@ export function AuthFields({
           defaultValue={formData?.get('password')?.toString()}
         />
         {errors?.password && <div>{errors.password}</div>}
-        {additionalFields}
-        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
+        {type === 'signup' && (
+          <Otp
+            setHasOtp={handleEnable}
+            formData={formData}
+            hasValidMail={emailIsValid}
+          />
+        )}
+        {/*<Turnstile siteKey={CLODFLARE_KEY} theme='auto' />*/}
       </div>
     </>
   );
-}
+};

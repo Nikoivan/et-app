@@ -5,24 +5,31 @@ import { TelField } from '@/entities/otp/ui/tel-field';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { otpApi } from '@/entities/otp/api/otp-api';
+import { cn } from '@/shared/lib/css';
 
 type Props = {
+  hasValidMail: boolean;
   setHasOtp(value: boolean): void;
   formData?: FormData;
 };
 
-export const Otp: FC<Props> = ({ formData, setHasOtp }) => {
-  const [isValidPhone, setPhoneIsValid] = useState<boolean>(false);
+export const Otp: FC<Props> = ({ hasValidMail, formData, setHasOtp }) => {
+  const [isValidPhone, setValidPhone] = useState<boolean>(false);
   const [hasTimeout, setHasTimeout] = useState<boolean>(false);
+
+  const codeId = useId();
 
   const debounceTimeout = () => {
     setHasTimeout(true);
+    setHasOtp(isValidPhone);
 
-    setTimeout(() => setHasTimeout(false), 60000);
+    setTimeout(() => {
+      setHasTimeout(false);
+    }, 60000);
   };
 
   const onChangePhone = (value: boolean) => {
-    setPhoneIsValid(value);
+    setValidPhone(value);
     setHasOtp(false);
   };
 
@@ -31,14 +38,14 @@ export const Otp: FC<Props> = ({ formData, setHasOtp }) => {
   ) => {
     e.preventDefault();
 
-    const response = await otpApi.sendCode({ email: 'nixonivan@rambler.ru' });
+    const response = await otpApi.sendCode({
+      email: (formData?.get('login') as string) || ''
+    });
 
     console.log({ response });
 
     debounceTimeout();
   };
-
-  const codeId = useId();
 
   return (
     <>
@@ -54,9 +61,22 @@ export const Otp: FC<Props> = ({ formData, setHasOtp }) => {
         placeholder='Код подтверждения'
         defaultValue={formData?.get('code')?.toString()}
       />
+      {hasTimeout && (
+        <span
+          className={cn(
+            'block',
+            'p-2',
+            'text-xs',
+            'text-zinc-500',
+            'text-center'
+          )}
+        >
+          Повторно код можно будет отправить через 60 секунд
+        </span>
+      )}
       <Button
         onClick={onClick}
-        disabled={!isValidPhone || hasTimeout}
+        disabled={!isValidPhone || !hasValidMail || hasTimeout}
         className='w-full'
       >
         Получить код

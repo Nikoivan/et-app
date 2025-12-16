@@ -11,7 +11,6 @@ import { SignUnFormState, signUpAction } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
-import { Otp } from '@/entities/otp';
 
 export function SignUpForm() {
   const [hasOtpFlag, setOtpFlag] = useState<boolean>(false);
@@ -28,15 +27,7 @@ export function SignUpForm() {
       description='Создайте свой аккаунт для доступа ко всему приложению'
       action={action}
       fields={
-        <AuthFields
-          {...formState}
-          // additionalFields={
-          //   <TelField
-          //     defaultValue={formState.formData?.get('tel')?.toString()}
-          //   />
-          // }
-          additionalFields={<Otp setHasOtp={onChangeOtpFlag} {...formState} />}
-        />
+        <AuthFields {...formState} type='signup' onEnable={onChangeOtpFlag} />
       }
       actions={
         <SubmitButton isPending={isPending || !hasOtpFlag}>
