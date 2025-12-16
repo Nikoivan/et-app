@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useId, useState } from 'react';
+import { Turnstile } from 'next-turnstile';
 
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
@@ -73,7 +74,7 @@ export const AuthFields: FC<Props> = ({ onEnable, type, errors, formData }) => {
             hasValidMail={emailIsValid}
           />
         )}
-        {/*<Turnstile siteKey={CLODFLARE_KEY} theme='auto' />*/}
+        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
       </div>
     </>
   );
