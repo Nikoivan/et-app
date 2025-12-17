@@ -58,6 +58,7 @@ export const AuthFields: FC<Props> = ({ type, errors, formData }) => {
         />
         {errors?.password && <div>{errors.password}</div>}
         {type === 'signup' && <Otp formData={formData} email={email} />}
+        {/*//TODO: Снять коммент*/}
         {/*<Turnstile siteKey={CLODFLARE_KEY} theme='auto' />*/}
       </div>
     </>
