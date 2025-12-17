@@ -6,22 +6,25 @@ import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { otpApi } from '@/entities/otp/api/otp-api';
 import { cn } from '@/shared/lib/css';
+import { emailSchema } from '@/entities/otp/model/schemas';
+import { toast } from 'sonner';
 
 type Props = {
-  hasValidMail: boolean;
-  setHasOtp(value: boolean): void;
+  email: string;
+  setHasOtp?: (value: boolean) => void;
   formData?: FormData;
 };
 
-export const Otp: FC<Props> = ({ hasValidMail, formData, setHasOtp }) => {
+export const Otp: FC<Props> = ({ email, formData, setHasOtp }) => {
   const [isValidPhone, setValidPhone] = useState<boolean>(false);
   const [hasTimeout, setHasTimeout] = useState<boolean>(false);
 
   const codeId = useId();
+  const isValidMail = emailSchema.safeParse(email)?.success;
 
   const debounceTimeout = () => {
     setHasTimeout(true);
-    setHasOtp(isValidPhone);
+    setHasOtp?.(isValidPhone);
 
     setTimeout(() => {
       setHasTimeout(false);
@@ -30,7 +33,7 @@ export const Otp: FC<Props> = ({ hasValidMail, formData, setHasOtp }) => {
 
   const onChangePhone = (value: boolean) => {
     setValidPhone(value);
-    setHasOtp(false);
+    setHasOtp?.(false);
   };
 
   const onClick = async (
@@ -38,11 +41,18 @@ export const Otp: FC<Props> = ({ hasValidMail, formData, setHasOtp }) => {
   ) => {
     e.preventDefault();
 
-    const response = await otpApi.sendCode({
-      email: (formData?.get('login') as string) || ''
+    const response = await otpApi.sendCode<{
+      success: boolean;
+      content: string;
+    }>({
+      email
     });
 
-    console.log({ response });
+    if (!response.success) {
+      return toast.error(response.content);
+    }
+
+    toast.success(response.content);
 
     debounceTimeout();
   };
@@ -76,7 +86,7 @@ export const Otp: FC<Props> = ({ hasValidMail, formData, setHasOtp }) => {
       )}
       <Button
         onClick={onClick}
-        disabled={!isValidPhone || !hasValidMail || hasTimeout}
+        disabled={!isValidPhone || !isValidMail || hasTimeout}
         className='w-full'
       >
         Получить код

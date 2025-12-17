@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import { AuthFormLayout } from '../ui/auth-form-layout';
 import { AuthFields } from '../ui/fields';
@@ -13,26 +13,19 @@ import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
 
 export function SignUpForm() {
-  const [hasOtpFlag, setOtpFlag] = useState<boolean>(false);
   const [formState, action, isPending] = useActionState(
     signUpAction,
     {} as SignUnFormState
   );
-
-  const onChangeOtpFlag = (value: boolean) => setOtpFlag(value);
 
   return (
     <AuthFormLayout
       title='Регистрация'
       description='Создайте свой аккаунт для доступа ко всему приложению'
       action={action}
-      fields={
-        <AuthFields {...formState} type='signup' onEnable={onChangeOtpFlag} />
-      }
+      fields={<AuthFields {...formState} type='signup' />}
       actions={
-        <SubmitButton isPending={isPending || !hasOtpFlag}>
-          Зарегистрироваться
-        </SubmitButton>
+        <SubmitButton isPending={isPending}>Зарегистрироваться</SubmitButton>
       }
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={

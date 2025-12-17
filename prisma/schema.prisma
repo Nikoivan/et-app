@@ -36,6 +36,13 @@ model User {
   @@map("user")
 }
 
+model Otp {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(256)
+  tel       String   @db.VarChar(80)
+  createdAt DateTime @default(now())
+}
+
 model Post {
   id              Int      @id @default(autoincrement())
   title           String   @db.VarChar(256)

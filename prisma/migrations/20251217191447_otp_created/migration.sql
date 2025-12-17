@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Otp" (
+    "id" SERIAL NOT NULL,
+    "email" VARCHAR(256) NOT NULL,
+    "tel" VARCHAR(80) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Otp_pkey" PRIMARY KEY ("id")
+);

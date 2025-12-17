@@ -1,15 +1,12 @@
 import React, { ChangeEvent, FC, useId, useState } from 'react';
-import { Turnstile } from 'next-turnstile';
 
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
 import { Otp } from '@/entities/otp';
-import { emailSchema } from '@/features/auth/model/schemas';
 
 const CLODFLARE_KEY = process.env.NEXT_PUBLIC_CF_SITE_KEY || '';
 
 type Props = {
-  onEnable(value: boolean): void;
   type: 'signup' | 'signin';
   formData?: FormData;
   errors?: {
@@ -18,7 +15,7 @@ type Props = {
   };
 };
 
-export const AuthFields: FC<Props> = ({ onEnable, type, errors, formData }) => {
+export const AuthFields: FC<Props> = ({ type, errors, formData }) => {
   const [email, setEmail] = useState(formData?.get('login')?.toString() || '');
   const loginId = useId();
   const passwordId = useId();
@@ -27,16 +24,9 @@ export const AuthFields: FC<Props> = ({ onEnable, type, errors, formData }) => {
   const placeholder = isSignup
     ? 'Адрес электронной почты'
     : 'Введите ваше имя пользователя';
-  const emailIsValid = emailSchema.safeParse(email).success;
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
-
-  const handleEnable = (value: boolean) => {
-    console.log({ emailIsValid, value });
-
-    onEnable(emailIsValid && value);
-  };
 
   return (
     <>
@@ -67,14 +57,8 @@ export const AuthFields: FC<Props> = ({ onEnable, type, errors, formData }) => {
           defaultValue={formData?.get('password')?.toString()}
         />
         {errors?.password && <div>{errors.password}</div>}
-        {type === 'signup' && (
-          <Otp
-            setHasOtp={handleEnable}
-            formData={formData}
-            hasValidMail={emailIsValid}
-          />
-        )}
-        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
+        {type === 'signup' && <Otp formData={formData} email={email} />}
+        {/*<Turnstile siteKey={CLODFLARE_KEY} theme='auto' />*/}
       </div>
     </>
   );
