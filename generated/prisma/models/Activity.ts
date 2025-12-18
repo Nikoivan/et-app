@@ -825,10 +825,6 @@ export type ActivityCreatecategoriesInput = {
   set: string[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
 export type ActivityUpdateparticipantsInput = {
   set?: number[]
   push?: number | number[]

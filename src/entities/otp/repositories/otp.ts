@@ -6,6 +6,6 @@ type OtpCreateData = {
   code: string;
 };
 
-const createOtp = (data: OtpCreateData) => dbClient..create(data);
+const createOtp = (data: OtpCreateData) => dbClient.otp.create({ data });
 
-export const otpRepositories = {};
+export const otpRepositories = { createOtp };

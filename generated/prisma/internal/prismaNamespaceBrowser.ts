@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Otp: 'Otp',
   Post: 'Post',
   Review: 'Review',
   Photo: 'Photo',
@@ -91,6 +92,17 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OtpScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  tel: 'tel',
+  createdAt: 'createdAt',
+  code: 'code'
+} as const
+
+export type OtpScalarFieldEnum = (typeof OtpScalarFieldEnum)[keyof typeof OtpScalarFieldEnum]
 
 
 export const PostScalarFieldEnum = {
