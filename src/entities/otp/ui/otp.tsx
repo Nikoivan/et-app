@@ -1,13 +1,14 @@
 'use client';
 
+import { toast } from 'sonner';
 import React, { FC, useId, useState } from 'react';
+
 import { TelField } from '@/entities/otp/ui/tel-field';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { otpApi } from '@/entities/otp/api/otp-api';
 import { cn } from '@/shared/lib/css';
-import { emailSchema } from '@/entities/otp/model/schemas';
-import { toast } from 'sonner';
+import { emailSchema, telSchema } from '@/entities/otp/model/schemas';
 
 type Props = {
   email: string;
@@ -16,11 +17,12 @@ type Props = {
 };
 
 export const Otp: FC<Props> = ({ email, formData, setHasOtp }) => {
-  const [isValidPhone, setValidPhone] = useState<boolean>(false);
+  const [tel, setTel] = useState('');
   const [hasTimeout, setHasTimeout] = useState<boolean>(false);
 
   const codeId = useId();
   const isValidMail = emailSchema.safeParse(email)?.success;
+  const isValidPhone = telSchema.safeParse(tel)?.success;
 
   const debounceTimeout = () => {
     setHasTimeout(true);
@@ -31,9 +33,8 @@ export const Otp: FC<Props> = ({ email, formData, setHasOtp }) => {
     }, 60000);
   };
 
-  const onChangePhone = (value: boolean) => {
-    setValidPhone(value);
-    setHasOtp?.(false);
+  const onChangePhone = (value: string) => {
+    setTel(value);
   };
 
   const onClick = async (
@@ -45,7 +46,8 @@ export const Otp: FC<Props> = ({ email, formData, setHasOtp }) => {
       success: boolean;
       content: string;
     }>({
-      email
+      email,
+      tel
     });
 
     if (!response.success) {
@@ -60,7 +62,7 @@ export const Otp: FC<Props> = ({ email, formData, setHasOtp }) => {
   return (
     <>
       <TelField
-        setIsValidPhone={onChangePhone}
+        onChangePhone={onChangePhone}
         defaultValue={formData?.get('tel')?.toString()}
       />
       <Input

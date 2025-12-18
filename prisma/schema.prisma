@@ -41,6 +41,7 @@ model Otp {
   email     String   @db.VarChar(256)
   tel       String   @db.VarChar(80)
   createdAt DateTime @default(now())
+  code      String   @db.VarChar(12)
 }
 
 model Post {

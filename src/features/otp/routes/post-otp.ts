@@ -7,7 +7,13 @@ import { RegistrationEmail } from '@/shared/ui/registration-email';
 import { otpService } from '@/features/otp/services/otp-service';
 
 const otpSchema = z.object({
-  email: z.string().email()
+  email: z.string().email(),
+  tel: z
+    .string()
+    .regex(
+      /^(?:\+7|7|8)[ -]?\(?(?:9\d{2})\)?(?:[ -]?\d){7}$/,
+      'Неверный формат телефона'
+    )
 });
 
 const errorText = 'Ошибка при отправке кода подтверждения на электронную почту';

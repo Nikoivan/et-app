@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Heading, Html, Section, Text } from '@react-email/components';
 
 type Props = {
-  code: number;
+  code: string;
 };
 
 export function RegistrationEmail({ code }: Props) {

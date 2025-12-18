@@ -4,22 +4,16 @@ import React, { ChangeEvent, FC, useId } from 'react';
 import { Label } from '@/shared/ui/label';
 import { Input } from '@/shared/ui/input';
 
-import { otpUtils } from '@/entities/otp/lib/otp-utils';
-import { telSchema } from '@/entities/otp/model/schemas';
-
 type Props = {
-  setIsValidPhone?: (value: boolean) => void;
+  onChangePhone?: (value: string) => void;
   defaultValue?: string;
 };
 
-export const TelField: FC<Props> = ({ setIsValidPhone, defaultValue }) => {
+export const TelField: FC<Props> = ({ onChangePhone, defaultValue }) => {
   const telId = useId();
 
-  const validatePhone = (e: ChangeEvent<HTMLInputElement>) => {
-    const normalizedValue = otpUtils.normalizePhone(e.currentTarget.value);
-    const result = telSchema.safeParse(normalizedValue);
-
-    setIsValidPhone?.(result.success);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangePhone?.(e.target.value);
   };
 
   return (
@@ -32,7 +26,7 @@ export const TelField: FC<Props> = ({ setIsValidPhone, defaultValue }) => {
         placeholder='Введите ваш телефон'
         required
         defaultValue={defaultValue}
-        onChange={validatePhone}
+        onChange={onChange}
       />
     </>
   );
