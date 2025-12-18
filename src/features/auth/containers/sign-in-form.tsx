@@ -22,7 +22,7 @@ export function SignInForm() {
       title='Вход'
       description='Доброе пожаловать!'
       action={action}
-      fields={<AuthFields {...formState} />}
+      fields={<AuthFields {...formState} type='signin' />}
       actions={<SubmitButton isPending={isPending}>Войти</SubmitButton>}
       error={<ErrorMessage error={formState.errors?._errors} />}
       link={
