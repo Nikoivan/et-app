@@ -1,11 +1,12 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { validateTurnstileToken } from 'next-turnstile';
 
 import { createUser, sessionService } from '@/entities/user/server';
 
 import { z } from 'zod';
+import { otpRepositories } from '@/entities/otp/server';
+import { otpService } from '@/kernel/otp/services/otp-services';
 
 export type SignUnFormState = {
   formData?: FormData;
@@ -29,7 +30,7 @@ const formDataSchema = z.object({
       /^(?:\+7|7|8)[ -]?\(?(?:9\d{2})\)?(?:[ -]?\d){7}$/,
       'Неверный формат телефона'
     ),
-  code: z.string().min(4)
+  code: z.string().min(3)
 });
 
 export const signUpAction = async (
@@ -39,24 +40,25 @@ export const signUpAction = async (
   const token = (formData.get('$ACTION_KEY') as string | null) || '';
   const data = Object.fromEntries(formData.entries());
 
-  const tokenValidationResult = await validateTurnstileToken({
-    token,
-    secretKey: CLOUDFRLARE_KEY
-  });
-
-  if (!tokenValidationResult.success) {
-    return {
-      formData,
-      errors: {
-        login: 'Вы БОТ!!!'
-      }
-    };
-  }
+  // const tokenValidationResult = await validateTurnstileToken({
+  //   token,
+  //   secretKey: CLOUDFRLARE_KEY
+  // });
+  //
+  // if (!tokenValidationResult.success) {
+  //   return {
+  //     formData,
+  //     errors: {
+  //       login: 'Вы БОТ!!!'
+  //     }
+  //   };
+  // }
 
   const result = formDataSchema.safeParse(data);
 
   if (!result.success) {
     const formatedErrors = result.error.format();
+
     return {
       formData,
       errors: {
@@ -65,6 +67,29 @@ export const signUpAction = async (
         tel: formatedErrors.tel?._errors.join(', '),
         code: formatedErrors.code?._errors.join(', '),
         _errors: formatedErrors._errors.join(', ')
+      }
+    };
+  }
+
+  const otp = await otpRepositories.getOtpByCode(result.data?.code);
+
+  console.log({ otp });
+  if (!otp) {
+    return {
+      formData,
+      errors: {
+        code: 'Такой код подтверждения не найден!'
+      }
+    };
+  }
+
+  await otpService.checkOtp(otp.code);
+
+  if (!otp || otp) {
+    return {
+      formData,
+      errors: {
+        code: 'Такой код подтверждения не найден!'
       }
     };
   }

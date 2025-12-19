@@ -1,36 +1,33 @@
 import { NextRequest } from 'next/server';
 
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
-import z from 'zod';
 import { emailNotifications } from '@/shared/services/email-notifications';
 import { RegistrationEmail } from '@/shared/ui/registration-email';
-import { otpService } from '@/features/otp/services/otp-service';
 
-const otpSchema = z.object({
-  email: z.string().email(),
-  tel: z
-    .string()
-    .regex(
-      /^(?:\+7|7|8)[ -]?\(?(?:9\d{2})\)?(?:[ -]?\d){7}$/,
-      'Неверный формат телефона'
-    )
-});
+import { otpCreateSchema } from '@/features/otp/model/schemas';
+import { otpService } from '@/kernel/server';
 
 const errorText = 'Ошибка при отправке кода подтверждения на электронную почту';
 
 export async function postOtp(req: NextRequest): Promise<Response> {
   try {
     const body = await req.json();
-    const bodyResult = otpSchema.safeParse(body);
+    const bodyResult = otpCreateSchema.safeParse(body);
 
     if (!bodyResult.success) {
       throw new Error('Ошибка валидации полученных данных');
     }
 
-    const code = otpService.generateOtpCode();
+    const otp = await otpService.createOtpRecord(bodyResult.data);
+
+    if (!otp) {
+      throw new Error();
+    }
+
+    const { code, email } = otp;
 
     const emailOtp = await emailNotifications.sendToEmail({
-      to: bodyResult.data.email,
+      to: email,
       subject: 'Регистрация на сайте Energy-Tour',
       reactNode: RegistrationEmail({ code })
     });

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { FC } from 'react';
 
 import { AuthFormLayout } from '../ui/auth-form-layout';
 import { AuthFields } from '../ui/fields';
@@ -12,7 +12,7 @@ import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
 
-export function SignUpForm() {
+export const SignUpForm: FC = () => {
   const [formState, action, isPending] = useActionState(
     signUpAction,
     {} as SignUnFormState
@@ -37,4 +37,4 @@ export function SignUpForm() {
       }
     />
   );
-}
+};
