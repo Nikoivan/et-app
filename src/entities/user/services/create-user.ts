@@ -5,13 +5,17 @@ import { Role } from '@/entities/user/domain';
 import { Prisma } from '../../../../generated/prisma/client';
 import UserWhereUniqueInput = Prisma.UserWhereUniqueInput;
 
-export const createUser = async ({
-  login,
-  password
-}: {
+type CreateUserData = {
   login: string;
   password: string;
-}) => {
+  phone: string;
+};
+
+export const createUser = async ({
+  login,
+  password,
+  phone
+}: CreateUserData) => {
   const userWithLogin = await userRepository.getUser({
     login
   } as UserWhereUniqueInput);
@@ -25,6 +29,7 @@ export const createUser = async ({
   const user = await userRepository.saveUser({
     id: Math.round(Math.random() * 1000),
     login,
+    phone,
     passwordHash: hash,
     salt,
     role: Role.USER

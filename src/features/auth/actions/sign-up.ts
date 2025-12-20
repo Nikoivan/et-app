@@ -1,12 +1,12 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 import { createUser, sessionService } from '@/entities/user/server';
-
-import { z } from 'zod';
 import { otpRepositories } from '@/entities/otp/server';
 import { otpService } from '@/kernel/otp/services/otp-services';
+import { validateTurnstileToken } from 'next-turnstile';
 
 export type SignUnFormState = {
   formData?: FormData;
@@ -40,19 +40,19 @@ export const signUpAction = async (
   const token = (formData.get('$ACTION_KEY') as string | null) || '';
   const data = Object.fromEntries(formData.entries());
 
-  // const tokenValidationResult = await validateTurnstileToken({
-  //   token,
-  //   secretKey: CLOUDFRLARE_KEY
-  // });
-  //
-  // if (!tokenValidationResult.success) {
-  //   return {
-  //     formData,
-  //     errors: {
-  //       login: 'Вы БОТ!!!'
-  //     }
-  //   };
-  // }
+  const tokenValidationResult = await validateTurnstileToken({
+    token,
+    secretKey: CLOUDFRLARE_KEY
+  });
+
+  if (!tokenValidationResult.success) {
+    return {
+      formData,
+      errors: {
+        login: 'Вы БОТ!!!'
+      }
+    };
+  }
 
   const result = formDataSchema.safeParse(data);
 
@@ -73,7 +73,6 @@ export const signUpAction = async (
 
   const otp = await otpRepositories.getOtpByCode(result.data?.code);
 
-  console.log({ otp });
   if (!otp) {
     return {
       formData,
@@ -83,18 +82,31 @@ export const signUpAction = async (
     };
   }
 
-  await otpService.checkOtp(otp.code);
+  const otpCheckResult = await otpService.checkOtp(otp.code);
 
-  if (!otp || otp) {
+  if (otpCheckResult.type === 'left') {
     return {
       formData,
       errors: {
-        code: 'Такой код подтверждения не найден!'
+        code: otpCheckResult.error
       }
     };
   }
 
-  const createUserResult = await createUser(result.data);
+  if (!otpCheckResult.value.success) {
+    return {
+      formData,
+      errors: {
+        code: 'Данный код уже просрочен, попробуйте снова!'
+      }
+    };
+  }
+
+  const createUserResult = await createUser({
+    login: otp.email,
+    phone: otp.tel,
+    password: result.data.password
+  });
 
   if (createUserResult.type === 'right') {
     await sessionService.addSession(createUserResult.value);

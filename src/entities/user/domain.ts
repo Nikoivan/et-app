@@ -16,6 +16,7 @@ export type UserEntity = {
   id: UserId;
   login: string;
   passwordHash: string;
+  phone: string;
   salt: string;
   role: string;
   firstName?: string;

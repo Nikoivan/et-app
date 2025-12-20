@@ -20,6 +20,7 @@ model User {
   passwordHash  String        @map("password_hash")
   salt          String        @db.VarChar(800)
   role          String        @db.VarChar(80)
+  phone         String?       @db.VarChar(80)
   firstName     String?       @map("first_name")
   lastName      String?       @map("last_name")
   avatarPhotoId Int?          @map("avatar_photo_id")

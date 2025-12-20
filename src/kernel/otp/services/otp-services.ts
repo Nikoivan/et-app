@@ -4,7 +4,7 @@ import { OtpCreateData } from '@/features/otp/domain';
 import { Otp } from '../../../../generated/prisma/client';
 import { otpRepositories } from '@/entities/otp/server';
 import { otpUtils } from '../lib/otp-utils';
-import { Either, left } from '@/shared/lib/either';
+import { Either, left, right } from '@/shared/lib/either';
 
 const createOtpRecord = (data: OtpCreateData): Promise<Otp> =>
   otpRepositories.createOtp({ ...data, code: otpUtils.generateOtpCode() });
@@ -21,6 +21,8 @@ const checkOtp = async (
   const { createdAt } = otp;
 
   const expired = otpUtils.isOtpExpired(createdAt);
+
+  return right({ success: !expired });
 };
 
 export const otpService = { createOtpRecord, checkOtp };

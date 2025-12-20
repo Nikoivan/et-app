@@ -7,24 +7,22 @@ import { Prisma } from '../../../../generated/prisma/client';
 
 export const saveUser = async (
   user: UserEntity
-): Promise<WithoutNull<UserEntity>> => {
-  return objectUtils.makeWithoutNull(
+): Promise<WithoutNull<UserEntity>> =>
+  objectUtils.makeWithoutNull(
     await dbClient.user.create({
       data: user
     })
   ) as WithoutNull<UserEntity>;
-};
 
 const updateUser = async (
   user: UserEntityUpdate
-): Promise<WithoutNull<UserEntity>> => {
-  return objectUtils.makeWithoutNull(
+): Promise<WithoutNull<UserEntity>> =>
+  objectUtils.makeWithoutNull(
     await dbClient.user.update({
       where: { id: user.id },
       data: user
     })
   ) as WithoutNull<UserEntity>;
-};
 
 export async function getUser(
   where: Prisma.UserWhereUniqueInput

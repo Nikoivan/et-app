@@ -6,14 +6,6 @@ const isOtpExpired = (date: Date): boolean => {
   const now = Date.now();
   const timeStamp = new Date(date).getTime();
 
-  console.log({
-    now,
-    timeStamp,
-    reason: (now - timeStamp) / 1000,
-    EXPIRED_TIME,
-    expired: now - timeStamp < EXPIRED_TIME
-  });
-
   return (now - timeStamp) / 1000 > EXPIRED_TIME;
 };
 
