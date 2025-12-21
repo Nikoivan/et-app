@@ -37,7 +37,7 @@ export const signUpAction = async (
   state: SignUnFormState,
   formData: FormData
 ): Promise<SignUnFormState> => {
-  const token = (formData.get('$ACTION_KEY') as string | null) || '';
+  const token = (formData.get('cf-turnstile-response') as string | null) || '';
   const data = Object.fromEntries(formData.entries());
 
   const tokenValidationResult = await validateTurnstileToken({
