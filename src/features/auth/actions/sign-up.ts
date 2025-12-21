@@ -45,7 +45,7 @@ export const signUpAction = async (
     secretKey: CLOUDFRLARE_KEY
   });
 
-  console.log({ tokenValidationResult });
+  console.log({ tokenValidationResult, token, data });
 
   if (!tokenValidationResult.success) {
     return {
