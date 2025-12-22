@@ -7,7 +7,7 @@ import { AuthFields } from '../ui/fields';
 import { SubmitButton } from '../ui/submit-button';
 
 import { ErrorMessage } from '../ui/submit-button copy';
-import { SignUnFormState, signUpAction } from '../actions/sign-up';
+import { signUpAction, SignUpFormState } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
