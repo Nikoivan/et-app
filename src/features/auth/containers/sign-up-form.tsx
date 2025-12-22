@@ -7,15 +7,16 @@ import { AuthFields } from '../ui/fields';
 import { SubmitButton } from '../ui/submit-button';
 
 import { ErrorMessage } from '../ui/submit-button copy';
-import { signUpAction, SignUpFormState } from '../actions/sign-up';
+import { signUpAction } from '../actions/sign-up';
 import { routes } from '@/kernel/routes';
 import { BottomLink } from '@/features/auth/ui/ilnk';
 import { useActionState } from '@/shared/lib/react';
+import { SignUpFormState } from '@/features/auth/domain';
 
 export const SignUpForm: FC = () => {
   const [formState, action, isPending] = useActionState(
     signUpAction,
-    {} as SignUnFormState
+    {} as SignUpFormState
   );
 
   return (
