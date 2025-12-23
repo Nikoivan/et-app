@@ -1,14 +1,15 @@
 'use server';
 
-import { SignUpFormState } from '@/features/auth/domain';
-import { signUpService } from '../services/sign-up-service';
-import { otpService } from '@/kernel/otp/services/otp-services';
-import { createUser } from '@/entities/user/services/create-user';
-import { sessionService } from '@/entities/user/services/session';
 import { redirect } from 'next/navigation';
+
+import { SignUpFormState } from '../domain';
+import { signUpService } from '../services/sign-up-service';
+import { formDataSchema } from '../model/schemas';
+import { authErrorsUtils } from '../lib/auth-errors-utils';
+import { otpService } from '@/kernel/otp/server';
+import { createUser, sessionService } from '@/entities/user/server';
 import { turnstileService } from '@/shared/services/turnstile-service';
-import { formDataSchema } from '@/features/auth/model/schemas';
-import { authErrorsUtils } from '@/features/auth/lib/auth-errors-utils';
+import { userRepository } from '@/entities/user/repositories/user';
 
 export const signUpAction = async (
   state: SignUpFormState,
@@ -41,6 +42,10 @@ export const signUpAction = async (
 
       redirect('/');
     }
+
+    const users = await userRepository.getUsers();
+
+    console.log({ createUserResult, users });
 
     const errors = {
       'user-login-exists': 'Пользователь с таким login существует'

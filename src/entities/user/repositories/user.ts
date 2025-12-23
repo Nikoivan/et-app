@@ -32,4 +32,6 @@ export async function getUser(
   return user ? (objectUtils.makeWithoutNull(user) as UserEntity) : null;
 }
 
-export const userRepository = { getUser, saveUser, updateUser };
+const getUsers = () => dbClient.user.findMany();
+
+export const userRepository = { getUser, getUsers, saveUser, updateUser };
