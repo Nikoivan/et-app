@@ -20,6 +20,8 @@ export const createUser = async ({
     login
   } as UserWhereUniqueInput);
 
+  console.log({ userWithLogin });
+
   if (userWithLogin) {
     return left('user-login-exists' as const);
   }
