@@ -20,15 +20,11 @@ export const createUser = async ({
     login
   } as UserWhereUniqueInput);
 
-  console.log({ userWithLogin });
-
   if (userWithLogin) {
     return left('user-login-exists' as const);
   }
 
   const { hash, salt } = await passwordService.hashPassword(password);
-
-  console.log({ hash, salt });
 
   const user = await userRepository.saveUser({
     id: Math.round(Math.random() * 1000),

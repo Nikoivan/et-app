@@ -3,7 +3,6 @@ import React, { ChangeEvent, FC, useId, useState } from 'react';
 import { Input } from '@/shared/ui/input';
 import { Label } from '@/shared/ui/label';
 import { Otp } from '@/entities/otp';
-import { Turnstile } from 'next-turnstile';
 
 const CLODFLARE_KEY = process.env.NEXT_PUBLIC_CF_SITE_KEY || '';
 
@@ -59,7 +58,7 @@ export const AuthFields: FC<Props> = ({ type, errors, formData }) => {
         />
         {errors?.password && <div>{errors.password}</div>}
         {type === 'signup' && <Otp formData={formData} email={email} />}
-        <Turnstile siteKey={CLODFLARE_KEY} theme='auto' />
+        {/*<Turnstile siteKey={CLODFLARE_KEY} theme='auto' />*/}
       </div>
     </>
   );

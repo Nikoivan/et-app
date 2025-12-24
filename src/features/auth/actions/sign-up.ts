@@ -14,14 +14,14 @@ export const signUpAction = async (
   state: SignUpFormState,
   formData: FormData
 ): Promise<SignUpFormState> => {
+  let success = false;
+
   try {
     const data = Object.fromEntries(formData.entries());
 
     await turnstileService.verifyHuman(data);
 
     const result = formDataSchema.safeParse(data);
-
-    console.log({ result });
 
     if (!result.success) {
       return {
@@ -32,33 +32,34 @@ export const signUpAction = async (
 
     const { email, tel } = await otpService.verifyOtp(result.data.code);
 
-    console.log({ email, tel });
-
     const createUserResult = await createUser({
       login: email,
       phone: tel,
       password: result.data.password
     });
 
-    console.log({ createUserResult });
-
     if (createUserResult.type === 'right') {
       await sessionService.addSession(createUserResult.value);
 
-      redirect('/');
+      success = true;
     }
-
-    const errors = {
-      'user-login-exists': 'Пользователь с таким login существует'
-    }[createUserResult.error];
 
     return {
       formData,
       errors: {
-        _errors: errors
+        _errors:
+          createUserResult.type === 'left'
+            ? {
+                'user-login-exists': 'Пользователь с таким login существует'
+              }[createUserResult.error]
+            : undefined
       }
     };
   } catch (e) {
     return signUpService.handleErrors(e, formData);
+  }
+
+  if (success) {
+    redirect('/');
   }
 };
