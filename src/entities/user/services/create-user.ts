@@ -35,7 +35,5 @@ export const createUser = async ({
     role: Role.USER
   });
 
-  console.log(user);
-
   return right(user);
 };
