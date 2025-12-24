@@ -9,7 +9,6 @@ import { authErrorsUtils } from '../lib/auth-errors-utils';
 import { otpService } from '@/kernel/otp/server';
 import { createUser, sessionService } from '@/entities/user/server';
 import { turnstileService } from '@/shared/services/turnstile-service';
-import { userRepository } from '@/entities/user/repositories/user';
 
 export const signUpAction = async (
   state: SignUpFormState,
@@ -22,6 +21,8 @@ export const signUpAction = async (
 
     const result = formDataSchema.safeParse(data);
 
+    console.log({ result });
+
     if (!result.success) {
       return {
         formData,
@@ -31,21 +32,21 @@ export const signUpAction = async (
 
     const { email, tel } = await otpService.verifyOtp(result.data.code);
 
+    console.log({ email, tel });
+
     const createUserResult = await createUser({
       login: email,
       phone: tel,
       password: result.data.password
     });
 
+    console.log({ createUserResult });
+
     if (createUserResult.type === 'right') {
       await sessionService.addSession(createUserResult.value);
 
       redirect('/');
     }
-
-    const users = await userRepository.getUsers();
-
-    console.log({ createUserResult, users });
 
     const errors = {
       'user-login-exists': 'Пользователь с таким login существует'

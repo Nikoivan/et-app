@@ -28,6 +28,8 @@ export const createUser = async ({
 
   const { hash, salt } = await passwordService.hashPassword(password);
 
+  console.log({ hash, salt });
+
   const user = await userRepository.saveUser({
     id: Math.round(Math.random() * 1000),
     login,
@@ -36,6 +38,8 @@ export const createUser = async ({
     salt,
     role: Role.USER
   });
+
+  console.log(user);
 
   return right(user);
 };
