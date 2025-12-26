@@ -53,8 +53,19 @@ const verifyOtp = async (
   return otp;
 };
 
+const deleteOtp = async (id: number): Promise<Either<string, Otp>> => {
+  const deletedOtp = await otpRepositories.deleteOtpById(id);
+
+  if (!deletedOtp) {
+    return left(`Возникла ошибка при удаление OTP ${id}`);
+  }
+
+  return right(deletedOtp);
+};
+
 export const otpService = {
   createOtpRecord,
   checkOtp,
-  verifyOtp
+  verifyOtp,
+  deleteOtp
 };

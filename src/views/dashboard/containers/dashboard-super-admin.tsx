@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/css';
 import { DashboardTours } from '@/widgets/tours';
 import { DashboardPosts } from '@/widgets/posts';
-import { DashboardActivities } from '@/widgets/activities';
 
 export const DashboardSuperAdmin: FC<
   PropsWithChildren<{ session: SessionDomain.SessionEntity }>
@@ -21,8 +20,7 @@ export const DashboardSuperAdmin: FC<
       <TabsList className={cn('mx-auto', 'bg-white', 'dark:bg-black')}>
         <TabsTrigger value='tours'>Туры компании</TabsTrigger>
         <TabsTrigger value='posts'>Посты/Легаси туры</TabsTrigger>
-        <TabsTrigger value='guideTours'>Туры гидов</TabsTrigger>
-        <TabsTrigger value='activities'>Мероприятия</TabsTrigger>
+        <TabsTrigger value='users'>Пользователи</TabsTrigger>
       </TabsList>
       <TabsContent value='tours'>
         <DashboardTours session={session} />
@@ -30,10 +28,6 @@ export const DashboardSuperAdmin: FC<
       <TabsContent value='posts'>
         <DashboardPosts session={session} />
       </TabsContent>
-      <TabsContent value='activities'>
-        <DashboardActivities session={session} />
-      </TabsContent>
-      <TabsContent value='guideTours'>DashboardGuideTours</TabsContent>
     </Tabs>
 
     {children}

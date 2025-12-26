@@ -3,7 +3,7 @@
 
   - You are about to drop the column `tour_author_id` on the `Tour` table. All the data in the column will be lost.
   - Added the required column `author_id` to the `Tour` table without a default value. This is not possible if the table is not empty.
-  - Changed the type of `role` on the `user` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
+  - Changed the type of `role` on the `users` table. No cast exists, the column would be dropped and recreated, which cannot be done if there is data, since the column is required.
 
 */
 -- DropForeignKey

@@ -11,7 +11,7 @@ import { createUser, sessionService } from '@/entities/user/server';
 import { turnstileService } from '@/shared/services/turnstile-service';
 
 export const signUpAction = async (
-  state: SignUpFormState,
+  _: SignUpFormState,
   formData: FormData
 ): Promise<SignUpFormState> => {
   let success = false;
@@ -30,7 +30,7 @@ export const signUpAction = async (
       };
     }
 
-    const { email, tel } = await otpService.verifyOtp(result.data.code);
+    const { email, tel, id } = await otpService.verifyOtp(result.data.code);
 
     const createUserResult = await createUser({
       login: email,
@@ -40,6 +40,7 @@ export const signUpAction = async (
 
     if (createUserResult.type === 'right') {
       await sessionService.addSession(createUserResult.value);
+      await otpService.deleteOtp(id);
 
       success = true;
     }

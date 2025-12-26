@@ -1,3 +1,5 @@
+export { userRepository } from '@/entities/user/repositories/user';
+
 export { getCurrentUser } from '@/entities/user/services/get-current-user';
 export { verifyUserPassword } from '@/entities/user/services/verify-user-password';
 export { createUser } from '@/entities/user/services/create-user';

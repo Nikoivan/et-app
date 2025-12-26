@@ -2,7 +2,7 @@
   Warnings:
 
   - You are about to alter the column `title` on the `post` table. The data in that column could be lost. The data in that column will be cast from `Text` to `VarChar(180)`.
-  - You are about to alter the column `salt` on the `user` table. The data in that column could be lost. The data in that column will be cast from `Text` to `VarChar(800)`.
+  - You are about to alter the column `salt` on the `users` table. The data in that column could be lost. The data in that column will be cast from `Text` to `VarChar(800)`.
   - You are about to drop the `legacy_post` table. If the table is not empty, all the data it contains will be lost.
   - Added the required column `description` to the `post` table without a default value. This is not possible if the table is not empty.
   - Added the required column `guid` to the `post` table without a default value. This is not possible if the table is not empty.

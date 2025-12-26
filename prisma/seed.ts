@@ -3,7 +3,7 @@
 // const prisma = new PrismaClient();
 //
 // async function main() {
-//   // const alice = await prisma.user.upsert({
+//   // const alice = await prisma.users.upsert({
 //   //   where: { email: "alice@prisma.io" },
 //   //   update: {},
 //   //   create: {
@@ -18,7 +18,7 @@
 //   //     },
 //   //   },
 //   // });
-//   // const bob = await prisma.user.upsert({
+//   // const bob = await prisma.users.upsert({
 //   //   where: { email: "bob@prisma.io" },
 //   //   update: {},
 //   //   create: {
