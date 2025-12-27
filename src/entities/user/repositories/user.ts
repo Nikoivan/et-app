@@ -30,7 +30,7 @@ const updateUser = async (
 export async function getUser(
   where: Prisma.UserWhereUniqueInput
 ): Promise<UserEntity | null> {
-  const user = await dbClient.user.findFirst({ where });
+  const user = await dbClient.user.findUnique({ where });
 
   return user ? (objectUtils.makeWithoutNull(user) as UserEntity) : null;
 }

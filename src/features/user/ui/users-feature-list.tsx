@@ -3,12 +3,44 @@
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
 
+import { useUserList } from '../hooks/use-user-list';
+import { UserFeature } from './user-feature';
+import { SessionDomain } from '@/entities/user/server';
+
 const cnUserFeatureList = cn('UserFeatureList');
 
-export const UserFeatureList: FC = () => {
+export const UserFeatureList: FC<{
+  session: SessionDomain.SessionEntity;
+}> = () => {
+  const { data, isFetching, pagination, tools, cursor } = useUserList();
+
   return (
-    <div className={cnUserFeatureList()}>
-      <span>userFeatureList</span>
-    </div>
+    <>
+      {tools}
+      {!!data?.users?.length && (
+        <div
+          className={cnUserFeatureList('Wrapper', [
+            isFetching ? 'opacity-50' : ''
+          ])}
+        >
+          {pagination}
+          <ul className={cnUserFeatureList()}>
+            {data.users.map(user => (
+              <li
+                className={cnUserFeatureList('Item', [
+                  'flex',
+                  'justify-center',
+                  'mt-3'
+                ])}
+                key={user.id}
+              >
+                <UserFeature user={user} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {cursor}
+    </>
   );
 };

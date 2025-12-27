@@ -2,7 +2,6 @@ import {
   TurnstileValidateResponse,
   validateTurnstileToken
 } from 'next-turnstile';
-import { TurnstileError } from '@/shared/model/turnstile-error';
 
 const CLOUDFRLARE_KEY = process.env.CF_SECRET_KEY || '';
 
@@ -29,21 +28,17 @@ const safeVerifyHuman = async (
   return result;
 };
 
-const verifyHuman = async (data: unknown): Promise<true> => {
+const verifyHuman = async (data: unknown): Promise<boolean> => {
   const token = getCfToken(data);
 
   if (!token) {
-    throw new TurnstileError('Missing CF Token');
+    return false;
   }
 
   const result = await validateTurnstileToken({
     token,
     secretKey: CLOUDFRLARE_KEY
   });
-
-  if (!result.success) {
-    throw new TurnstileError('Human test failed');
-  }
 
   return result.success;
 };

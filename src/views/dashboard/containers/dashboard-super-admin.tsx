@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui/tabs';
 import { cn } from '@/shared/lib/css';
 import { DashboardTours } from '@/widgets/tours';
 import { DashboardPosts } from '@/widgets/posts';
+import { DashboardUsers } from '@/widgets/users';
 
 export const DashboardSuperAdmin: FC<
   PropsWithChildren<{ session: SessionDomain.SessionEntity }>
@@ -28,8 +29,10 @@ export const DashboardSuperAdmin: FC<
       <TabsContent value='posts'>
         <DashboardPosts session={session} />
       </TabsContent>
+      <TabsContent value='users'>
+        <DashboardUsers session={session} />
+      </TabsContent>
     </Tabs>
-
     {children}
   </DashboardLayout>
 );

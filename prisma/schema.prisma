@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   id            Int           @id @default(autoincrement())
-  login         String
+  login         String        @unique
   passwordHash  String        @map("password_hash")
   salt          String        @db.VarChar(800)
   role          String        @db.VarChar(80)
@@ -34,7 +34,7 @@ model User {
   orders        Order[]
   photos        Photo[]
 
-  @@map("users")
+  @@map("user")
 }
 
 model Otp {

@@ -14,22 +14,33 @@ import { Button } from '@/shared/ui/button';
 import { Badge } from '@/shared/ui/badge';
 import { Separator } from '@/shared/ui/separator';
 import { Loader2, Mail, Phone, Star, Trash2, User } from 'lucide-react';
-import { SessionDomain } from '@/entities/user/server';
+import { ConfirmDialog } from '@/entities/confirm-dialog';
 
 type Props = {
   onDelete(id: number): void;
-  user: SessionDomain.UserEntity;
+  user: Omit<
+    {
+      id: number;
+      login: string;
+      passwordHash: string;
+      salt: string;
+      role: string;
+      phone: string | null;
+      firstName: string | null;
+      lastName: string | null;
+      avatarPhotoId: number | null;
+      email: string | null;
+      rating: number | null;
+    },
+    'passwordHash' | 'salt'
+  >;
 };
 
 export const UserCard: FC<Props> = ({ user, onDelete }) => {
-  const [isPending, startTransition] = useTransition();
+  const [isPending] = useTransition();
 
-  const handleDelete = () => {
-    if (confirm('Вы уверены, что хотите удалить этого пользователя?')) {
-      startTransition(async () => {
-        await onDelete(user.id);
-      });
-    }
+  const handleDelete = async () => {
+    await onDelete(user.id);
   };
 
   const getInitials = (login: string) => {
@@ -37,7 +48,7 @@ export const UserCard: FC<Props> = ({ user, onDelete }) => {
   };
 
   return (
-    <Card className='w-full max-w-md shadow-md hover:shadow-lg transition-shadow'>
+    <Card className='w-full shadow-md hover:shadow-lg transition-shadow'>
       <CardHeader className='flex flex-row items-center gap-4 pb-2'>
         <Avatar className='h-14 w-14 border'>
           <AvatarImage src='/images/mockAvatar.jpg' alt={user.login} />
@@ -58,9 +69,7 @@ export const UserCard: FC<Props> = ({ user, onDelete }) => {
           </div>
         </div>
       </CardHeader>
-
       <Separator className='my-2' />
-
       <CardContent className='grid gap-4 mt-4'>
         {(user.firstName || user.lastName) && (
           <div className='flex items-center gap-3 text-sm'>
@@ -87,24 +96,29 @@ export const UserCard: FC<Props> = ({ user, onDelete }) => {
       </CardContent>
 
       <CardFooter className='pt-2'>
-        <Button
-          variant='destructive'
-          className='w-full'
-          onClick={handleDelete}
-          disabled={isPending}
-        >
-          {isPending ? (
-            <>
-              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
-              Удаление...
-            </>
-          ) : (
-            <>
-              <Trash2 className='mr-2 h-4 w-4' />
-              Удалить пользователя
-            </>
-          )}
-        </Button>
+        <ConfirmDialog
+          triggger={
+            <Button
+              variant='destructive'
+              className='w-full'
+              onClick={handleDelete}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <>
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                  Удаление...
+                </>
+              ) : (
+                <>
+                  <Trash2 className='mr-2 h-4 w-4' />
+                  Удалить пользователя
+                </>
+              )}
+            </Button>
+          }
+          onSubmit={handleDelete}
+        />
       </CardFooter>
     </Card>
   );
