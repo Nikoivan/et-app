@@ -11,6 +11,8 @@ const getPagesCount = async (where?: Prisma.PostWhereInput) => {
   return Math.ceil(count / 10);
 };
 
+const getPostsSlugs = () => postRepositories.getPostsSlugs();
+
 const getPosts = async (
   dbQueryParams?: Prisma.PostFindManyArgs & {
     select?: never;
@@ -112,6 +114,7 @@ const deletePost = async (id: number): Promise<Either<string, Post>> => {
 };
 
 export const postServices = {
+  getPostsSlugs,
   getPosts,
   getPostBySlug,
   getPostMetaDataBySlug,

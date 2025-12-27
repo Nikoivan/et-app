@@ -11,8 +11,10 @@ const getPost = <T extends Prisma.PostFindUniqueArgs>(
 ) => {
   const params = uniqueParam || { include: { user: true } };
 
-  return dbClient.post.findUnique(params);
+  return dbClient.post.findFirst(params);
 };
+
+const getPostsSlugs = () => dbClient.post.findMany({ select: { slug: true } });
 
 const getPosts = <
   T extends Prisma.PostFindManyArgs & {
@@ -63,6 +65,7 @@ const deletePost = (id: number): Promise<Post> =>
   });
 
 export const postRepositories = {
+  getPostsSlugs,
   getPostsCount,
   getPost,
   getPosts,

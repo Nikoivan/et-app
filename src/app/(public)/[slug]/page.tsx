@@ -1,6 +1,16 @@
-import { postServices } from '@/features/post/services/post-services';
+import { postServices } from '@/features/post/server';
 import { FC } from 'react';
 import { PostView } from '@/views/post/server';
+
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  const posts = await postServices.getPostsSlugs();
+
+  return posts.map(post => ({
+    slug: post.slug
+  }));
+}
 
 const Page: FC<{
   params: Promise<{ slug: string }>;

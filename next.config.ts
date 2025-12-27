@@ -3,7 +3,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
-    useCache: true
+    useCache: true,
+    cpus: 1,
+    workerThreads: false
   },
   images: {
     unoptimized: true,

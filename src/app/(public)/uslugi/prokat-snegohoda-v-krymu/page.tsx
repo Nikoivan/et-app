@@ -1,5 +1,3 @@
-'use server';
-
 import { FC } from 'react';
 
 import { ServiceView } from '@/views/legacy/server';
@@ -53,6 +51,8 @@ const service = {
   mainImage: 'https://energy-tur.ru/wp-content/uploads/2016/01/3-23.jpg',
   images: []
 };
+
+export const dynamic = 'force-static';
 
 const LegacyPage: FC = async () => <ServiceView {...service} />;
 

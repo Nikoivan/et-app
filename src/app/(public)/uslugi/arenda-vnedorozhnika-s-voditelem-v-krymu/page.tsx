@@ -1,5 +1,3 @@
-'use server';
-
 import { FC } from 'react';
 
 import { ServiceView } from '@/views/legacy/server';
@@ -61,6 +59,8 @@ Mitsubishi L200 – 4 места
   mainImage: 'https://energy-tur.ru/wp-content/uploads/2016/01/9qIjSNgwcz8.jpg',
   images: []
 };
+
+export const dynamic = 'force-static';
 
 const LegacyPage: FC = async () => <ServiceView {...service} />;
 
