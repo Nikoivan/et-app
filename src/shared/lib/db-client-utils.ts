@@ -1,5 +1,3 @@
-export type DbQueryParams = { take: number; skip?: number };
-
 const take = 10;
 
 export type Params<T> = ({ page?: number } & Partial<T>) | undefined;
@@ -20,7 +18,7 @@ const getDbQueryParamsByPage = <T>(params: Params<T>) => {
   return { ...rest, take, skip: take * (page - 1) };
 };
 
-const getPageParams = (pageQuery: string | null): PageParams => {
+const getPageParams = (pageQuery?: string | number | null): PageParams => {
   const page = pageQuery ? Number(pageQuery) : 1;
 
   if (!page || page === 1) {
