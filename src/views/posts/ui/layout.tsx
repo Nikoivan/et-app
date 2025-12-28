@@ -9,6 +9,7 @@ import { PageTitle } from '@/entities/page-title/server';
 
 import { cn } from '@/shared/lib/css';
 import { postsServices } from '@/widgets/posts/services/posts-services';
+import { Pagination } from '@/views/posts/ui/pagination';
 
 type Props = {
   page?: string;
@@ -38,7 +39,12 @@ export const PostsView: FC<Props> = async ({ page }) => {
           <ServerPostCardList list={list} />
         </div>
       }
-      mainBottom={}
+      mainBottom={
+        <Pagination
+          currentPage={page ? Number(page) : 1}
+          totalPages={result.value.totalPages}
+        />
+      }
     />
   );
 };

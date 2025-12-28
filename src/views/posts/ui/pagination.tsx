@@ -4,6 +4,8 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+import { cn } from '@/shared/lib/css';
+
 export const Pagination: FC<{
   totalPages: number;
   currentPage: number;
@@ -11,10 +13,19 @@ export const Pagination: FC<{
   return (
     <>
       {totalPages > 1 && (
-        <div>
+        <div
+          className={cn(
+            'w-full',
+            'flex',
+            'justify-center',
+            'items-center',
+            'text-zinc-700',
+            'text-2xl'
+          )}
+        >
           {currentPage > 1 && (
             <Link href={`/posts/${currentPage - 1}`}>
-              <ChevronLeft />
+              <ChevronLeft size={36} />
             </Link>
           )}
           <div className='my-auto text-lg'>
@@ -22,7 +33,7 @@ export const Pagination: FC<{
           </div>
           {currentPage < totalPages && (
             <Link href={`/posts/${currentPage + 1}`}>
-              <ChevronRight />
+              <ChevronRight size={36} />
             </Link>
           )}
         </div>
