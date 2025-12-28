@@ -29,7 +29,7 @@ export const MainNav: FC = async () => {
   return (
     <nav
       className={cnMainNav(null, [
-        'flex items-start md:items-center gap-6 text-sm font-medium flex-col md:flex-row'
+        'flex items-start gap-6 text-sm font-medium flex-col md:text-2xl lg:text-3xl'
       ])}
     >
       {linksToRender.map(({ href, title }) => (

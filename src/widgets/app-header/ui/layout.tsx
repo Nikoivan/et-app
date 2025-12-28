@@ -23,8 +23,6 @@ type LayoutProps = {
   isStatic?: boolean;
 };
 
-// TODO: MenuIcon взять из макета Яны
-
 export const Layout: FC<LayoutProps> = async ({
   logo,
   nav,
@@ -36,12 +34,15 @@ export const Layout: FC<LayoutProps> = async ({
       !isStatic ? 'absolute top-0 w-full z-10' : ''
     ])}
   >
-    <div className='container flex justify-between items-center px-5 pt-4 pb-12'>
+    <div className='flex justify-between items-center px-5 pt-4 pb-12'>
       <div>
         <Sheet>
           <SheetTrigger asChild>
             <Button variant='ghost' aria-controls='burgerIcon'>
-              <BurgerIcon className='w-20 h-20 shrink-0' id='burgerIcon' />
+              <BurgerIcon
+                className='shrink-0 grow md:w-40 md:h-40'
+                id='burgerIcon'
+              />
             </Button>
           </SheetTrigger>
           <SheetContent side='left'>
