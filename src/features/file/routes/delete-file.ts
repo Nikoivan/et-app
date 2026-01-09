@@ -1,14 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { dbClient } from '@/shared/lib/db';
 import { bucketService } from '@/features/file/services/bucket-service';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
+import { NextRequest } from 'next/server';
 
-export const deletefile = async (req: NextApiRequest, res: NextApiResponse) => {
+export const deletefile = async (req: NextRequest) => {
   try {
-    const { id } = req.query;
+    const id = req.nextUrl.searchParams.get('id');
 
     if (!id || typeof id !== 'string') {
-      return res.status(400).json({ message: 'Missing or invalid id' });
+      return handleError({ error: 'Missing or invalid id' });
     }
 
     // Get the file name in bucket from the database

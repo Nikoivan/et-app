@@ -15,7 +15,7 @@ type FileItemProps = {
 
 async function getPresignedUrl(file: FileDomain.FileProps) {
   const response = await fetch(`/api/files/download/presignedUrl/${file.id}`);
-  return (await response.json()) as string;
+  return (await response.json()) as number;
 }
 
 export function FileItem({
@@ -24,7 +24,7 @@ export function FileItem({
   setFiles,
   downloadUsingPresignedUrl
 }: FileItemProps) {
-  async function deleteFile(id: string) {
+  async function deleteFile(id: number) {
     setFiles((files: FileDomain.FileProps[]) =>
       files.map((file: FileDomain.FileProps) =>
         file.id === id ? { ...file, isDeleting: true } : file
@@ -53,7 +53,7 @@ export function FileItem({
   const downloadFile = async (file: FileDomain.FileProps) => {
     if (downloadUsingPresignedUrl) {
       const presignedUrl = await getPresignedUrl(file);
-      window.open(presignedUrl, '_blank');
+      window.open(String(presignedUrl), '_blank');
     } else {
       window.open(`/api/files/download/smallFiles/${file.id}`, '_blank');
     }

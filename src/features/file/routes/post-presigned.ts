@@ -1,17 +1,16 @@
-import type { NextApiRequest } from 'next';
-
 import { nanoid } from 'nanoid';
 import { PresignedUrlProp, ShortFileProp } from '@/entities/file/domain';
 import { bucketService } from '@/features/file/services/bucket-service';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
+import { NextRequest } from 'next/server';
 
 const bucketName = process.env.S3_BUCKET_NAME || '';
 const expiry = 60 * 60;
 
-export const postPresigned = async (req: NextApiRequest) => {
+export const postPresigned = async (req: NextRequest) => {
   try {
     // get the files from the request body
-    const files = req.body as ShortFileProp[];
+    const files = (await req.json()) as ShortFileProp[];
 
     if (!files?.length) {
       return handleError({ error: 'No files to upload' });

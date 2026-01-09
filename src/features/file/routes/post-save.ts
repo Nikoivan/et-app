@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { PresignedUrlProp } from '@/entities/file/domain';
 import { dbClient } from '@/shared/lib/db';
 import { handleError, handleSuccess } from '@/shared/lib/response-utils';
+import { NextRequest } from 'next/server';
 
 type FileInDBProp = {
   fileNameInBucket: string;
@@ -9,9 +10,9 @@ type FileInDBProp = {
   fileSize: number;
 };
 
-export const postSave = async (req: NextApiRequest, res: NextApiResponse) => {
+export const postSave = async (req: NextRequest) => {
   try {
-    const presignedUrls = req.body as PresignedUrlProp[];
+    const presignedUrls = (await req.json()) as PresignedUrlProp[];
 
     // Get the file name in bucket from the database
     const saveFilesInfo = await dbClient.file.createMany({
