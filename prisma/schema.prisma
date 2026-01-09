@@ -170,3 +170,12 @@ model Activity {
   discount     Int?
   photos       Photo[]
 }
+
+model File {
+  id           Int      @id @default(autoincrement())
+  bucket       String
+  fileName     String   @unique
+  originalName String
+  createdAt    DateTime @default(now())
+  size         Int
+}

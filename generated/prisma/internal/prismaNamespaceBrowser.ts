@@ -59,7 +59,8 @@ export const ModelName = {
   Tour: 'Tour',
   Order: 'Order',
   Transaction: 'Transaction',
-  Activity: 'Activity'
+  Activity: 'Activity',
+  File: 'File'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -228,6 +229,18 @@ export const ActivityScalarFieldEnum = {
 } as const
 
 export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+export const FileScalarFieldEnum = {
+  id: 'id',
+  bucket: 'bucket',
+  fileName: 'fileName',
+  originalName: 'originalName',
+  createdAt: 'createdAt',
+  size: 'size'
+} as const
+
+export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
 
 
 export const SortOrder = {

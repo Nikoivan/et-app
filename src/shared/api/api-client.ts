@@ -3,6 +3,7 @@ import { urlUtils } from '@/shared/lib/url-utils';
 type RequestParams = {
   url: string;
   queryParams?: Record<string, string | number>;
+  withoutParse?: boolean;
 } & RequestInit;
 
 const request = async <T>({
@@ -11,7 +12,8 @@ const request = async <T>({
   method,
   signal,
   headers,
-  queryParams
+  queryParams,
+  withoutParse
 }: RequestParams): Promise<T> => {
   const response = await fetch(`${urlUtils.getUrl(url, queryParams)}`, {
     method,
@@ -23,7 +25,9 @@ const request = async <T>({
     }
   });
 
-  return response.json();
+  console.log({ response });
+
+  return withoutParse ? (response as T) : await response.json();
 };
 
 const get = <T>(params: RequestParams): Promise<T> =>

@@ -62,3 +62,8 @@ export type Transaction = Prisma.TransactionModel
  * 
  */
 export type Activity = Prisma.ActivityModel
+/**
+ * Model File
+ * 
+ */
+export type File = Prisma.FileModel

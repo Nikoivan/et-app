@@ -16,7 +16,7 @@ export const signUpAction = async (
 
   const turnstileSuccess = await turnstileService.verifyHuman(data);
 
-  if (!turnstileSuccess) {
+  if (process.env.NODE_ENV === 'production' && !turnstileSuccess) {
     return {
       formData,
       errors: {
