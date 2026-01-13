@@ -9,35 +9,5 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - main-db:/var/lib/postgresql/data
-  minio:
-    image: minio/minio:latest
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
-      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
-    volumes:
-      - minio_storage:/data
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    restart: always
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-  createbuckets:
-    image: minio/mc
-    depends_on:
-      minio:
-        condition: service_healthy
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc alias set myminio http://minio:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD};
-      /usr/bin/mc mb myminio/wp-content;
-      /usr/bin/mc anonymous set download myminio/wp-content;
-      exit 0;
-      "
 volumes:
   main-db:
-  minio_storage:

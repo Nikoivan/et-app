@@ -48,6 +48,12 @@ const getPostListQueryOption = ({
       getPosts<GetPostsResponse>({ signal, page, search })
   });
 
+const exportPosts = async () => {
+  try {
+    const response = await apiClient.get({ url: '/posts/export' });
+  } catch {}
+};
+
 export const postApi = {
   baseKey: 'posts',
   getPosts,
