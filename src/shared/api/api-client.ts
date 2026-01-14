@@ -25,8 +25,6 @@ const request = async <T>({
     }
   });
 
-  console.log({ response });
-
   return withoutParse ? (response as T) : await response.json();
 };
 

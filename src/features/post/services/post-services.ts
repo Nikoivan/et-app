@@ -30,6 +30,16 @@ const getPosts = async (
   return right({ pagesCount, posts: result.map(PostDomain.postToPostEntity) });
 };
 
+const getAllPosts = async (): Promise<Either<string, Post[]>> => {
+  const posts = await postRepositories.getAllPosts();
+
+  if (!posts?.length) {
+    return left('Ошибка получения постов. Их нет');
+  }
+
+  return right(posts);
+};
+
 const getPostBySlug = async (
   slug: string
 ): Promise<Either<string, PostDomain.PostEntity>> => {
@@ -116,6 +126,7 @@ const deletePost = async (id: number): Promise<Either<string, Post>> => {
 export const postServices = {
   getPostsSlugs,
   getPosts,
+  getAllPosts,
   getPostBySlug,
   getPostMetaDataBySlug,
   createPosts,

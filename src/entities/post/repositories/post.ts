@@ -39,6 +39,8 @@ const getPosts = <
   >;
 };
 
+const getAllPosts = (): Promise<Post[]> => dbClient.post.findMany();
+
 const getPostsBySelect = <T extends Prisma.PostSelect>(params?: {
   where?: PostWhereInput;
   select?: T;
@@ -69,6 +71,7 @@ export const postRepositories = {
   getPostsCount,
   getPost,
   getPosts,
+  getAllPosts,
   getPostsBySelect,
   createPost,
   createManyPosts,

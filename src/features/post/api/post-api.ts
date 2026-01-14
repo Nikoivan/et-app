@@ -48,10 +48,16 @@ const getPostListQueryOption = ({
       getPosts<GetPostsResponse>({ signal, page, search })
   });
 
-const exportPosts = async () => {
+const exportPosts = async (): Promise<Response | null> => {
   try {
-    const response = await apiClient.get({ url: '/posts/export' });
-  } catch {}
+    return apiClient.get<Response>({
+      url: '/posts/export',
+      credentials: 'include',
+      withoutParse: true
+    });
+  } catch {
+    return null;
+  }
 };
 
 export const postApi = {
@@ -61,5 +67,6 @@ export const postApi = {
   createPostsByFile,
   editPost,
   deletePost,
-  getPostListQueryOption
+  getPostListQueryOption,
+  exportPosts
 };

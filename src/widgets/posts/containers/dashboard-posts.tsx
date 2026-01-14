@@ -4,7 +4,7 @@ import { cn } from '@bem-react/classname';
 import { FC } from 'react';
 import { Layout } from '../ui/layout';
 import { Spinner } from '@/shared/ui/spinner';
-import { PostFeatureList } from '@/features/post';
+import { ExportPosts, PostFeatureList } from '@/features/post';
 import { FeaturePost } from '@/features/post/ui/feature-post';
 import { MigrationPosts } from '@/widgets/posts/ui/posts-migration';
 import { SessionDomain } from '@/entities/user/server';
@@ -31,6 +31,7 @@ export const DashboardPosts: FC<{ session: SessionDomain.SessionEntity }> = ({
           <div>
             <FeaturePost session={session} type='create' />
             <MigrationPosts />
+            <ExportPosts />
           </div>
         }
       />
