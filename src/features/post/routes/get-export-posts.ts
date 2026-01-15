@@ -4,7 +4,7 @@ import { handleError } from '@/shared/lib/response-utils';
 import { sessionService } from '@/entities/user/server';
 import { roleUtils } from '@/entities/user';
 import { postServices } from '../services/post-services';
-import { Post } from '../../../../generated/prisma/client';
+import { filesUtils } from '@/features/post/lib/file-utils';
 
 export async function getExportPosts(req: NextRequest): Promise<Response> {
   try {
@@ -30,24 +30,7 @@ export async function getExportPosts(req: NextRequest): Promise<Response> {
       return handleError({ body: either.error });
     }
 
-    const posts: Post[] = either.value;
-
-    const encoder = new TextEncoder();
-
-    const stream = new ReadableStream({
-      start(controller) {
-        controller.enqueue(encoder.encode('[\n'));
-
-        posts.forEach((post, index) => {
-          const json = JSON.stringify(post, null, 2);
-          const suffix = index < posts.length - 1 ? ',\n' : '\n';
-          controller.enqueue(encoder.encode(json + suffix));
-        });
-
-        controller.enqueue(encoder.encode(']'));
-        controller.close();
-      }
-    });
+    const stream = filesUtils.getPostsFileJSONStream(either.value);
 
     return new Response(stream, {
       status: 200,
@@ -59,6 +42,8 @@ export async function getExportPosts(req: NextRequest): Promise<Response> {
   } catch (e) {
     if (!!e && typeof e === 'object' && 'message' in e) {
       console.error(e.message);
+
+      return handleError({ body: e.message });
     }
 
     return handleError({ body: 'Ошибка верификации' });

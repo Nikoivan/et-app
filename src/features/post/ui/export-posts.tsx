@@ -4,6 +4,9 @@ import { FC } from 'react';
 import { Button } from '@/shared/ui/button';
 import { postApi } from '@/features/post/api/post-api';
 import { toast } from 'sonner';
+import { exportUtils } from '@/features/post/lib/export-utils';
+import { cn } from '@/shared/lib/css';
+import { DownloadCloudIcon } from 'lucide-react';
 
 export const ExportPosts: FC = () => {
   const download = async () => {
@@ -14,21 +17,16 @@ export const ExportPosts: FC = () => {
     }
 
     const blob: Blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'posts.json';
-    document.body.appendChild(a);
-    a.click();
-
-    a.remove();
-    window.URL.revokeObjectURL(url);
+    exportUtils.downLoadExportFile(blob);
   };
 
   return (
-    <Button variant='ghost' onClick={download}>
-      Экспорт постов
-    </Button>
+    <div className={cn('text-center')}>
+      <Button variant='ghost' onClick={download}>
+        Экспорт постов
+        <DownloadCloudIcon />
+      </Button>
+    </div>
   );
 };
